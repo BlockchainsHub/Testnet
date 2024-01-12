@@ -1,5 +1,5 @@
 # Artela Network Node Guide
-This document provides an introduction to joining the Artela Testnet as a full node.
+This document provides an introduction to joining the Artela Testnet.
 
 ## Hardware recommended requirements:
 It is recommended to use **ubuntu** operating system.
