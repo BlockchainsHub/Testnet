@@ -131,3 +131,77 @@ sudo systemctl start artelad
 ```
 sudo journalctl -fu artelad -o cat
 ```
+
+## Validator Guide
+Before setting up a validator node, make sure you have completed the **[Run a Full Node](https://github.com/Kamus-Crypto/Testnet/edit/botxx15-artela-guide/Artela%20Network/Guide_EN.md#run-a-full-node)** guide.
+
+### Create your validator operator account
+Replace ```<account name>``` with your validator operator account name.
+```
+artelad keys add <account name>
+```
+Example:
+```
+artelad keys add kamuscrypto
+```
+Enter your password and don't forget to **securely save your mnemonic phrase**. Becareful when you enter your password, it's not gonna show up on the CLI when you input your password.
+
+![Validator Guide Artela](https://github.com/Kamus-Crypto/Testnet/assets/77204008/9f25478d-0de9-4bb4-ad3f-9eede1749b61)
+
+### Convert bech32(cosmos format) address to hex(evm format) address
+Before requesting a faucet you have to convert your Artelar address to EVM address format.
+```
+artelad debug addr <betch32 address/Artela address>
+```
+Example:
+```
+artelad debug addr art1f491dnx3kdqplfyjjpwl5cap4x0nlsgtcvvyca
+```
+![Validator Guide Art](https://github.com/Kamus-Crypto/Testnet/assets/77204008/699fb5b6-d38f-41f0-8d0b-fa9c4327bd1b)
+
+### Request Faucet
+Join **[Artela Network Discord](https://discord.gg/artela)** server to request faucet. After verify yourself, go to **#🚰|testnet-faucet** and enter the command below to request faucet.
+```
+$request <your converted EVM addres>
+```
+Example:
+```
+$request 0xCd62eFd6959612b9196C1a22EaCE66B48cFe9953
+```
+
+### Create your validator
+```
+artelad tx staking create-validator \
+--amount 1000000000000000000uart \
+--pubkey=$(artelad tendermint show-validator) \
+--moniker "your validator name" \
+--website "your website" \
+--details "your validator details" \
+--commission-rate "0.10" \
+--commission-max-rate "0.20" \
+--commission-max-change-rate "0.01" \
+--min-self-delegation 1 \
+--gas auto \
+--gas-adjustment 1.5 \
+--chain-id <chain_id> \
+--from <your validator account name> \
+-y
+```
+Example:
+```
+artelad tx staking create-validator \
+--amount 1000000000000000000uart \
+--pubkey=$(artelad tendermint show-validator) \
+--moniker "kamuscrypto" \
+--website "https://kamuscrypto.super.site" \
+--details "Indonesia crypto community" \
+--commission-rate "0.10" \
+--commission-max-rate "0.20" \
+--commission-max-change-rate "0.01" \
+--min-self-delegation 1 \
+--gas auto \
+--gas-adjustment 1.5 \
+--chain-id artela_11822-1 \
+--from kamuscrypto \
+-y
+```
