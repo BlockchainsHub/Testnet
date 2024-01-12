@@ -1,3 +1,5 @@
+![Kamus Crypto](https://github.com/Kamus-Crypto/Testnet/assets/77204008/5a53beb5-11e6-485a-af72-eb6983bd5343)
+
 # Artela Network Node Guide
 This document provides an introduction to joining the Artela Testnet.
 
