@@ -1,0 +1,83 @@
+# Artela Network Node Guide
+This document provides an introduction to joining the Artela Testnet as a full node.
+
+## Hardware recommended requirements:
+It is recommended to use **ubuntu** operating system.
+* 8 CPU Cores
+* 16GB of Memory
+* 1TB SSD
+* 200mbps Network Bandwidth
+
+## 1. Preparation
+```
+apt update && apt upgrade -y
+apt install curl iptables build-essential git wget jq make gcc nano tmux htop lz4 nvme-cli pkg-config libssl-dev libleveldb-dev tar clang bsdmainutils ncdu unzip libleveldb-dev -y
+```
+
+### Install Go
+You can skip this if you already installed Go. Run command ```go version``` on your terminal to verify it.
+```
+ver="1.20.3"
+wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz"
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz"
+rm "go$ver.linux-amd64.tar.gz"
+echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> $HOME/.bash_profile
+source $HOME/.bash_profile
+go version
+```
+
+### Install Git
+You can skip this if you already installed Git. Run command ```git version``` on your terminal to verify it.
+```
+sudo apt install git
+```
+
+## 2. Installation
+### Clone and build the code
+Make sure you install the latest version. Modify the ```git checkout vx.x.x``` with the latest version of Artela. You can find the latest version **[here](https://github.com/artela-network/artela)**.
+```
+cd $HOME
+rm -rf artela
+git clone https://github.com/artela-network/artela
+cd artela
+git checkout vx.x.x
+make install
+```
+Example:
+```
+cd $HOME
+rm -rf artela
+git clone https://github.com/artela-network/artela
+cd artela
+git checkout v0.4.7-rc4
+make install
+```
+
+### Node chain id configuration
+```
+artelad config chain-id artela_11822-1
+```
+
+### Initialize node
+Modify the ```$MONIKER``` with your node name.
+```
+artelad init "$MONIKER" --chain-id artela_11822-1
+```
+Example:
+```
+artelad init kamuscrypto --chain-id artela_11822-1
+```
+
+### Add genesis file and addrbook
+```
+wget -qO $HOME/.artelad/config/genesis.json https://docs.artela.network/assets/files/genesis-314f4b0294712c1bc6c3f4213fa76465.json
+wget -qO $HOME/.artelad/config/addrbook.json https://snapshots.theamsolutions.info/artela-addrbook.json
+```
+
+### Seed and peers configuration
+```
+SEEDS="bec6934fcddbac139bdecce19f81510cb5e02949@47.254.24.106:26656,32d0e4aec8d8a8e33273337e1821f2fe2309539a@47.88.58.36:26656,1bf5b73f1771ea84f9974b9f0015186f1daa4266@47.251.14.47:26656"
+PEERS="a996136dcb9f63c7ddef626c70ef488cc9e263b8@144.217.68.182:22256,de5612c035bd1875f0bd36d7cbf5d660b0d1e943@5.78.64.11:26656,bec6934fcddbac139bdecce19f81510cb5e02949@47.254.24.106:26656,30fb0055aced21472a01911353101bc4cd356bb3@47.89.230.117:26656,a03ae11a093c67e2554b73d174c4168fe715af10@57.128.103.184:26656,146d6011cce0423f564c9277c6a3390657c53730@157.90.226.23:26656,0188a9bcff4f411b29dbddda527d77803396e1c6@185.245.182.180:26656,b23bc610c374fd071c20ce4a2349bf91b8fbd7db@65.108.72.233:11656,aa416d3628dcce6e87d4b92d1867c8eca36a70a7@47.254.93.86:26656,978dee673bd447147f61aa5a1bdaabdfb8f8b853@47.88.57.107:26656,35ce36af33e289a29787eedb3127d21bf10edcff@81.0.218.194:45656,32d0e4aec8d8a8e33273337e1821f2fe2309539a@47.88.58.36:26656,1b73ac616d74375932fb6847ec67eee4a98174e9@116.202.85.52:25556,9e2fbfc4b32a1b013e53f3fc9b45638f4cddee36@47.254.66.177:26656,b23bc610c374fd071c20ce4a2349bf91b8fbd7db@65.108.72.233:11656,30fb0055aced21472a01911353101bc4cd356bb3@47.89.230.117:26656,9e2fbfc4b32a1b013e53f3fc9b45638f4cddee36@47.254.66.177:26656,978dee673bd447147f61aa5a1bdaabdfb8f8b853@47.88.57.107:26656,aa416d3628dcce6e87d4b92d1867c8eca36a70a7@47.254.93.86:26656"
+sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.artelad/config/config.toml
+```
