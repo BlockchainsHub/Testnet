@@ -31,12 +31,6 @@ source $HOME/.bash_profile
 go version
 ```
 
-#### Install Git
-You can skip this if you already installed Git. Run command ```git version``` on your terminal to verify it.
-```
-sudo apt install git
-```
-
 ### 2. Installation
 #### Clone and build the code
 Make sure you install the latest version. Modify the ```git checkout vx.x.x``` with the latest version of Artela. You can find the latest version **[here](https://github.com/artela-network/artela)**.
