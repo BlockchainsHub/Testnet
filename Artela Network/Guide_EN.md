@@ -201,3 +201,18 @@ artelad tx staking create-validator \
 --from kamuscrypto \
 -y
 ```
+
+## Useful commands
+### Restart Service
+```
+sudo systemctl restart artelad
+```
+### Delegate to yourself
+You can change the ```wallet``` to your wallet name. You can see the example for reference.
+```
+artelad tx staking delegate $(artelad keys show wallet --bech val -a) 1000000000000000000uart --from wallet --chain-id artela_11822-1 --gas-prices 0.02uart  --gas-adjustment 1.5 --gas auto -y
+```
+Example:
+```
+artelad tx staking delegate $(artelad keys show kamuscrypto --bech val -a) 1000000000000000000uart --from kamuscrypto --chain-id artela_11822-1 --gas-prices 0.02uart  --gas-adjustment 1.5 --gas auto -y
+```
