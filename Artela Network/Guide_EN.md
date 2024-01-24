@@ -207,6 +207,7 @@ artelad tx staking create-validator \
 ```
 sudo systemctl restart artelad
 ```
+
 ### Delegate to yourself
 You can change the ```wallet``` to your wallet name. You can see the example for reference.
 ```
@@ -215,4 +216,16 @@ artelad tx staking delegate $(artelad keys show wallet --bech val -a) 1000000000
 Example:
 ```
 artelad tx staking delegate $(artelad keys show kamuscrypto --bech val -a) 1000000000000000000uart --from kamuscrypto --chain-id artela_11822-1 --gas-prices 0.02uart  --gas-adjustment 1.5 --gas auto -y
+```
+
+### Remove Node
+```cd $HOME
+sudo systemctl stop artela
+sudo systemctl disable artela
+sudo rm /etc/systemd/system/artela.service
+sudo systemctl daemon-reload
+sudo rm -f $(which artela)
+sudo rm -rf $HOME/.artelad
+sudo rm -rf $HOME/artela
+sudo rm -rf $HOME/go
 ```
