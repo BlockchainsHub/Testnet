@@ -219,7 +219,8 @@ artelad tx staking delegate $(artelad keys show kamuscrypto --bech val -a) 10000
 ```
 
 ### Remove Node
-```cd $HOME
+```
+cd $HOME
 sudo systemctl stop artela
 sudo systemctl disable artela
 sudo rm /etc/systemd/system/artela.service
