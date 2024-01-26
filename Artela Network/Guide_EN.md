@@ -129,7 +129,7 @@ sudo journalctl -fu artelad -o cat
 ```
 
 ## Validator Guide
-Before setting up a validator node, make sure you have completed the **[Run a Full Node](https://github.com/Kamus-Crypto/Testnet/edit/botxx15-artela-guide/Artela%20Network/Guide_EN.md#run-a-full-node)** guide.
+Before setting up a validator node, make sure you have completed the **[Run a Full Node](#run-a-full-node)** guide.
 
 ### Create your validator operator account
 Replace ```<account name>``` with your validator operator account name.
