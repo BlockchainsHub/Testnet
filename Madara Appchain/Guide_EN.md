@@ -145,3 +145,35 @@ Exit from your Explorer screen:
 Control + A + D
 ```
 
+## Create Pull Request
+* Open the [Karnot Avail Campaign Listing Repository](https://github.com/karnotxyz/avail-campaign-listing) and fork the repository.
+![CleanShot 2024-02-12 at 14 56 58@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/213f6f9f-517d-4593-b476-720518fc2e16)
+
+![CleanShot 2024-02-12 at 14 58 53@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/8c1dd0f7-3658-4fb7-8c30-a3ff5f954822)
+
+* Open the `app_chains` folder from the repository that you have forked
+![CleanShot 2024-02-12 at 15 00 46@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/dd25ad79-b4db-419f-8e11-1a3e2dc8f65b)
+
+* Click `Add file` and then `+ Create new file`
+![CleanShot 2024-02-12 at 15 03 17@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/8caaf17a-7015-4b5b-841c-ee0ebd923b16)
+
+Add the following format to your file. Read the [details](###details) below.
+```
+{
+  "name": "kamuscrypto",
+  "logo": "https://im.ge",
+  "rpc_url": "http://84.46.242.118:9944",
+  "explorer_url": "http://84.46.242.118:4000",
+  "metrics_endpoint": "http://84.46.242.118:9615/metrics",
+  "id": "6044316b-f53c-4977-8cf4-ac2f2dec3a91"
+}
+```
+
+### Details
+1. `name`: The name of your app chain.
+2. `logo`: A image link for the logo of your app chain
+3. `rpc_url`: A public endpoint for your app chain to make RPC calls (port 9944 by default)
+4. `explorer_url`: A public endpoint where your app chain explorer is visible
+5. `metrics_endpoint`: A public endpoint for your prometheus metrics (port 9615 by default)
+
+![CleanShot 2024-02-12 at 15 08 53@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/2aa8f066-8d0f-498c-8dfe-2faa33eff964)
