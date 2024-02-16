@@ -131,7 +131,7 @@ Control + A + D
 
 Create new screen named explorer:
 ```
-Screen -S explorer
+screen -S explorer
 ```
 
 Run your Explorer:
