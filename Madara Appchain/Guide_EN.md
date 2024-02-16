@@ -115,7 +115,7 @@ Example output:
 
 Create new screen named madara:
 ```
-Screen -S madara
+screen -S madara
 ```
 
 Run your App Chain:
