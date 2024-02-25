@@ -5,7 +5,7 @@ It is recommended to use ubuntu operating system.
 * 32GB of Memory
 * 500GB - 2TB SSD
 
-## Dependencies
+## Install Dependencies
 There are a few dependencies that need to be installed to smoothly run the validator node.
 
 ```
