@@ -8,14 +8,8 @@ It is recommended to use ubuntu operating system.
 ## Dependencies
 There are a few dependencies that need to be installed to smoothly run the validator node.
 
-### Installing Git
 ```
-sudo apt install git-all
-```
-
-### Installing Screen
-```
-sudo apt install screen
+sudo apt install git screen wget jq -y
 ```
 
 ## Initialize Chain
