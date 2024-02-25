@@ -60,6 +60,7 @@ After receiving your $MPX tokens from the Cross Finance team, you can continue t
 ```
 
 `"Catching_up": false` means that you are synced with the network and can continue to create your validator. If it's `true` you have to wait till it changed to `false` before continue creating your validator.
+
 ![CleanShot 2024-02-25 at 18 31 12@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/da7f26b8-6f2a-472b-8ebe-7bf100f8d617)
 
 
