@@ -47,8 +47,10 @@ Example:
 ./bin/crossfid --home ./testnet keys add kamuscrypto --recover
 ```
 Enter your seed phrase.
+
 ![CleanShot 2024-02-25 at 18 17 36@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/30539d5d-f41a-4097-afb5-ec22d5435bdd)
 Enter your password.
+
 ![CleanShot 2024-02-25 at 18 22 25@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/151fdb41-862d-4862-943f-82e2564e3ccf)
 
 ## Create Your Validator
