@@ -1,3 +1,5 @@
+![Github Banner Cross](https://github.com/Kamus-Crypto/Testnet/assets/77204008/c5ad8d1d-c534-4418-bbeb-07e6510f95ba)
+
 # Cross Finance Validator Guide
 
 ## Hardware Requirements:
