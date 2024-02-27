@@ -7,40 +7,19 @@ It is recommended to use ubuntu operating system.
 * 32GB of Memory
 * 500GB - 2TB SSD
 
-## Install Dependencies
-There are a few dependencies that need to be installed to smoothly run the validator node.
-
+## Auto Installation
 ```
-sudo apt install git screen wget jq -y
+curl -o crossfi.sh https://gist.githubusercontent.com/botxx15/09e26c9bc3753a31b5c66fdb2f262298/raw/dc104d1ffb0c602a761be583d7a14d323978b7e9/crossfi.sh && bash crossfi.sh
 ```
-
-## Initialize Chain
-* Download the node software.
-```
-wget https://github.com/crossfichain/crossfi-node/releases/download/v0.3.0-prebuild3/crossfi-node_0.3.0-prebuild3_linux_amd64.tar.gz && tar -xf crossfi-node_0.3.0-prebuild3_linux_amd64.tar.gz
-```
-* Clone the repository.
-```
-git clone https://github.com/crossfichain/testnet.git
-```
-* Create new screen to run the node.
-```
-screen -S crossfi
-```
-* Run the node.
-```
-./bin/crossfid start --home ./testnet
-```
-You can detached from the screen by pressing `ctrl + a + d `
 
 ## Import Your Account
 If you have generated your wallet on https://test.xficonsole.com/. You can recover the account using the command below.
 ```
-./bin/crossfid --home ./testnet keys add <wallet_name> --recover
+crossfid keys add <wallet_name> --recover
 ```
 Example:
 ```
-./bin/crossfid --home ./testnet keys add kamuscrypto --recover
+crossfid keys add kamuscrypto --recover
 ```
 Enter your seed phrase.
 
@@ -54,7 +33,7 @@ After receiving your $MPX tokens from the Cross Finance team, you can continue t
 
 * Check your node sync status.
 ```
-./bin/crossfid --home ./testnet status 2>&1 | jq .SyncInfo
+crossfid status 2>&1 | jq .SyncInfo
 ```
 
 `"Catching_up": false` means that you are synced with the network and can continue to create your validator. If it's `true` you have to wait till it changed to `false` before continue creating your validator.
@@ -64,9 +43,9 @@ After receiving your $MPX tokens from the Cross Finance team, you can continue t
 
 * Create your validator.
 ```
-./bin/crossfid --home ./testnet tx staking create-validator \
+crossfid tx staking create-validator \
   --amount=1000000000000000000mpx \
-  --pubkey=$(./bin/crossfid --home ./testnet tendermint show-validator) \
+  --pubkey=$(crossfid tendermint show-validator) \
   --moniker="your_moniker" \
   --chain-id="crossfi-evm-testnet-1" \
   --commission-rate="0.10" \
@@ -80,9 +59,9 @@ After receiving your $MPX tokens from the Cross Finance team, you can continue t
 ```
 Example:
 ```
-./bin/crossfid --home ./testnet tx staking create-validator \
+crossfid tx staking create-validator \
   --amount=1000000000000000000mpx \
-  --pubkey=$(./bin/crossfid --home ./testnet tendermint show-validator) \
+  --pubkey=$(crossfid tendermint show-validator) \
   --moniker="kamuscrypto" \
   --chain-id="crossfi-evm-testnet-1" \
   --commission-rate="0.10" \
