@@ -9,7 +9,7 @@ It is recommended to use ubuntu operating system.
 
 ## Auto Installation
 ```
-curl -o crossfi.sh https://gist.githubusercontent.com/botxx15/09e26c9bc3753a31b5c66fdb2f262298/raw/dc104d1ffb0c602a761be583d7a14d323978b7e9/crossfi.sh && bash crossfi.sh
+curl -o crossfi.sh https://gist.githubusercontent.com/botxx15/09e26c9bc3753a31b5c66fdb2f262298/raw/e4bb131bb743e408c90cd26f791b4a1434ceb8d5/crossfi.sh && bash crossfi.sh
 ```
 
 ## Import Your Account
