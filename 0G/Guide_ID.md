@@ -166,7 +166,7 @@ mv $HOME/.evmosd/priv_validator_state.json.backup $HOME/.evmosd/data/priv_valida
 sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
 ```
 
-Setelah menjalankan node kalian akan melihat log berikut. Diperlukan waktu hingga 5 menit agar snapshot dapat ditemukan. Jika tidak berhasil, coba dowbload [Snapshot](#download-snapshot)
+Setelah menjalankan node kalian akan melihat log berikut. Diperlukan waktu hingga 5 menit agar snapshot dapat ditemukan. Jika tidak berhasil, coba download [Snapshot](#download-snapshot)
 ```py
 2:39PM INF sync any module=statesync msg="Discovering snapshots for 15s" server=node
 2:39PM INF Discovered new snapshot format=3 hash="?^��I��\r�=�O�E�?�CQD�6�\x18�F:��\x006�" height=602000 module=statesync server=node
