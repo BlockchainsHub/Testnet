@@ -115,7 +115,7 @@ sudo systemctl enable ogd
 ```
 
 > [!TIP]
-> Sebelum menjalankan node kalian bisa menggunakan [State Sync](##state-sync) untuk mempercepat sinkronisasi.
+> Sebelum menjalankan node kalian bisa menggunakan [State Sync](#state-sync) untuk mempercepat sinkronisasi.
 
 ### 13. Menjalankan Node
 ```bash
