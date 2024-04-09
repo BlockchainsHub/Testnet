@@ -3,6 +3,8 @@
 # Panduan Node 0G
 Panduan ini akan membantu kalian dalam proses instalasi node 0G.
 
+-----------------------------------------------------------------
+
 ## Spesifikasi Hardware Yang Dibutuhkan
 | Spesifikasi | Hardware |
 |-|-
@@ -11,6 +13,8 @@ Panduan ini akan membantu kalian dalam proses instalasi node 0G.
 | Storage | 500 GB NVMe SSD |
 | Bandwidth | 100mbps |
 | OS | Linux |
+
+-----------------------------------------------------------------
 
 ## Panduan Instalasi Node
 ### 1. Instal Packages Yang Dibutuhkan
@@ -51,7 +55,7 @@ echo 'export RPC_PORT="26657"' >> ~/.bash_profile
 source $HOME/.bash_profile
 ```
 
-### 5. Inisialiasi Node
+### 5. Inisialisasi Node
 ```bash
 cd $HOME
 evmosd init $MONIKER --chain-id $CHAIN_ID
@@ -72,7 +76,8 @@ SEEDS="8c01665f88896bca44e8902a30e4278bed08033f@54.241.167.190:26656,b288e8b37f4
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.evmosd/config/config.toml
 ```
 
-### 8. Konfigurasi Prunning Untuk Menghemat Penyimpanan (Opsional)
+### 8. Konfigurasi Prunning (Opsional)
+Untuk menghemat penyimpanan kalian bisa menggunakan konfigurasi prunning dibawah ini.
 ```bash
 sed -i.bak -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.evmosd/config/app.toml
 sed -i.bak -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.evmosd/config/app.toml
@@ -115,13 +120,67 @@ sudo systemctl enable ogd
 ```
 
 > [!TIP]
-> Sebelum menjalankan node kalian bisa menggunakan [State Sync](#state-sync) untuk mempercepat sinkronisasi.
+> Sebelum menjalankan node kalian bisa menggunakan [State Sync](#state-sync) atau [Snapshot](#download-snapshot) untuk mempercepat sinkronisasi.
 
 ### 13. Menjalankan Node
 ```bash
 sudo systemctl restart ogd && \
 sudo journalctl -u ogd -f -o cat
 ```
+
+### 14. Buat Wallet Untuk Validator
+Pada saat pembuatan wallet baru kalian akan diberikan **seed phrase**. **Jangan lupa untuk menyimpan seed phrase kalian!**. Kalian juga akan
+langsung diberikan alamat wallet dalam format EVM (0x), pastikan untuk menyimpan alamat tersebut karena akan digunakan pada saat kalian 
+melakukan request faucet.
+```bash
+evmosd keys add $WALLET_NAME
+echo "0x$(evmosd debug addr $(evmosd keys show $WALLET_NAME -a) | grep hex | awk '{print $3}')"
+```
+> [!CAUTION]
+> **JANGAN LUPA UNTUK MENYIMPAN SEED PHRASE KALIAN!**
+
+Contoh output:
+![CleanShot 2024-04-09 at 20 13 29@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/0d8cf252-a925-45b8-99f2-e772997c420a)
+
+### 16. Request Token Melalui Faucet
+Silahkan klik tombol dibawah ini untuk request faucet.
+
+<a href="https://faucet.0g.ai/" target="_blank">
+  <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/12866a81-cac7-451a-96b5-4b202e8f1194" alt="Faucet Button" width="150" height="36.94" border="10" />
+</a>
+
+### 17. Cek Saldo Wallet
+```bash
+evmosd q bank balances $(evmosd keys show $WALLET_NAME -a) 
+```
+Contoh output:
+![CleanShot 2024-04-09 at 21 18 52@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/870464cb-a6f5-4d42-8712-9fc29cc92436)
+
+> [!NOTE]
+> Note: Kalian akan mendapatkan *100000000000000000aevmos* dari faucet. Untuk membuat validator bergabung dengan set aktif, kalian memerlukan setidaknya *1000000000000000000aevmos* (**10 kali lebih banyak**).
+
+### 18. Buat Validator
+```bash
+evmosd tx staking create-validator \
+  --amount=10000000000000000aevmos \
+  --pubkey=$(evmosd tendermint show-validator) \
+  --moniker=$MONIKER \
+  --chain-id=$CHAIN_ID \
+  --commission-rate=0.05 \
+  --commission-max-rate=0.10 \
+  --commission-max-change-rate=0.01 \
+  --min-self-delegation=1 \
+  --from=$WALLET_NAME \
+  --identity="" \
+  --website="" \
+  --details="0G to the moon!" \
+  --gas=500000 --gas-prices=99999aevmos \
+  -y
+```
+> [!CAUTION]
+> Jangan lupa menyimpan file `priv_validator_key.json` yang terletak di $HOME/.evmosd/config/
+
+-----------------------------------------------------------------
 
 ## State Sync
 ### 1. Backup File priv_validator_state.json 
@@ -166,14 +225,15 @@ mv $HOME/.evmosd/priv_validator_state.json.backup $HOME/.evmosd/data/priv_valida
 sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
 ```
 
-Setelah menjalankan node kalian akan melihat log berikut. Diperlukan waktu hingga 5 menit agar snapshot dapat ditemukan. Jika tidak berhasil, coba download [Snapshot](#download-snapshot)
+Setelah menjalankan node kalian akan melihat log berikut. Diperlukan waktu hingga 5 menit agar snapshot bisa ditemukan. Jika tidak berhasil, coba download [Snapshot](#download-snapshot).
 ```py
 2:39PM INF sync any module=statesync msg="Discovering snapshots for 15s" server=node
 2:39PM INF Discovered new snapshot format=3 hash="?^��I��\r�=�O�E�?�CQD�6�\x18�F:��\x006�" height=602000 module=statesync server=node
 2:39PM INF Discovered new snapshot format=3 hash="%���\x16\x03�T0�v�f�C��5�<TlLb�5��l!�M" height=600000 module=statesync server=node
 2:42PM INF VerifyHeader hash=CFC07DAB03CEB02F53273F5BDB6A7C16E6E02535B8A88614800ABA9C705D4AF7 height=602001 module=light server=node
 ```
-After some time you should see the following logs. It make take 5 minutes for the node to catch up the rest of the blocks
+
+Setelah beberapa waktu kalian akan melihat log berikut. Diperlukan waktu 5 menit bagi node untuk mengejar sisa blok.
 ```py
 2:43PM INF indexed block events height=602265 module=txindex server=node
 2:43PM INF executed block height=602266 module=state num_invalid_txs=0 num_valid_txs=0 server=node
@@ -184,7 +244,7 @@ After some time you should see the following logs. It make take 5 minutes for th
 2:43PM INF commit synced commit=436F6D6D697449447B5B323437203134322032342031313620323038203631203138362032333920323238203138312032333920313039203336203420383720323238203236203738203637203133302032323220313431203438203337203235203133302037302032343020313631203233372031312036365D3A39333039427D module=server
 ```
 
-### 6. Periksa Status Sinkronisasi
+### 6. Cek Status Sinkronisasi
 Jika status `"catching_up": false` berarti node sudah tersinkronisasi, sebaliknya jika status `"catching_up": true` berarti node belum selesai melakukan sinkronisasi.
 ```bash
 evmosd status | jq .SyncInfo
@@ -194,4 +254,48 @@ evmosd status | jq .SyncInfo
 Jika node sudah selesai tersinkronisasi kalian bisa menonaktifkan State Sync.
 ```bash
 sed -i.bak -e "/\[statesync\]/,/^\[/{s/\(enable = \).*$/\1false/}" $HOME/.evmosd/config/app.toml
+```
+
+-----------------------------------------------------------------
+
+## Download Snapshot
+### 1. Download Snapshot Terbaru
+```bash
+wget https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4
+```
+
+### 2. Stop the node
+```bash
+sudo systemctl stop ogd
+```
+
+### 3. Backup file priv_validator_state.json 
+```bash
+cp $HOME/.evmosd/data/priv_validator_state.json $HOME/.evmosd/priv_validator_state.json.backup
+```
+
+### 4. Reset Database
+```bash
+evmosd tendermint unsafe-reset-all --home $HOME/.evmosd --keep-addr-book
+```
+
+### 5. Ekstrak File Dari Arsip 
+```bash
+lz4 -d -c ./latest_snapshot.tar.lz4 | tar -xf - -C $HOME/.evmosd
+```
+
+### 6. Pindahkan Kembali File priv_validator_state.json
+```bash
+mv $HOME/.evmosd/priv_validator_state.json.backup $HOME/.evmosd/data/priv_validator_state.json
+```
+
+### 7. Restart Node
+```bash
+sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
+```
+
+### 8. Cek Status Sinkronisasi
+Snapshot diperbarui setiap 3 jam.
+```bash
+evmosd status | jq .SyncInfo
 ```
