@@ -13,13 +13,13 @@ Panduan ini akan membantu kalian dalam proses instalasi node 0G.
 | OS | Linux |
 
 ## Panduan Instalasi Node
-### Instal Packages Yang Dibutuhkan
+### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt update && \
 sudo apt install curl git jq build-essential gcc unzip wget lz4 -y
 ```
 
-### Instal GO
+### 2. Instal GO
 ```bash
 cd $HOME && \
 ver="1.21.3" && \
@@ -32,7 +32,7 @@ source ~/.bash_profile && \
 go version
 ```
 
-### Build Binary
+### 3. Build Binary
 ```bash
 git clone https://github.com/0glabs/0g-evmos.git
 cd 0g-evmos
@@ -41,7 +41,7 @@ make install
 evmosd version
 ```
 
-### Mengatur Variable
+### 4. Mengatur Variable
 Kalian bisa melakukan beberapa perubahan yang dibutuhkan. Seperti `My_Node` yang ada pada variabel `MONIKER="My_Node"` bisa dirubah dengan nama node apa saja yang ingin kalian gunakan dan `wallet` yang ada pada variabel `WALLET_NAME="wallet"` bisa dirubah dengan nama wallet apa saja yang ingin kalian gunakan.
 ```bash
 echo 'export MONIKER="My_Node"' >> ~/.bash_profile
@@ -51,7 +51,7 @@ echo 'export RPC_PORT="26657"' >> ~/.bash_profile
 source $HOME/.bash_profile
 ```
 
-### Inisialiasi Node
+### 5. Inisialiasi Node
 ```bash
 cd $HOME
 evmosd init $MONIKER --chain-id $CHAIN_ID
@@ -60,36 +60,36 @@ evmosd config node tcp://localhost:$RPC_PORT
 evmosd config keyring-backend test
 ```
 
-### Download file genesis.json
+### 6. Download file genesis.json
 ```bash
 wget https://github.com/0glabs/0g-evmos/releases/download/v1.0.0-testnet/genesis.json -O $HOME/.evmosd/config/genesis.json
 ```
 
-### Tambahkan seeds dan peers pada file config.toml
+### 7. Tambahkan seeds dan peers pada file config.toml
 ```bash
 PEERS="1248487ea585730cdf5d3c32e0c2a43ad0cda973@peer-zero-gravity-testnet.trusted-point.com:26326" && \
 SEEDS="8c01665f88896bca44e8902a30e4278bed08033f@54.241.167.190:26656,b288e8b37f4b0dbd9a03e8ce926cd9c801aacf27@54.176.175.48:26656,8e20e8e88d504e67c7a3a58c2ea31d965aa2a890@54.193.250.204:26656,e50ac888b35175bfd4f999697bdeb5b7b52bfc06@54.215.187.94:26656" && \
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.evmosd/config/config.toml
 ```
 
-### Konfigurasi Prunning Untuk Menghemat Penyimpanan (Opsional)
+### 8. Konfigurasi Prunning Untuk Menghemat Penyimpanan (Opsional)
 ```bash
 sed -i.bak -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.evmosd/config/app.toml
 sed -i.bak -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.evmosd/config/app.toml
 sed -i.bak -e "s/^pruning-interval *=.*/pruning-interval = \"10\"/" $HOME/.evmosd/config/app.toml
 ```
 
-### Mengatur Min Gas Price 
+### 9. Mengatur Min Gas Price 
 ```bash
 sed -i "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.00252aevmos\"/" $HOME/.evmosd/config/app.toml
 ```
 
-### Mengaktifkan Indexer (Opsional)
+### 10. Mengaktifkan Indexer (Opsional)
 ```bash
 sed -i "s/^indexer *=.*/indexer = \"kv\"/" $HOME/.evmosd/config/config.toml
 ```
 
-### Membuat File Service
+### 11. Membuat File Service
 ```bash
 sudo tee /etc/systemd/system/ogd.service > /dev/null <<EOF
 [Unit]
@@ -108,7 +108,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### Memuat Ulang Konfigurasi Systemd
+### 12. Memuat Ulang Konfigurasi Systemd
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable ogd
@@ -117,24 +117,24 @@ sudo systemctl enable ogd
 > [!TIP]
 > Sebelum menjalankan node kalian bisa menggunakan [State Sync](##state-sync) untuk mempercepat sinkronisasi.
 
-### Menjalankan Node
+### 13. Menjalankan Node
 ```bash
 sudo systemctl restart ogd && \
 sudo journalctl -u ogd -f -o cat
 ```
 
 ## State Sync
-### Backup File priv_validator_state.json 
+### 1. Backup File priv_validator_state.json 
 ```bash
 cp $HOME/.evmosd/data/priv_validator_state.json $HOME/.evmosd/priv_validator_state.json.backup
 ```
 
-### Reset Database
+### 2. Reset Database
 ```bash
 evmosd tendermint unsafe-reset-all --home $HOME/.evmosd --keep-addr-book
 ```
 
-### Mengatur Variabel Yang Dibutuhkan
+### 3. Mengatur Variabel Yang Dibutuhkan
 ```bash
 PEERS="1248487ea585730cdf5d3c32e0c2a43ad0cda973@peer-zero-gravity-testnet.trusted-point.com:26326" && \
 RPC="https://rpc-zero-gravity-testnet.trusted-point.com:443" && \
@@ -156,12 +156,12 @@ else
 fi
 ```
 
-### Memindahkan File priv_validator_state.json back
+### 4. Memindahkan File priv_validator_state.json back
 ```bash
 mv $HOME/.evmosd/priv_validator_state.json.backup $HOME/.evmosd/data/priv_validator_state.json
 ```
 
-### Menjalankan Node
+### 5. Menjalankan Node
 ```bash
 sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
 ```
@@ -184,13 +184,13 @@ After some time you should see the following logs. It make take 5 minutes for th
 2:43PM INF commit synced commit=436F6D6D697449447B5B323437203134322032342031313620323038203631203138362032333920323238203138312032333920313039203336203420383720323238203236203738203637203133302032323220313431203438203337203235203133302037302032343020313631203233372031312036365D3A39333039427D module=server
 ```
 
-### Periksa Status Sinkronisasi
+### 6. Periksa Status Sinkronisasi
 Jika status `"catching_up": false` berarti node sudah tersinkronisasi, sebaliknya jika status `"catching_up": true` berarti node belum selesai melakukan sinkronisasi.
 ```bash
 evmosd status | jq .SyncInfo
 ```
 
-### Menonaktifkan State Sync
+### 7. Menonaktifkan State Sync
 Jika node sudah selesai tersinkronisasi kalian bisa menonaktifkan State Sync.
 ```bash
 sed -i.bak -e "/\[statesync\]/,/^\[/{s/\(enable = \).*$/\1false/}" $HOME/.evmosd/config/app.toml
