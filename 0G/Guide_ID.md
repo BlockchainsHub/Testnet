@@ -299,3 +299,109 @@ Snapshot diperbarui setiap 3 jam.
 ```bash
 evmosd status | jq .SyncInfo
 ```
+
+# Daftar Command
+## Pengelolaan Key / Akun
+Generate key baru
+```
+evmosd keys add wallet
+```
+
+Pemulihan key
+```
+evmosd keys add wallet --recover
+```
+
+Lihat semua daftar key
+```
+evmosd keys list
+```
+
+Hapus key
+```
+evmosd keys delete wallet
+```
+
+Export key
+```
+evmosd keys export wallet
+```
+
+Import key
+```
+evmosd keys import wallet wallet.backup
+```
+
+Cek saldo wallet
+```
+evmosd q bank balances $(evmosd keys show wallet -a)
+```
+
+## Pengelolaan Validator
+Buat validator
+```
+evmosd tx staking create-validator \
+--amount 10000000000000000aevmos \
+--pubkey $(evmosd tendermint show-validator) \
+--moniker "nama-moniker" \
+--identity "keybase-id" \
+--details "info-detail" \
+--website "link-website" \
+--security-contact "alamat-email" \
+--chain-id zgtendermint_9000-1 \
+--commission-rate 0.05 \
+--commission-max-rate 0.10 \
+--commission-max-change-rate 0.01 \
+--min-self-delegation 1 \
+--from $WALLET_NAME \
+--gas 500000 \
+--gas-prices 99999aevmos \
+-y
+```
+
+Edit validator
+```
+evmosd tx staking edit-validator \
+--new-moniker "nama-moniker" \
+--identity "keybase-id" \
+--details "info-detail" \
+--website "link-website" \
+--security-contact "alamat-email" \
+--chain-id zgtendermint_9000-1 \
+--commission-rate 0.05 \
+--from $WALLET_NAME \
+--gas 500000 \
+--gas-prices 99999aevmos \
+-y
+```
+
+Unjail validator
+```
+evmosd tx slashing unjail --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
+
+Info jail validator
+```
+evmosd q slashing signing-info $(evmosd tendermint show-validator)
+```
+
+Daftar validator aktif
+```
+evmosd q staking validators -o json --limit=1000 \
+| jq '.validators[] | select(.status=="BOND_STATUS_BONDED")' \
+| jq -r '.tokens + " - " + .description.moniker' \
+| sort -gr | nl
+```
+
+Daftar validator inaktif
+```
+evmosd q staking validators -o json --limit=1000 \
+| jq '.validators[] | select(.status=="BOND_STATUS_UNBONDED")' \
+| jq -r '.tokens + " - " + .description.moniker' \
+| sort -gr | nl
+```
+
+Info detail validator
+```
+evmosd q staking validator $(evmosd keys show $WALLET_NAME --bech val -a) 
+```
