@@ -409,3 +409,41 @@ Info detail validator
 ```
 evmosd q staking validator $(evmosd keys show $WALLET_NAME --bech val -a) 
 ```
+
+-----------------------------------------------------------------
+
+## Pengelolaan Token
+Penarikan reward dari semua validator
+```
+evmosd tx distribution withdraw-all-rewards --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
+
+Penarikan reward dan komisi
+```
+evmosd tx distribution withdraw-rewards $(evmosd keys show wallet --bech val -a) --commission --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
+
+Delegasikan token ke validator anda
+```
+evmosd tx staking delegate $(evmosd keys show $WALLET_NAME --bech val -a) 1000000000000000000aevmos --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
+
+Delegasikan token ke validator lain, ubah `<to-valoper-address>` dengan alamat validator lain
+```
+evmosd tx staking delegate <to-valoper-address> 1000000000000000000aevmos --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
+
+Pindahkan delegasi token ke validator lain
+```
+evmosd tx staking redelegate $(evmosd keys show $WALLET_NAME --bech val -a) <to-valoper-address> 1000000000000000000aevmos --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
+
+Unbond token dari validator anda
+```
+evmosd tx staking unbond $(evmosd keys show $WALLET_NAME --bech val -a) 1000000000000000000aevmos --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
+
+Kirim token antar wallet
+```
+evmosd tx bank send wallet <to-wallet-address> 1000000000000000000aevmos --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
+```
