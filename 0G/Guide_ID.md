@@ -300,6 +300,8 @@ Snapshot diperbarui setiap 3 jam.
 evmosd status | jq .SyncInfo
 ```
 
+-----------------------------------------------------------------
+
 # Daftar Command
 ## Pengelolaan Key / Akun
 Generate key baru
@@ -336,6 +338,8 @@ Cek saldo wallet
 ```
 evmosd q bank balances $(evmosd keys show wallet -a)
 ```
+
+-----------------------------------------------------------------
 
 ## Pengelolaan Validator
 Buat validator
