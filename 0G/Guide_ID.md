@@ -189,7 +189,8 @@ evmosd tx staking create-validator \
   --identity="" \
   --website="" \
   --details="0G to the moon!" \
-  --gas=500000 --gas-prices=99999aevmos \
+  --gas=500000 \
+  --gas-prices=99999aevmos \
   -y
 ```
 > [!CAUTION]
