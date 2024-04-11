@@ -1,7 +1,7 @@
 ![0G Github Banner](https://github.com/BlockchainsHub/Testnet/assets/77204008/34a32724-b411-41e4-8696-e390dfa01cab)
 
 # Panduan Node 0G
-Panduan ini akan membantu kalian dalam proses instalasi node 0G.
+Panduan ini akan membantu anda dalam proses instalasi node 0G.
 
 -----------------------------------------------------------------
 
@@ -16,7 +16,22 @@ Panduan ini akan membantu kalian dalam proses instalasi node 0G.
 
 -----------------------------------------------------------------
 
-## Panduan Instalasi Node
+## Instalasi Node Otomatis
+Jalankan command berikut ini untuk menginstal node secara otomatis.
+```
+curl -o 0g.sh https://gist.githubusercontent.com/botxx15/b122ad56138a9805f54a7dc12c25059f/raw/0a0d7913a88c41205f251b1eb98a85624b9d8153/0g.sh && bash 0g.sh
+```
+
+### Cek Status Sinkronisasi
+Jika status `"catching_up": false` berarti node sudah tersinkronisasi, sebaliknya jika status `"catching_up": true` berarti node belum selesai melakukan sinkronisasi.
+```bash
+evmosd status | jq .SyncInfo
+``` 
+
+> [!NOTE]
+> Setelah node tersinkronisasi, anda dapat melanjutkan ke tahap [14. Buat Wallet Untuk Validator](#14.-Buat-Wallet-Untuk-Validator)
+
+## Instalasi Node Manual
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt update && \
@@ -46,7 +61,7 @@ evmosd version
 ```
 
 ### 4. Mengatur Variable
-Kalian bisa melakukan beberapa perubahan yang dibutuhkan. Seperti `My_Node` yang ada pada variabel `MONIKER="My_Node"` bisa dirubah dengan nama node apa saja yang ingin kalian gunakan dan `wallet` yang ada pada variabel `WALLET_NAME="wallet"` bisa dirubah dengan nama wallet apa saja yang ingin kalian gunakan.
+Anda bisa melakukan beberapa perubahan yang dibutuhkan. Seperti `My_Node` yang ada pada variabel `MONIKER="My_Node"` bisa dirubah dengan nama node apa saja yang ingin anda gunakan dan `wallet` yang ada pada variabel `WALLET_NAME="wallet"` bisa dirubah dengan nama wallet apa saja yang ingin anda gunakan.
 ```bash
 echo 'export MONIKER="My_Node"' >> ~/.bash_profile
 echo 'export CHAIN_ID="zgtendermint_9000-1"' >> ~/.bash_profile
@@ -77,7 +92,7 @@ sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persisten
 ```
 
 ### 8. Konfigurasi Prunning (Opsional)
-Untuk menghemat penyimpanan kalian bisa menggunakan konfigurasi prunning dibawah ini.
+Untuk menghemat penyimpanan anda bisa menggunakan konfigurasi prunning dibawah ini.
 ```bash
 sed -i.bak -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.evmosd/config/app.toml
 sed -i.bak -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.evmosd/config/app.toml
@@ -120,7 +135,7 @@ sudo systemctl enable ogd
 ```
 
 > [!TIP]
-> Sebelum menjalankan node kalian bisa menggunakan [State Sync](#state-sync) atau [Snapshot](#download-snapshot) untuk mempercepat sinkronisasi.
+> Sebelum menjalankan node anda bisa menggunakan [State Sync](#state-sync) atau [Snapshot](#download-snapshot) untuk mempercepat sinkronisasi.
 
 ### 13. Menjalankan Node
 ```bash
@@ -129,15 +144,15 @@ sudo journalctl -u ogd -f -o cat
 ```
 
 ### 14. Buat Wallet Untuk Validator
-Pada saat pembuatan wallet baru kalian akan diberikan **seed phrase**. **Jangan lupa untuk menyimpan seed phrase kalian!**. Kalian juga akan
-langsung diberikan alamat wallet dalam format EVM (0x), pastikan untuk menyimpan alamat tersebut karena akan digunakan pada saat kalian 
+Pada saat pembuatan wallet baru anda akan diberikan **seed phrase**. **Jangan lupa untuk menyimpan seed phrase anda!**. Anda juga akan
+langsung diberikan alamat wallet dalam format EVM (0x), pastikan untuk menyimpan alamat tersebut karena akan digunakan pada saat anda 
 melakukan request faucet.
 ```bash
 evmosd keys add $WALLET_NAME
 echo "0x$(evmosd debug addr $(evmosd keys show $WALLET_NAME -a) | grep hex | awk '{print $3}')"
 ```
 > [!CAUTION]
-> **JANGAN LUPA UNTUK MENYIMPAN SEED PHRASE KALIAN!**
+> **JANGAN LUPA UNTUK MENYIMPAN SEED PHRASE ANDA!**
 
 Contoh output:
 ![CleanShot 2024-04-09 at 20 13 29@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/0d8cf252-a925-45b8-99f2-e772997c420a)
@@ -157,7 +172,7 @@ Contoh output:
 ![CleanShot 2024-04-09 at 21 18 52@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/870464cb-a6f5-4d42-8712-9fc29cc92436)
 
 > [!NOTE]
-> Note: Kalian akan mendapatkan *100000000000000000aevmos* dari faucet. Untuk membuat validator bergabung dengan set aktif, kalian memerlukan setidaknya *1000000000000000000aevmos* (**10 kali lebih banyak**).
+> Note: Anda akan mendapatkan *100000000000000000aevmos* dari faucet. Untuk membuat validator bergabung dengan set aktif, anda memerlukan setidaknya *1000000000000000000aevmos* (**10 kali lebih banyak**).
 
 ### 18. Buat Validator
 ```bash
@@ -225,7 +240,7 @@ mv $HOME/.evmosd/priv_validator_state.json.backup $HOME/.evmosd/data/priv_valida
 sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
 ```
 
-Setelah menjalankan node kalian akan melihat log berikut. Diperlukan waktu hingga 5 menit agar snapshot bisa ditemukan. Jika tidak berhasil, coba download [Snapshot](#download-snapshot).
+Setelah menjalankan node anda akan melihat log berikut. Diperlukan waktu hingga 5 menit agar snapshot bisa ditemukan. Jika tidak berhasil, coba download [Snapshot](#download-snapshot).
 ```py
 2:39PM INF sync any module=statesync msg="Discovering snapshots for 15s" server=node
 2:39PM INF Discovered new snapshot format=3 hash="?^��I��\r�=�O�E�?�CQD�6�\x18�F:��\x006�" height=602000 module=statesync server=node
@@ -251,7 +266,7 @@ evmosd status | jq .SyncInfo
 ```
 
 ### 7. Menonaktifkan State Sync
-Jika node sudah selesai tersinkronisasi kalian bisa menonaktifkan State Sync.
+Jika node sudah selesai tersinkronisasi anda bisa menonaktifkan State Sync.
 ```bash
 sed -i.bak -e "/\[statesync\]/,/^\[/{s/\(enable = \).*$/\1false/}" $HOME/.evmosd/config/app.toml
 ```
