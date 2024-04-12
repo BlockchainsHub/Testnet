@@ -19,7 +19,7 @@ This guide will help you in the 0G node installation process.
 ## Auto Node Installation
 Run the following command to install node automatically.
 ```bash
-curl -o 0g_EN.sh https://gist.githubusercontent.com/botxx15/81c7ded174c98976b186f1cac999a53d/raw/664f257c5ce23503f9029c259209e5d38474e476/0g_EN.sh && bash 0g_EN.sh
+curl -o 0g_EN.sh https://gist.githubusercontent.com/botxx15/81c7ded174c98976b186f1cac999a53d/raw/a4331d1932b940fe23cc5019b5d0feae1c13d61a/0g_EN.sh && bash 0g_EN.sh
 ```
 
 > [!NOTE]
