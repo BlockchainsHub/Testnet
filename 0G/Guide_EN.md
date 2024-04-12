@@ -5,8 +5,8 @@ This guide will help you in the 0G node installation process.
 
 -----------------------------------------------------------------
 
-## Required Hardware Specifications
-| Required | Specifications |
+## Required Specification
+| Required | Specification |
 |-|-
 | CPU | 4 Cores |
 | Memory | 8 GB |
