@@ -107,7 +107,7 @@ ls
 ```
 ![CleanShot 2024-04-13 at 16 34 05@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/6123290a-0ea9-4cc3-907c-3aaac9990961)
 
-Buka file log yang ada. Silahkan rubah `nama_log` dengan nama log yang muncul setelah menjalankan command `ls`
+Buka file log yang ada. Silahkan rubah `nama_log` pada command dibawah dengan nama log yang muncul setelah menjalankan command `ls`
 ```bash
 cat nama_log
 ```
