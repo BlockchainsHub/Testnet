@@ -9,7 +9,7 @@ Panduan ini akan membantu anda dalam proses instalasi storage node 0G.
 | Spesifikasi | Hardware |
 |-|-
 | CPU | 4 Cores |
-| Memory | 8 GB |
+| Memory | 16 GB |
 | Storage | 500 GB NVMe SSD |
 | Bandwidth | 100mbps |
 | OS | Linux |
