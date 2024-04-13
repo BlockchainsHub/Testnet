@@ -19,7 +19,7 @@ Panduan ini akan membantu anda dalam proses instalasi node 0G.
 ## Instalasi Node Otomatis
 Jalankan command berikut ini untuk menginstal node secara otomatis.
 ```
-curl -o 0g.sh https://gist.githubusercontent.com/botxx15/b122ad56138a9805f54a7dc12c25059f/raw/103f41bf764676a4232df2c51d57311cb4890149/0g.sh && bash 0g.sh
+curl -o 0g.sh https://gist.githubusercontent.com/botxx15/b122ad56138a9805f54a7dc12c25059f/raw/442771b03ea81bf16dd5677db091051795cd602f/0g.sh && bash 0g.sh
 ```
 
 ### Cek Status Sinkronisasi
