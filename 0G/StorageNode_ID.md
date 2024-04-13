@@ -118,5 +118,6 @@ cat zgs.log.2024-04-13
 ```
 
 Output dari file log akan muncul seperti digambar berikut ini.
+
 Log output:
 ![CleanShot 2024-04-13 at 16 45 36@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/70870e65-2add-46fb-b24b-2865f168db09)
