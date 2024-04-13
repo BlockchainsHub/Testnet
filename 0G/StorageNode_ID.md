@@ -80,7 +80,7 @@ Hapus tanda `#` yang ada pada baris `miner_id` dan `miner_key` kemudian isi data
 Contoh setelan konfigurasi:
 ![CleanShot 2024-04-13 at 15 52 52@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/55272fec-d9e4-4151-a6cd-be619cc53023)
 
-Setelah selesai mengatur file konfigurasi anda dapat menyimpannya dengan cara menekan tombol `ctrl+x`,`y`,`enter`
+Setelah selesai mengatur file konfigurasi anda dapat menyimpannya dengan menekan tombol `ctrl+x`,`y`,`enter`
 
 ### 7. Buat Screen Baru
 Buat screen baru untuk menjalankan storage node di background.
