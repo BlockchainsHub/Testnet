@@ -67,6 +67,9 @@ echo -n your_name | sha256sum
 Contoh output:
 ![CleanShot 2024-04-13 at 15 44 55@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/520bd6ff-5f62-4684-8d6e-d8f9bb9281a5)
 
+> [!NOTE]
+> Simpanlah `miner_id` yang sudah anda buat karena akan digunakan untuk konfigurasi miner.
+
 ### 6. Update Konfigurasi
 ```bash
 nano $HOME/0g-storage-node/run/config.toml
