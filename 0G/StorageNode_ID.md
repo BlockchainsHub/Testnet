@@ -20,7 +20,7 @@ Panduan ini akan membantu anda dalam proses instalasi storage node 0G.
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt-get update
-sudo apt-get install clang cmake build-essential screen
+sudo apt-get install git clang cmake build-essential screen
 ```
 
 ### 2. Instal Rustup
