@@ -16,6 +16,15 @@ This guide will help you in the 0G storage node installation process.
 
 -----------------------------------------------------------------
 
+## Storage Node Auto-Installation
+```bash
+curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/d2bc4b8f48ca1e1fe839cc14f9f9bd19/raw/318da7f459b05958a24a0c6b7ee744b087f0ba96/zgs_EN.sh && bash zgs_EN.sh
+```
+
+After the installation is completed, you can continue to the [Check Logs](#Check-Logs) step to check your logs.
+
+-----------------------------------------------------------------
+
 ## Storage Node Installation
 ### 1. Install Dependencies
 ```bash
