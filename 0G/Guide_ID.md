@@ -29,7 +29,7 @@ evmosd status | jq .SyncInfo
 ``` 
 
 > [!NOTE]
-> Setelah node tersinkronisasi, anda dapat melanjutkan ke tahap [14. Buat Wallet Untuk Validator](#14.-Buat-Wallet-Untuk-Validator)
+> Setelah node tersinkronisasi, anda dapat melanjutkan ke tahap [14. Buat Wallet Untuk Validator](#14-Buat-Wallet-Untuk-Validator)
 
 ## Instalasi Node Manual
 ### 1. Instal Packages Yang Dibutuhkan
