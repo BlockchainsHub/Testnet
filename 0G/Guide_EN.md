@@ -23,7 +23,7 @@ curl -o 0g_EN.sh https://gist.githubusercontent.com/botxx15/81c7ded174c98976b186
 ```
 
 > [!NOTE]
-> Note: You can click `ctrl+c` to quit from logs
+> Note: You can press `ctrl+c` button to quit from logs
 
 ### Check Sync Status
 If the status is `"catching_up": false` it means the node has been synchronized, whereas if the status is `"catching_up": true` it means the node has not finished synchronizing.
