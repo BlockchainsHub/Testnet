@@ -21,7 +21,7 @@ This guide will help you in the 0G storage node installation process.
 curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/47d79d8b52bd0d156cc61f2aa58bddcd/raw/28dc5aa35f053fe1a5dbdce640d6e8a5c0158ab3/zgs_EN.sh && bash zgs_EN.sh
 ```
 
-After the installation is completed, you can continue to the [Check Logs](#9-Check-Logs) step to check your logs.
+After the installation is completed, you can continue to the [Check Latest Log](#Check-Latest-Log) step to check your logs.
 
 -----------------------------------------------------------------
 
@@ -29,7 +29,7 @@ After the installation is completed, you can continue to the [Check Logs](#9-Che
 ### 1. Install Dependencies
 ```bash
 sudo apt-get update
-sudo apt-get install git clang cmake build-essential screen
+sudo apt-get install git wget curl clang cmake build-essential
 ```
 
 ### 2. Install Rustup
@@ -49,7 +49,7 @@ After the installation process is complete, run the following command, to restar
 ### 3. Install GO
 ```bash
 cd $HOME && \
-ver="1.21.3" && \
+ver="1.22.0" && \
 wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
 sudo rm -rf /usr/local/go && \
 sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
@@ -65,71 +65,134 @@ git clone https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
-cd run
+sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
 ```
 
-### 5. Create Miner ID
-Create `miner_id` by running the following command. Please change `your_name` to the name you want to use.
+### 5. Set Up Environment Variables
 ```bash
-echo -n your_name | sha256sum
+echo 'export ZGS_CONFIG_FILE="$HOME/0g-storage-node/run/config.toml"' >> ~/.bash_profile
+echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
+echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.bash_profile
+source ~/.bash_profile
 ```
-Example output:
-![CleanShot 2024-04-13 at 15 44 55@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/520bd6ff-5f62-4684-8d6e-d8f9bb9281a5)
 
-> [!NOTE]
-> Save the `miner_id` that you have created because it will be used to configure the miner.
-
-### 6. Update The Config File
+### 6. Store Miner ID and Key
 ```bash
-nano $HOME/0g-storage-node/run/config.toml
+read -p "Enter your name for miner_id config: " MINER_NAME && echo
 ```
-
-Delete the `#` sign in the `miner_id` and `miner_key` lines then fill in the `miner_id` and `miner_key` data.
-
-> [!NOTE]
-> The `miner_key` data is filled with your wallet's private key. You can view the wallet private key using Metamask.
-
-Example configuration settings:
-![CleanShot 2024-04-13 at 15 52 52@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/55272fec-d9e4-4151-a6cd-be619cc53023)
-
-Once you have finished setting up the configuration file, you can save it by pressing `ctrl x`, `y`, `enter`.
-
-### 7. Create a New Screen
-Create a new screen to run the storage node in the background.
 ```bash
-screen -S zgs
+read -sp "Enter your private key for miner_key config: " PRIVATE_KEY && echo
 ```
 
-### 8. Start Storage Node
+### 7. Update Config File
 ```bash
-../target/release/zgs_node --config config.toml
+if grep -q 'miner_id' "$ZGS_CONFIG_FILE" || grep -q '# miner_id' "$ZGS_CONFIG_FILE"; then
+    MINER_ID=$(echo -n "$MINER_NAME" | sha256sum | cut -d ' ' -f1)
+    sed -i "/#*miner_id/c\miner_id = \"$MINER_ID\"" "$ZGS_CONFIG_FILE"
+fi
+
+if grep -q 'miner_key' "$ZGS_CONFIG_FILE" || grep -q '# miner_key' "$ZGS_CONFIG_FILE"; then
+    sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
+fi
+
+if ! grep -q "^# log_config_file" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_config_file/c\log_config_file = \"$ZGS_LOG_CONFIG_FILE\"" $ZGS_CONFIG_FILE
+elif ! grep -q "^log_config_file" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_config_file/c\log_config_file = \"$ZGS_LOG_CONFIG_FILE\"" $ZGS_CONFIG_FILE
+fi
+
+if ! grep -q "^# log_directory" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
+elif ! grep -q "^log_directory" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
+fi
 ```
 
-After running the command above, you can immediately exit the screen by pressing the `ctrl a d` button.
-
-### 9. Check Logs
-Open the log directory.
+### 8. Create Service File
+Create a service file to run the storage node in the background.
 ```bash
-cd $HOME/0g-storage-node/run/log
+sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
+[Unit]
+Description=0G Storage Node
+After=network.target
+
+[Service]
+User=$USER
+Type=simple
+ExecStart=zgs_node --config $ZGS_CONFIG_FILE
+Restart=on-failure
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+EOF
 ```
 
-View the list of existing logs.
+### 9. Start Storage Node
 ```bash
-ls
+sudo systemctl daemon-reload && \
+sudo systemctl enable zgs && \
+sudo systemctl restart zgs && \
+sudo systemctl status zgs
 ```
-![CleanShot 2024-04-13 at 16 34 05@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/6123290a-0ea9-4cc3-907c-3aaac9990961)
 
-Open the existing log file. Please change the `log_name` in the command below with the log name that appears after running the `ls` command.
+-----------------------------------------------------------------
+
+## Useful Commands
+### Check Latest Log
 ```bash
-cat log_name
+tail -n 100 "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
 ```
 
-Example command:
+### Look for Errors
 ```bash
-cat zgs.log.2024-04-13
+grep "Error" $ZGS_LOG_DIR/zgs.log.*
 ```
 
-The output from the log file will appear as shown below.
+### List Logs by Date
+```bash
+ls -lt $ZGS_LOG_DIR
+```
 
-Log output:
-![CleanShot 2024-04-13 at 16 45 36@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/70870e65-2add-46fb-b24b-2865f168db09)
+### View Specific Date Logs
+```bash
+cat $ZGS_LOG_DIR/zgs.log.2024-04-15
+```
+
+### Restart the Node
+```bash
+sudo systemctl restart zgs
+```
+
+### Stop the Node
+```bash
+sudo systemctl stop zgs
+```
+
+### Upgrade the node
+Please change the `<version>` to the latest version.
+```bash
+cd $HOME/0g-storage-node
+git fetch
+git checkout tags/<version>
+git submodule update --init
+cargo build --release
+sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
+```
+
+### Backup Miner ID and Key
+You can backup your `miner_id` and `miner_key` by saving the output value of the command below.
+```bash
+grep 'miner_id' $ZGS_CONFIG_FILE
+grep 'miner_key' $ZGS_CONFIG_FILE
+```
+
+### Delete The Node
+> [!CAUTION]
+> **Make sure to backup your `miner_id` and `miner_key` before deleting the node!**
+```bash
+sudo systemctl stop zgs
+sudo systemctl disable zgs
+sudo rm /etc/systemd/system/zgs.service
+rm -rf $HOME/0g-storage-node
+```
