@@ -169,7 +169,7 @@ sudo systemctl restart zgs
 sudo systemctl stop zgs
 ```
 
-### Upgrade the node
+### Upgrade the Node
 Please change the `<version>` to the latest version.
 ```bash
 cd $HOME/0g-storage-node
