@@ -18,7 +18,7 @@ This guide will help you in the 0G storage node installation process.
 
 ## Storage Node Auto-Installation
 ```bash
-curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/47d79d8b52bd0d156cc61f2aa58bddcd/raw/bf38d2a96c0cebfd1302a77acb9946cd2e2f7ffe/zgs_EN.sh && bash zgs_EN.sh
+curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/47d79d8b52bd0d156cc61f2aa58bddcd/raw/4b2576c6f404f7108fae0ce0cb187edd0b75f562/zgs_EN.sh && bash zgs_EN.sh
 ```
 
 After the installation is completed, you can continue to the [Check Latest Log](#Check-Latest-Log) step to check your logs.
