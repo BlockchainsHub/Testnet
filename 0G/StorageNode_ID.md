@@ -21,7 +21,7 @@ Panduan ini akan membantu anda dalam proses instalasi storage node 0G.
 curl -o zgs_ID.sh https://gist.githubusercontent.com/botxx15/c32f78e4e30bf3efa13d5c544b1c6cc7/raw/e0f3618db4167000cc113ab5a1215dca2a2d0038/zgs_ID.sh && bash zgs_ID.sh
 ```
 
-Setelah instalasi selesai, anda dapat melanjutkan ke langkah [Cek Log](#9-Cek-Log) untuk memeriksa log Anda.
+Setelah instalasi selesai, anda dapat melanjutkan ke langkah [Cek Log](#Cek-Log-Terbaru) untuk memeriksa log Anda.
 
 -----------------------------------------------------------------
 
