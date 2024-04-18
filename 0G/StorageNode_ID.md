@@ -49,7 +49,7 @@ Setelah proses instalasi selesai, jalankan command berikut, untuk restart shell.
 ### 3. Instal GO
 ```bash
 cd $HOME && \
-ver="1.21.3" && \
+ver="1.22.0" && \
 wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
 sudo rm -rf /usr/local/go && \
 sudo tar -C /usr/local -xzf "go$ver.linux-amd64.tar.gz" && \
@@ -65,71 +65,134 @@ git clone https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
-cd run
+sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
 ```
 
-### 5. Buat Miner ID
-Buat `miner_id` dengan menjalankan command berikut ini. Silahkan rubah `your_name` dengan nama yang ingin anda gunakan.
+### 5. Menyiapkan Environment Variables
 ```bash
-echo -n your_name | sha256sum
+echo 'export ZGS_CONFIG_FILE="$HOME/0g-storage-node/run/config.toml"' >> ~/.bash_profile
+echo 'export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"' >> ~/.bash_profile
+echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.bash_profile
+source ~/.bash_profile
 ```
-Contoh output:
-![CleanShot 2024-04-13 at 15 44 55@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/520bd6ff-5f62-4684-8d6e-d8f9bb9281a5)
 
-> [!NOTE]
-> Simpanlah `miner_id` yang sudah anda buat karena akan digunakan untuk konfigurasi miner.
-
-### 6. Update Konfigurasi
+### 6. Masukkan miner_id dan miner_key Dalam Variabel
 ```bash
-nano $HOME/0g-storage-node/run/config.toml
+read -p "Masukkan nama anda untuk konfigurasi miner_id: " MINER_NAME && echo
 ```
-
-Hapus tanda `#` yang ada pada baris `miner_id` dan `miner_key` kemudian isi data `miner_id` dan `miner_key`.
-
-> [!NOTE]
-> Data `miner_key` diisi dengan private key wallet anda. Anda dapat melihat private key wallet melalui Metamask.
-
-Contoh setelan konfigurasi:
-![CleanShot 2024-04-13 at 15 52 52@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/55272fec-d9e4-4151-a6cd-be619cc53023)
-
-Setelah selesai mengatur file konfigurasi anda dapat menyimpannya dengan menekan tombol `ctrl+x`,`y`,`enter`
-
-### 7. Buat Screen Baru
-Buat screen baru untuk menjalankan storage node di background.
 ```bash
-screen -S zgs
+read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
 ```
 
-### 8. Jalankan Storage Node
+### 7. Update Konfigurasi
 ```bash
-../target/release/zgs_node --config config.toml
+if grep -q 'miner_id' "$ZGS_CONFIG_FILE" || grep -q '# miner_id' "$ZGS_CONFIG_FILE"; then
+    MINER_ID=$(echo -n "$MINER_NAME" | sha256sum | cut -d ' ' -f1)
+    sed -i "/#*miner_id/c\miner_id = \"$MINER_ID\"" "$ZGS_CONFIG_FILE"
+fi
+
+if grep -q 'miner_key' "$ZGS_CONFIG_FILE" || grep -q '# miner_key' "$ZGS_CONFIG_FILE"; then
+    sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
+fi
+
+if ! grep -q "^# log_config_file" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_config_file/c\log_config_file = \"$ZGS_LOG_CONFIG_FILE\"" $ZGS_CONFIG_FILE
+elif ! grep -q "^log_config_file" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_config_file/c\log_config_file = \"$ZGS_LOG_CONFIG_FILE\"" $ZGS_CONFIG_FILE
+fi
+
+if ! grep -q "^# log_directory" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
+elif ! grep -q "^log_directory" "$ZGS_CONFIG_FILE"; then
+    sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
+fi
 ```
 
-Setelah menjalankan command diatas anda bisa keluar dari screen dengan menekan tombol `ctrl+a+d`
-
-### 9. Cek Log
-Buka directory log.
+### 8. Buat File Service
+Buat file service untuk menjalankan storage node di background.
 ```bash
-cd $HOME/0g-storage-node/run/log
+sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
+[Unit]
+Description=0G Storage Node
+After=network.target
+
+[Service]
+User=$USER
+Type=simple
+ExecStart=zgs_node --config $ZGS_CONFIG_FILE
+Restart=on-failure
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
+EOF
 ```
 
-Lihat daftar log yang ada.
+### 9. Start Storage Node
 ```bash
-ls
+sudo systemctl daemon-reload && \
+sudo systemctl enable zgs && \
+sudo systemctl restart zgs && \
+sudo systemctl status zgs
 ```
-![CleanShot 2024-04-13 at 16 34 05@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/6123290a-0ea9-4cc3-907c-3aaac9990961)
 
-Buka file log yang ada. Silahkan rubah `nama_log` pada command dibawah dengan nama log yang muncul setelah menjalankan command `ls`
+-----------------------------------------------------------------
+
+## Daftar Command
+### Cek Log Terbaru
 ```bash
-cat nama_log
+tail -n 100 "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
 ```
 
-Contoh command:
+### Cek Error
 ```bash
-cat zgs.log.2024-04-13
+grep "Error" $ZGS_LOG_DIR/zgs.log.*
 ```
 
-Output dari file log akan muncul seperti digambar berikut ini.
+### Daftar Log Berdasarkan Tanggal
+```bash
+ls -lt $ZGS_LOG_DIR
+```
 
-Log output:
-![CleanShot 2024-04-13 at 16 45 36@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/70870e65-2add-46fb-b24b-2865f168db09)
+### Lihat Log Tanggal Tertentu
+```bash
+cat $ZGS_LOG_DIR/zgs.log.2024-04-15
+```
+
+### Restart Node
+```bash
+sudo systemctl restart zgs
+```
+
+### Stop Node
+```bash
+sudo systemctl stop zgs
+```
+
+### Upgrade Node
+Silahkan ubah `<version>` ke versi terbaru.
+```bash
+cd $HOME/0g-storage-node
+git fetch
+git checkout tags/<version>
+git submodule update --init
+cargo build --release
+sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
+```
+
+### Backup Miner ID and Key
+Anda dapat membackup `miner_id` dan `miner_key` dengan menyimpan nilai output dari command di bawah ini.
+```bash
+grep 'miner_id' $ZGS_CONFIG_FILE
+grep 'miner_key' $ZGS_CONFIG_FILE
+```
+
+### Hapus Node
+> [!CAUTION]
+> **Pastikan untuk membackup `miner_id` dan `miner_key` anda sebelum menghapus node!**
+```bash
+sudo systemctl stop zgs
+sudo systemctl disable zgs
+sudo rm /etc/systemd/system/zgs.service
+rm -rf $HOME/0g-storage-node
+```
