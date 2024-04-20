@@ -95,7 +95,7 @@ Sekarang, Anda akan diminta untuk memilih cara menambahkan entropi — ini adala
 
 Setelah Anda menambahkan entropi, Anda akan ditempatkan di antrean kontribusi. Kontribusi memerlukan waktu lama, jadi biarkan proses ini berjalan di latar belakang atau lakukan hal lain. (Tetapi jangan biarkan komputer Anda tertidur, komputer yang tertidur tidak dapat berkontribusi!)
 
-Sekarang Anda dapat melepaskan diri dari sesi Tmux. Untuk melepaskan diri dari sesi saat ini (membiarkannya berjalan di latar belakang), tekan `Ctrl b`, lalu lepaskan kedua tombol dan tekan `d`.
+Sekarang Anda dapat melepaskan diri dari sesi Tmux. Untuk melepaskan diri dari sesi saat ini (membiarkannya berjalan di latar belakang), tekan `Ctrl + b`, lalu lepaskan kedua tombol dan tekan `d`.
 
 Untuk menyambungkan kembali ke sesi terpisah, ketik `tmux attach` di terminal Anda.
 
