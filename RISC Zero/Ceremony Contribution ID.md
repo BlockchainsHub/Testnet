@@ -34,8 +34,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
 
-
-
 Download dan instal Node.js
 ```bash
 nvm install 20
@@ -85,8 +83,7 @@ npm i @p0tion/phase2cli
 ```bash
 npx phase2cli auth
 ```
-Ini akan menyalin kode autentikasi ke clipboard Anda, membuka browser web Anda, dan membawa Anda ke situs GitHub yang meminta izin untuk menggunakan fitur "Gists" GitHub Anda. 
-Paste konten clipboard Anda ke situs web ini dan klik tombol untuk memberi otorisasi. GitHub akan memberi tahu Anda “Congratulations, you’re all set!” dan Anda dapat kembali ke terminal.
+Ini akan menyalin kode autentikasi ke clipboard Anda, membuka browser web Anda, dan membawa Anda ke situs GitHub yang meminta izin untuk menggunakan fitur "Gists" GitHub Anda. Paste konten clipboard Anda ke situs web ini dan klik tombol untuk memberi otorisasi. GitHub akan memberi tahu Anda “Congratulations, you’re all set!” dan Anda dapat kembali ke terminal.
 
 ### 6. Contribute
 ```bash
