@@ -28,7 +28,13 @@ Sebelum melanjutkan, pastikan akun GitHub Anda memenuhi persyaratan ini.
 Instal NVM (Node Version Manager)
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
+
+
 
 Download dan instal Node.js
 ```bash
@@ -65,22 +71,22 @@ nvm install 16.20
 nvm use 16.20
 ```
 
-### 3. Instal phase2cli
+### 3. Buat Sesi Tmux Baru
+```bash
+tmux
+```
+
+### 4. Instal phase2cli
 ```bash
 npm i @p0tion/phase2cli
 ```
 
-### 4. Otentikasi dengan GitHub
+### 5. Otentikasi dengan GitHub
 ```bash
 npx phase2cli auth
 ```
 Ini akan menyalin kode autentikasi ke clipboard Anda, membuka browser web Anda, dan membawa Anda ke situs GitHub yang meminta izin untuk menggunakan fitur "Gists" GitHub Anda. 
 Paste konten clipboard Anda ke situs web ini dan klik tombol untuk memberi otorisasi. GitHub akan memberi tahu Anda “Congratulations, you’re all set!” dan Anda dapat kembali ke terminal.
-
-### 5. Buat Sesi Tmux Baru
-```bash
-tmux
-```
 
 ### 6. Contribute
 ```bash
