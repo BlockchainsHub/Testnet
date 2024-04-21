@@ -28,6 +28,10 @@ Before continuing make sure your GitHub account meets this requirement.
 Install NVM (Node Version Manager)
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
 
 Download and install Node.js
@@ -65,21 +69,21 @@ nvm install 16.20
 nvm use 16.20
 ```
 
-### 3. Install phase2cli
+### 3. Create a New Tmux Session
+```bash
+tmux
+```
+
+### 4. Install phase2cli
 ```bash
 npm i @p0tion/phase2cli
 ```
 
-### 4. Authenticate with GitHub
+### 5. Authenticate with GitHub
 ```bash
 npx phase2cli auth
 ```
 This will copy an authentication code to your clipboard, open your web browser, and take you to a GitHub site asking to give p0tion permission to use the “Gists” feature of your GitHub. Paste the contents of your clipboard into this website and click the button to authorize. GitHub will tell you “Congratulations, you’re all set!” and you can return to the terminal.
-
-### 5. Create a New Tmux Session
-```bash
-tmux
-```
 
 ### 6. Contribute
 ```bash
