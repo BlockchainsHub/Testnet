@@ -7,7 +7,7 @@ Panduan ini akan memandu Anda untuk mendeploy smart contract sederhana ke Eclips
 Anda harus melakukan beberapa hal sebelum dapat mendeploy smart contract Anda ke Eclipse Testnet.
 
 ### Instal Rust
-Instal Rust, dan package managerya Cargo.
+Instal Rust, dan package managernya Cargo.
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
