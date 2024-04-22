@@ -35,12 +35,12 @@ Download dan instal node.js
 nvm install 21
 ```
 
-Verifikasi versi Node.js yang benar telah terinstal. Seharusnya menampilkan versi `v21.7.3`
+Verifikasi versi Node.js yang benar telah terinstal. Seharusnya menampilkan versi `v21.7.3`.
 ```bash
 node -v
 ```
 
-Verifikasi versi NPM yang benar telah terinstal. Seharusnya menampilkan `10.5.0`
+Verifikasi versi NPM yang benar telah terinstal. Seharusnya menampilkan versi `10.5.0`.
 ```bash
 npm -v
 ```
