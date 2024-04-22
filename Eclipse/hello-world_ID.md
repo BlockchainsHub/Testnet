@@ -105,7 +105,7 @@ node deposit.js [ADDRESS_SOLANA_ANDA] 0x7C9e161ebe55000a3220F972058Fb83273653a6e
 
 Contoh command:
 ```bash
-node deposit.js yyiecymjvwYE6Wxg4ZSt4ibdfFRo3JUNhQ99AKnaRqu 0x7C9e161ebe55000a3220F972058Fb83273653a6e 1500000 100 3e1bf180e4778c7944f509b422711101186d26ac15337934f12088623755c0b7 https://rpc.sepolia.org/
+node deposit.js yyiecymjvwYE6Wxg4ZSt4ibdfFRo3JUNhQ99AKnaRqu 0x7C9e161ebe55000a3220F972058Fb83273653a6e 15000000 100 3e1bf180e4778c7944f509b422711101186d26ac15337934f12088623755c0b7 https://rpc.sepolia.org/
 ```
 
 Jika transaksi Anda berhasil, Anda akan mendapatkan hasil transaksi seperti ini.
