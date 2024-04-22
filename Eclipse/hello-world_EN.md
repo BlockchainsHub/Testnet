@@ -1,4 +1,4 @@
-![alt text](<Eclipse Github Banner.png>)
+![Eclipse Github Banner](https://github.com/BlockchainsHub/Testnet/assets/77204008/fc25892b-e8ab-4f3e-8b19-430f94420bd8)
 
 # Eclipse Testnet Guide
 This guide walks you through deploying a simple smart contract to Eclipse Testnet.
