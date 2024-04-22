@@ -63,7 +63,7 @@ npm install -g yarn
 
 ## Deposit Sepolia ETH ke Eclipse Testnet
 ### Dapatkan Private Key Ethereum Anda
-Anda bisa mendapatkan private key Anda dari dompet Metamask dengan pergi ke menu `Account details` dan klik `Show private key`.
+Anda bisa mendapatkan private key Anda dari dompet Metamask dengan membuka menu `Account details` dan klik `Show private key`.
 
 > [!NOTE]
 > Pastikan Anda memiliki setidaknya 0,1 Sepolia ETH di dompet Anda.
