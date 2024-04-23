@@ -102,7 +102,7 @@ Make sure to change this variable on the command below:
 - **[ETHEREUM_PRIVATE_KEY]** : Change with the private key that you get from your Metamask wallet.
 
 ```bash
-node deposit.js [YOUR_SOLANA_ADDRESS] 0x7C9e161ebe55000a3220F972058Fb83273653a6e 1500000 100 [ETHEREUM_PRIVATE_KEY] https://rpc.sepolia.org
+node deposit.js [YOUR_SOLANA_ADDRESS] 0x7C9e161ebe55000a3220F972058Fb83273653a6e 15000000 100 [ETHEREUM_PRIVATE_KEY] https://rpc.sepolia.org
 ```
 
 Command example:

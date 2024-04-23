@@ -102,7 +102,7 @@ Pastikan untuk mengubah variabel ini pada perintah di bawah ini:
 - **[PRIVATE_KEY_ETHEREUM_ANDA]** : Ganti dengan private key yang Anda dapatkan dari dompet Metamask Anda.
 
 ```bash
-node deposit.js [ADDRESS_SOLANA_ANDA] 0x7C9e161ebe55000a3220F972058Fb83273653a6e 1500000 100 [PRIVATE_KEY_ETHEREUM_ANDA] https://rpc.sepolia.org
+node deposit.js [ADDRESS_SOLANA_ANDA] 0x7C9e161ebe55000a3220F972058Fb83273653a6e 15000000 100 [PRIVATE_KEY_ETHEREUM_ANDA] https://rpc.sepolia.org
 ```
 
 Contoh command:
