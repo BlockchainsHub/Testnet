@@ -1,3 +1,5 @@
+![Tanssi Banner](https://github.com/BlockchainsHub/Testnet/assets/77204008/dc2ec5eb-0d98-4e99-8254-9438ad7294fc)
+
 # Panduan Block Producer Tanssi
 Panduan ini akan membantu Anda dalam proses instalasi node Block Producer Tanssi, pastikan Anda memenuhi spesifikasi yang diperlukan dan mengikuti langkah instalasi yang benar untuk kinerja optimal.
 
