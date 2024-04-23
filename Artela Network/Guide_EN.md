@@ -230,3 +230,9 @@ sudo rm -rf $HOME/.artelad
 sudo rm -rf $HOME/artela
 sudo rm -rf $HOME/go
 ```
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

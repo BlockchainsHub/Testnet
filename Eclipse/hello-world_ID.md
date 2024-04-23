@@ -159,3 +159,9 @@ Success
 Salin program addressnya `8MBmHtJvxpKdYhdw6yPpedp6X6y2U9dCpdYaZJdmwV3A` dan kirimkan ke [formulir](https://forms.gle/yJfFABQDPmpvgzAf7) ini.
 
 Selamat! Anda telah berhasil mendeploy smart contract ke Eclipse Testnet.
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

@@ -159,3 +159,9 @@ Success
 Copy the program address `8MBmHtJvxpKdYhdw6yPpedp6X6y2U9dCpdYaZJdmwV3A` and submit to this [form](https://forms.gle/yJfFABQDPmpvgzAf7).
 
 Congratulations! You've successfully deployed a smart contract to the Eclipse Testnet.
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

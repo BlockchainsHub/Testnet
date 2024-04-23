@@ -73,3 +73,9 @@ crossfid tx staking create-validator \
   --gas-adjustment=1.5 \
   --from=kamuscrypto
 ```
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

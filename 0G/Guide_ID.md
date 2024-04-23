@@ -463,3 +463,9 @@ Kirim token antar wallet
 ```
 evmosd tx bank send wallet <to-wallet-address> 1000000000000000000aevmos --from $WALLET_NAME --chain-id zgtendermint_9000-1 --gas 500000 --gas-prices 99999aevmos -y
 ```
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

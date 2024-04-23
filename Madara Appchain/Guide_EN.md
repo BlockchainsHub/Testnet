@@ -177,3 +177,9 @@ Add the following format to your file. Read the [details](###details) below.
 5. `metrics_endpoint`: A public endpoint for your prometheus metrics (port 9615 by default)
 
 ![CleanShot 2024-02-12 at 15 08 53@2x](https://github.com/Kamus-Crypto/Testnet/assets/77204008/2aa8f066-8d0f-498c-8dfe-2faa33eff964)
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

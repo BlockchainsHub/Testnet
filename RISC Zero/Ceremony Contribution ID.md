@@ -117,3 +117,9 @@ npx phase2cli logout
 ```
 
 Buka `authorized app list di GitHub` dan hapus izin untuk `pse-p0tion-production`. Anda juga dapat menghapus folder `~/p0tion-tmp` yang Anda buat jika Anda mau.
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

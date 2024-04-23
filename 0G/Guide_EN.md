@@ -77,3 +77,9 @@ evmosd tx staking create-validator \
 ```
 > [!CAUTION]
 > Don't forget to backup the `priv_validator_key.json` file located at $HOME/.evmosd/config/
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>

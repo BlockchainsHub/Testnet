@@ -196,3 +196,9 @@ sudo systemctl disable zgs
 sudo rm /etc/systemd/system/zgs.service
 rm -rf $HOME/0g-storage-node
 ```
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2023 BlockHub. All rights reserved.
+</p>
