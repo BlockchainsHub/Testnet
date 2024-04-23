@@ -467,5 +467,5 @@ evmosd tx bank send wallet <to-wallet-address> 1000000000000000000aevmos --from 
 -----------------------------------------------------------------
 
 <p align="center">
-  &copy; 2023 BlockHub. All rights reserved.
+  &copy; 2024 BlockHub. All rights reserved.
 </p>

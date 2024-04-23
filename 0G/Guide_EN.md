@@ -81,5 +81,5 @@ evmosd tx staking create-validator \
 -----------------------------------------------------------------
 
 <p align="center">
-  &copy; 2023 BlockHub. All rights reserved.
+  &copy; 2024 BlockHub. All rights reserved.
 </p>

@@ -121,5 +121,5 @@ Buka `authorized app list di GitHub` dan hapus izin untuk `pse-p0tion-production
 -----------------------------------------------------------------
 
 <p align="center">
-  &copy; 2023 BlockHub. All rights reserved.
+  &copy; 2024 BlockHub. All rights reserved.
 </p>

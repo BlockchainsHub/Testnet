@@ -234,5 +234,5 @@ sudo rm -rf $HOME/go
 -----------------------------------------------------------------
 
 <p align="center">
-  &copy; 2023 BlockHub. All rights reserved.
+  &copy; 2024 BlockHub. All rights reserved.
 </p>
