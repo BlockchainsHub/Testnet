@@ -54,6 +54,8 @@ sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
 Set your Solana CLI to Eclipse Testnet with the following command:
 ```bash
 solana config set --url https://testnet.dev2.eclipsenetwork.xyz
+
+export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 ```
 
 ### Install Yarn
