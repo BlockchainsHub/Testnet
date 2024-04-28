@@ -53,10 +53,9 @@ go version
 
 ### 3. Build Binary
 ```bash
-git clone https://github.com/0glabs/0g-evmos.git
-cd 0g-evmos
-git checkout v1.0.0-testnet
-make install
+wget https://rpc-zero-gravity-testnet.trusted-point.com/evmosd
+chmod +x ./evmosd
+mv ./evmosd /usr/local/bin/
 evmosd version
 ```
 
@@ -81,7 +80,7 @@ evmosd config keyring-backend test
 
 ### 6. Download file genesis.json
 ```bash
-wget https://github.com/0glabs/0g-evmos/releases/download/v1.0.0-testnet/genesis.json -O $HOME/.evmosd/config/genesis.json
+wget https://rpc-zero-gravity-testnet.trusted-point.com/genesis.json -O $HOME/.evmosd/config/genesis.json
 ```
 
 ### 7. Tambahkan seeds dan peers pada file config.toml
