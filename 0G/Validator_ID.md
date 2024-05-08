@@ -16,6 +16,15 @@ Panduan ini akan membantu anda dalam proses instalasi node 0G.
 
 -----------------------------------------------------------------
 
+## Public Endpoint
+| Public | Endpoint |
+|-|-
+| RPC | https://og-testnet-rpc.blockhub.id |
+| API | https://og-testnet-api.blockhub.id |
+| gRPC | https://og-testnet-grpc.blockhub.id |
+
+-----------------------------------------------------------------
+
 ## Instalasi Node Manual
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
@@ -65,7 +74,7 @@ curl -Ls https://snapshots.liveraven.net/snapshots/testnet/zero-gravity/genesis.
 curl -Ls https://snapshots.liveraven.net/snapshots/testnet/zero-gravity/addrbook.json > $HOME/.0gchain/config/addrbook.json
 ```
 
-Kemudian verifikasi file konfigurasi genesis sudah benar atau belum:
+Kemudian verifikasi file konfigurasi genesis sudah benar atau belum.
 ```bash
 0gchaind validate-genesis
 ```
