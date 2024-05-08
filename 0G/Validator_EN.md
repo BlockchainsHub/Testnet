@@ -16,6 +16,15 @@ This guide will assist you in the installation process of the 0G node.
 
 -----------------------------------------------------------------
 
+## Public Endpoint
+| Public | Endpoint |
+|-|-
+| RPC | https://og-testnet-rpc.blockhub.id |
+| API | https://og-testnet-api.blockhub.id |
+| gRPC | https://og-testnet-grpc.blockhub.id |
+
+-----------------------------------------------------------------
+
 ## Manual Node Installation
 ### 1. Install Required Packages
 ```bash
