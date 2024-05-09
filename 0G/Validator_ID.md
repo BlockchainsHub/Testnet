@@ -141,7 +141,7 @@ Silahkan klik tombol dibawah ini untuk request faucet.
 ### 13. Buat Validator
 ```bash
 0gchaind tx staking create-validator \
-  --amount=100000000000000000ua0gi \
+  --amount=1000000ua0gi \
   --pubkey=$(0gchaind tendermint show-validator) \
   --moniker=$MONIKER \
   --chain-id=$CHAIN_ID \
