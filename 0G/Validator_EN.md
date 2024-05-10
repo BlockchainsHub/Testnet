@@ -25,6 +25,19 @@ This guide will assist you in the installation process of the 0G node.
 
 -----------------------------------------------------------------
 
+## Auto Node Installation
+Run the following command to install node automatically.
+```bash
+curl -o 0g_EN.sh https://gist.githubusercontent.com/botxx15/81c7ded174c98976b186f1cac999a53d/raw/1b213352097c75ac1c4557dbeb25b70bc0baaaea/0g_EN.sh && bash 0g_EN.sh
+```
+
+You can press `ctrl+c` button to quit from logs
+
+> [!NOTE]
+> Once the nodes are synchronized, you can proceed to step [11. Create Wallet for Validator](#11-Create-Wallet-For-Validator)
+
+-----------------------------------------------------------------
+
 ## Manual Node Installation
 ### 1. Install Required Packages
 ```bash
