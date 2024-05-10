@@ -31,7 +31,7 @@ Run the following command to install node automatically.
 curl -o zg_EN.sh https://gist.githubusercontent.com/botxx15/e8f60b199e74356ea8b8be532fb71880/raw/64f1fac6c8464a044907d4d5a79883c2b2f84791/zg_EN.sh && bash zg_EN.sh
 ```
 
-You can press `ctrl+c` button to quit from logs
+You can press `ctrl+c` button to quit from logs.
 
 > [!NOTE]
 > Once the nodes are synchronized, you can proceed to step [11. Create Wallet for Validator](#11-Create-Wallet-For-Validator)
