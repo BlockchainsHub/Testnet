@@ -160,6 +160,242 @@ Please click the button below to request from the faucet.
 
 -----------------------------------------------------------------
 
+# Command List
+## Managing keys
+Generate new key
+```
+0gchaind keys add wallet
+```
+
+Recover key
+```
+0gchaind keys add wallet --recover
+```
+
+List all key
+```
+0gchaind keys list
+```
+
+Delete key
+```
+0gchaind keys delete wallet
+```
+
+Export key
+```
+0gchaind keys export wallet
+```
+
+Import key
+```
+0gchaind keys import wallet wallet.backup
+```
+
+Query wallet balances
+```
+0gchaind q bank balances $(0gchaind keys show wallet -a)
+```
+
+-----------------------------------------------------------------
+
+## Pengelolaan Validator
+Create validator
+```
+0gchaind tx staking create-validator \
+--amount 1000000ua0gi \
+--pubkey $(0gchaind tendermint show-validator) \
+--moniker $MONIKER \
+--identity "keybase-id" \
+--details "info-detail" \
+--website "link-website" \
+--security-contact "alamat-email" \
+--chain-id $CHAIN_ID \
+--commission-rate 0.10 \
+--commission-max-rate 0.20 \
+--commission-max-change-rate 0.01 \
+--min-self-delegation 1 \
+--from wallet \
+--gas auto \
+--gas-adjustment 1.4 \
+--fees=800ua0gi \
+-y
+```
+
+Edit validator
+```
+0gchaind tx staking edit-validator \
+--new-moniker "nama-moniker" \
+--identity "keybase-id" \
+--details "info-detail" \
+--website "link-website" \
+--security-contact "alamat-email" \
+--chain-id $CHAIN_ID \
+--commission-rate 0.10 \
+--from wallet \
+--gas auto \
+--gas-adjustment 1.4 \
+--fees=800ua0gi \
+-y
+```
+
+Unjail validator
+```
+0gchaind tx slashing unjail --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Validator jail reason
+```
+0gchaind q slashing signing-info $(0gchaind tendermint show-validator)
+```
+
+List active validator
+```
+0gchaind q staking validators -o json --limit=1000 \
+| jq '.validators[] | select(.status=="BOND_STATUS_BONDED")' \
+| jq -r '.tokens + " - " + .description.moniker' \
+| sort -gr | nl
+```
+
+List incative validator
+```
+0gchaind q staking validators -o json --limit=1000 \
+| jq '.validators[] | select(.status=="BOND_STATUS_UNBONDED")' \
+| jq -r '.tokens + " - " + .description.moniker' \
+| sort -gr | nl
+```
+
+View validator details
+```
+0gchaind q staking validator $(0gchaind keys show wallet --bech val -a) 
+```
+
+-----------------------------------------------------------------
+
+## Managing Tokens
+Withdraw reward from all validator
+```
+0gchaind tx distribution withdraw-all-rewards --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Withdraw reward and commission
+```
+0gchaind tx distribution withdraw-rewards $(0gchaind keys show wallet --bech val -a) --commission --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Delegate tokens to your validator
+```
+0gchaind tx staking delegate $(0gchaind keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Delegate token to other validator, change `<to-valoper-address>` as you like
+```
+0gchaind tx staking delegate <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Redelegate to another validator
+```
+0gchaind tx staking redelegate $(0gchaind keys show wallet --bech val -a) <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Unbond token from your own validator
+```
+0gchaind tx staking unbond $(0gchaind keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Send token to the wallet
+```
+0gchaind tx bank send wallet <to-wallet-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+-----------------------------------------------------------------
+
+## Governance
+Query list proposal
+```bash
+0gchaind query gov proposals
+```
+
+View proposal by ID
+```bash
+0gchaind query gov proposal 1
+```
+
+Vote option yes
+```bash
+0gchaind tx gov vote 1 yes --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Vote option no
+```bash
+0gchaind tx gov vote 1 no --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Vote option asbtain
+```bash
+0gchaind tx gov vote 1 abstain --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+
+Vote option NoWithVeto
+```bash
+0gchaind tx gov vote 1 NoWithVeto --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+```
+-----------------------------------------------------------------
+
+## Maintenance
+Get validator information
+```bash
+0gchaind status 2>&1 | jq .ValidatorInfo
+```
+
+Get sync information
+```bash
+0gchaind status 2>&1 | jq .SyncInfo
+```
+
+Get node peer
+```bash
+echo $(0gchaind tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/.0gchain/config/config.toml | sed -n '/Address to listen for incoming connection/{n;p;}' | sed 's/.*://; s/".*//')
+```
+
+Check validator keys
+```bash
+[[ $(0gchaind q staking validator $(0gchaind keys show wallet --bech val -a) -oj | jq -r .consensus_pubkey.key) = $(0gchaind status | jq -r .ValidatorInfo.PubKey.value) ]] && echo -e "\n\e[1m\e[32mTrue\e[0m\n" || echo -e "\n\e[1m\e[31mFalse\e[0m\n"
+```
+
+Get live peers
+```bash
+curl -sS http://localhost:23457/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
+```
+
+Enable prometheus
+```bash
+sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.0gchain/config/config.toml
+```
+
+Reset chain data
+```bash
+0gchaind tendermint unsafe-reset-all --keep-addr-book --home $HOME/.0gchain --keep-addr-book
+```
+
+> [!CAUTION]
+> Sebelum melanjutkan ke langkah berikutnya, ketahuilah bahwa semua data chain akan dihapus. **Pastikan Anda telah membackup priv_validator_key.json Anda!**
+
+Remove node
+```bash
+cd $HOME
+sudo systemctl stop 0gchaind
+sudo systemctl disable 0gchaind
+sudo rm /etc/systemd/system/0gchaind.service
+sudo systemctl daemon-reload
+sudo rm -f $(which 0gchaind)
+sudo rm -rf $HOME/.0gchain
+sudo rm -rf $HOME/0g-chain
+sudo rm -rf $HOME/go
+```
+
+-----------------------------------------------------------------
+
 <p align="center">
   &copy; 2024 BlockHub. All rights reserved.
 </p>
