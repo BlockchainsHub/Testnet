@@ -25,6 +25,17 @@ Panduan ini akan membantu anda dalam proses instalasi node 0G.
 
 -----------------------------------------------------------------
 
+## Instalasi Node Otomatis
+Jalankan command berikut ini untuk menginstal node secara otomatis.
+```
+curl -o zg_ID.sh https://gist.githubusercontent.com/botxx15/972b30bfa135b92c20438f48fc8a6e7d/raw/d8da1be11b125f8e70f371f14536d4b452376efb/zg_ID.sh && bash zg_ID.sh
+``` 
+
+> [!NOTE]
+> Setelah node tersinkronisasi, anda dapat melanjutkan ke tahap [11. Buat Wallet Untuk Validator](#11-Buat-Wallet-Untuk-Validator)
+
+-----------------------------------------------------------------
+
 ## Instalasi Node Manual
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
