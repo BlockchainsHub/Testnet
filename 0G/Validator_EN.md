@@ -207,9 +207,9 @@ Create validator
 --pubkey $(0gchaind tendermint show-validator) \
 --moniker $MONIKER \
 --identity "keybase-id" \
---details "info-detail" \
---website "link-website" \
---security-contact "alamat-email" \
+--details "detailed-info" \
+--website "website-link" \
+--security-contact "email-address" \
 --chain-id $CHAIN_ID \
 --commission-rate 0.10 \
 --commission-max-rate 0.20 \
@@ -227,9 +227,9 @@ Edit validator
 0gchaind tx staking edit-validator \
 --new-moniker "nama-moniker" \
 --identity "keybase-id" \
---details "info-detail" \
---website "link-website" \
---security-contact "alamat-email" \
+--details "detailed-info" \
+--website "website-link" \
+--security-contact "email-address" \
 --chain-id $CHAIN_ID \
 --commission-rate 0.10 \
 --from wallet \
@@ -379,7 +379,7 @@ Reset chain data
 ```
 
 > [!CAUTION]
-> Sebelum melanjutkan ke langkah berikutnya, ketahuilah bahwa semua data chain akan dihapus. **Pastikan Anda telah membackup priv_validator_key.json Anda!**
+> Before moving on to the next step, be aware that all chain data will be erased. **Ensure you've created a backup of your priv_validator_key.json!**
 
 Remove node
 ```bash
