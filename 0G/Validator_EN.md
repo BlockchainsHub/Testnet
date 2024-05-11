@@ -28,7 +28,7 @@ This guide will assist you in the installation process of the 0G node.
 ## Auto Node Installation
 Run the following command to install node automatically.
 ```bash
-curl -o zg_EN.sh https://gist.githubusercontent.com/botxx15/e8f60b199e74356ea8b8be532fb71880/raw/64f1fac6c8464a044907d4d5a79883c2b2f84791/zg_EN.sh && bash zg_EN.sh
+curl -o zg_EN.sh https://gist.githubusercontent.com/botxx15/e8f60b199e74356ea8b8be532fb71880/raw/3675e7ab585b2d20092ea1eea90003b5d5b6a31e/zg_EN.sh && bash zg_EN.sh
 ```
 
 You can press `ctrl+c` button to quit from logs.
