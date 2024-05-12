@@ -164,8 +164,8 @@ Silahkan klik tombol dibawah ini untuk request faucet.
   --min-self-delegation="1" \
   --from=$WALLET_NAME \
   --gas=auto \
-  --gas-adjustment=1.4
-  --fees=800ua0gi
+  --gas-adjustment=1.4 \
+  --fees=800ua0gi \
   -y
 ```
 > [!CAUTION]
