@@ -358,7 +358,7 @@ Vote option NoWithVeto
 ## Maintenance
 Get validator information
 ```bash
-0gchaind status 2>&1 | jq .ValidatorInfo
+0gchaind status 2>&1 | jq .validator_info
 ```
 
 Get sync information
@@ -373,7 +373,7 @@ echo $(0gchaind tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/
 
 Check validator keys
 ```bash
-[[ $(0gchaind q staking validator $(0gchaind keys show wallet --bech val -a) -oj | jq -r .consensus_pubkey.key) = $(0gchaind status | jq -r .ValidatorInfo.PubKey.value) ]] && echo -e "\n\e[1m\e[32mTrue\e[0m\n" || echo -e "\n\e[1m\e[31mFalse\e[0m\n"
+[[ $(0gchaind q staking validator $(0gchaind keys show wallet --bech val -a) -oj | jq -r .consensus_pubkey.key) = $(0gchaind status | jq -r .validator_info.PubKey.value) ]] && echo -e "\n\e[1m\e[32mTrue\e[0m\n" || echo -e "\n\e[1m\e[31mFalse\e[0m\n"
 ```
 
 Get live peers
