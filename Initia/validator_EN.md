@@ -1,3 +1,5 @@
+![Initia Banner 3000x1000](https://github.com/BlockchainsHub/Testnet/assets/77204008/1ea3aade-f38d-4057-8e6e-ab349bf0ab7e)
+
 # Initia Node Guide
 This guide will assist you in the installation process of the Initia node.
 
@@ -128,7 +130,7 @@ initiad keys add $WALLET_NAME
 Please click the button below to request from the faucet.
 
 <a href="https://faucet.testnet.initia.xyz/" target="_blank">
-  <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/12866a81-cac7-451a-96b5-4b202e8f1194" alt="Faucet Button" width="150" height="36.94" border="10" />
+  <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/58473daf-a9e6-4fba-9449-ef7fff50ed1a" alt="Initia Faucet Button" width="150" height="36.94" border="10" />
 </a>
 
 ### 15. Create a Validator
