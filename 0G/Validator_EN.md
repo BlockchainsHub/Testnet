@@ -363,7 +363,7 @@ Get validator information
 
 Get sync information
 ```bash
-0gchaind status 2>&1 | jq .SyncInfo
+0gchaind status 2>&1 | jq .sync_info
 ```
 
 Get node peer

@@ -363,7 +363,7 @@ Informasi validator
 
 Informasi sinkronisasi
 ```bash
-0gchaind status 2>&1 | jq .SyncInfo
+0gchaind status 2>&1 | jq .sync_info
 ```
 
 Dapatkan node peer
