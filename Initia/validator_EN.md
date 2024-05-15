@@ -144,7 +144,7 @@ Please click the button below to request from the faucet.
 
 ### 15. Create a Validator
 ```bash
-initiad tx staking create-validator \
+initiad tx mstaking create-validator \
   --amount=10000000uinit \
   --pubkey=$(initiad tendermint show-validator) \
   --moniker=$MONIKER \
