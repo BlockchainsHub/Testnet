@@ -16,6 +16,15 @@ This guide will assist you in the installation process of the Initia node.
 
 -----------------------------------------------------------------
 
+## Public Endpoint
+| Public | Endpoint |
+|-|-
+| RPC | https://initia-testnet-rpc.blockhub.id |
+| API | https://initia-testnet-api.blockhub.id |
+| gRPC | https://initia-testnet-grpc.blockhub.id |
+
+-----------------------------------------------------------------
+
 ## Manual Node Installation
 ### 1. Install Required Packages
 ```bash
@@ -136,16 +145,21 @@ Please click the button below to request from the faucet.
 ### 15. Create a Validator
 ```bash
 initiad tx staking create-validator \
-  --amount="bond_amount" \
+  --amount=10000000uinit \
   --pubkey=$(initiad tendermint show-validator) \
   --moniker=$MONIKER \
   --chain-id=$CHAIN_ID \
+  --identity="keybase-id" \
+  --website="website-link" \
+  --details="info-detail" \
+  --security-contact="email-address" \
   --commission-rate="0.10" \
   --commission-max-rate="0.20" \
   --commission-max-change-rate="0.01" \
   --from=$WALLET_NAME \
   --gas=auto \
   --gas-adjustment=1.4 \
+  --fees=300000uinit \
   -y
 ```
 > [!CAUTION]
