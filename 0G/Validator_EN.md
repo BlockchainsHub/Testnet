@@ -212,7 +212,7 @@ Query wallet balances
 
 -----------------------------------------------------------------
 
-## Pengelolaan Validator
+## Validator Management
 Create validator
 ```
 0gchaind tx staking create-validator \
