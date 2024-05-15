@@ -157,7 +157,7 @@ initiad tx mstaking create-validator \
   --from=$WALLET_NAME \
   --gas=auto \
   --gas-adjustment=1.4 \
-  --fees=300000uinit \
+  --gas-prices 0.15uinit \
   -y
 ```
 > [!CAUTION]
