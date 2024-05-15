@@ -225,14 +225,14 @@ initiad tx mstaking create-validator \
 --from wallet \
 --gas auto \
 --gas-adjustment 1.4 \
---fees=800ua0gi \
+--gas-prices 0.15uinit \
 -y
 ```
 
 Edit validator
 ```
 initiad tx mstaking edit-validator \
---new-moniker "nama-moniker" \
+--new-moniker "your-new-moniker" \
 --identity "keybase-id" \
 --details "detailed-info" \
 --website "website-link" \
@@ -242,13 +242,13 @@ initiad tx mstaking edit-validator \
 --from wallet \
 --gas auto \
 --gas-adjustment 1.4 \
---fees=800ua0gi \
+--gas-prices 0.15uinit \
 -y
 ```
 
 Unjail validator
 ```
-initiad tx slashing unjail --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx slashing unjail --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Validator jail reason
@@ -282,37 +282,37 @@ initiad q mstaking validator $(initiad keys show wallet --bech val -a)
 ## Managing Tokens
 Withdraw reward from all validator
 ```
-initiad tx distribution withdraw-all-rewards --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx distribution withdraw-all-rewards --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Withdraw reward and commission
 ```
-initiad tx distribution withdraw-rewards $(initiad keys show wallet --bech val -a) --commission --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx distribution withdraw-rewards $(initiad keys show wallet --bech val -a) --commission --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Delegate tokens to your validator
 ```
-initiad tx mstaking delegate $(initiad keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx mstaking delegate $(initiad keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Delegate token to other validator, change `<to-valoper-address>` as you like
 ```
-initiad tx mstaking delegate <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx mstaking delegate <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Redelegate to another validator
 ```
-initiad tx mstaking redelegate $(initiad keys show wallet --bech val -a) <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx mstaking redelegate $(initiad keys show wallet --bech val -a) <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Unbond token from your own validator
 ```
-initiad tx mstaking unbond $(initiad keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx mstaking unbond $(initiad keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Send token to the wallet
 ```
-initiad tx bank send wallet <to-wallet-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx bank send wallet <to-wallet-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 -----------------------------------------------------------------
@@ -330,22 +330,22 @@ initiad query gov proposal 1
 
 Vote option yes
 ```bash
-initiad tx gov vote 1 yes --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx gov vote 1 yes --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Vote option no
 ```bash
-initiad tx gov vote 1 no --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx gov vote 1 no --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Vote option asbtain
 ```bash
-initiad tx gov vote 1 abstain --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx gov vote 1 abstain --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Vote option NoWithVeto
 ```bash
-initiad tx gov vote 1 NoWithVeto --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+initiad tx gov vote 1 NoWithVeto --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 -----------------------------------------------------------------
 
