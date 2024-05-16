@@ -27,8 +27,9 @@ Panduan ini akan membantu Anda dalam proses instalasi node Initia.
 
 ## Connections
 Peer
-
-`007fd507f039e06bc8d4cb3169f005745dd01f84@158.220.89.92:26656`
+```bash
+007fd507f039e06bc8d4cb3169f005745dd01f84@158.220.89.92:26656
+```
 
 -----------------------------------------------------------------
 
