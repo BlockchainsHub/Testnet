@@ -158,11 +158,3 @@ Kunjungi [Halaman Tag GitHub Tanssi](https://github.com/moondance-labs/tanssi/ta
 <p align="center">
   &copy; 2024 BlockHub. All rights reserved.
 </p>
-
-<div align="center">
-  <a href="https://0g.ai/"><img src="https://github.com/BlockchainsHub/Assets/blob/df18afa279d057a963038450da568bd82e84f06f/Outlined/Twitter%20icon.png" alt="0G Website" width="16%"></a>
-  <a href="https://github.com/0glabs"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/229ec400-72ff-48ee-ac18-7bdb1f5e221a" alt="0G Github" width="16%"></a>
-  <a href="https://twitter.com/0G_labs"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/3978b7fc-d575-44a6-8d41-327c14c8ba31" alt="0G Twitter" width="16%"></a>
-  <a href="https://discord.gg/0glabs"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/944a0b87-548d-4109-ad0c-def572d307cb" alt="0G Discord" width="16%"></a>
-  <a href="https://blog.0g.ai/"><img src="https://github.com/bartosian/celestia-tools/assets/20209819/ac52729b-64d7-44d1-9a66-1e0d159848f6" alt="0G Blog" width="16.2%"></a>
-</div>
