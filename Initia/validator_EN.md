@@ -215,7 +215,7 @@ initiad q bank balances $(initiad keys show wallet -a)
 Create validator
 ```
 initiad tx mstaking create-validator \
---amount 1000000ua0gi \
+--amount 1000000uinit \
 --pubkey $(initiad tendermint show-validator) \
 --moniker $MONIKER \
 --identity "keybase-id" \
@@ -297,27 +297,27 @@ initiad tx distribution withdraw-rewards $(initiad keys show wallet --bech val -
 
 Delegate tokens to your validator
 ```
-initiad tx mstaking delegate $(initiad keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
+initiad tx mstaking delegate $(initiad keys show wallet --bech val -a) 1000000uinit --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Delegate token to other validator, change `<to-valoper-address>` as you like
 ```
-initiad tx mstaking delegate <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
+initiad tx mstaking delegate <to-valoper-address> 1000000uinit --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Redelegate to another validator
 ```
-initiad tx mstaking redelegate $(initiad keys show wallet --bech val -a) <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
+initiad tx mstaking redelegate $(initiad keys show wallet --bech val -a) <to-valoper-address> 1000000uinit --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Unbond token from your own validator
 ```
-initiad tx mstaking unbond $(initiad keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
+initiad tx mstaking unbond $(initiad keys show wallet --bech val -a) 1000000uinit --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 Send token to the wallet
 ```
-initiad tx bank send wallet <to-wallet-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
+initiad tx bank send wallet <to-wallet-address> 1000000uinit --from wallet --chain-id $CHAIN_ID --gas-adjustment 1.4 --gas auto --gas-prices 0.15uinit -y
 ```
 
 -----------------------------------------------------------------
