@@ -27,8 +27,9 @@ This guide will assist you in the installation process of the Initia node.
 
 ## Connections
 Peer
-
-`007fd507f039e06bc8d4cb3169f005745dd01f84@158.220.89.92:26656`
+```bash
+007fd507f039e06bc8d4cb3169f005745dd01f84@158.220.89.92:26656
+```
 
 -----------------------------------------------------------------
 
