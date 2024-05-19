@@ -22,6 +22,7 @@ Panduan ini akan membantu anda dalam proses instalasi node 0G.
 | RPC | https://og-testnet-rpc.blockhub.id |
 | API | https://og-testnet-api.blockhub.id |
 | gRPC | https://og-testnet-grpc.blockhub.id |
+| jsonRPC | https://og-testnet-jsonrpc.blockhub.id |
 
 -----------------------------------------------------------------
 
