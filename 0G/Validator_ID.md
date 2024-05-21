@@ -100,7 +100,13 @@ SEEDS="c4d619f6088cb0b24b4ab43a0510bf9251ab5d7f@54.241.167.190:26656,44d11d4ba92
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.0gchain/config/config.toml
 ```
 
-### 8. Membuat File Service
+### 8. Open Json-RPC 
+```bash
+sed -i -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
+       -e 's/ws-address = "127.0.0.1:8546"/ws-address = "0.0.0.0:8546"/' $HOME/.0gchain/config/app.toml
+```
+
+### 9. Membuat File Service
 ```bash
 sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
 [Unit]
@@ -119,19 +125,19 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 9. Memuat Ulang Konfigurasi Systemd
+### 10. Memuat Ulang Konfigurasi Systemd
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable 0gchaind 
 sudo systemctl start 0gchaind
 ```
 
-### 10. Cek Log
+### 11. Cek Log
 ```bash
 sudo journalctl -u 0gchaind -f -o cat
 ```
 
-### 11. Buat Wallet Untuk Validator
+### 12. Buat Wallet Untuk Validator
 ```bash
 0gchaind keys add $WALLET_NAME --eth
 ```
@@ -145,14 +151,14 @@ Export private key dan masukkan ke Metamask.
 
 Untuk menambahkan jaringan 0G di Metamask, buka website [scanner 0G](https://scan-testnet.0g.ai/) dan connect wallet. Jaringan 0G akan ditambahkan secara otomatis ke wallet Metamask anda.
 
-### 12. Request Token Melalui Faucet
+### 13. Request Token Melalui Faucet
 Silahkan klik tombol dibawah ini untuk request faucet.
 
 <a href="https://faucet.0g.ai/" target="_blank">
   <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/12866a81-cac7-451a-96b5-4b202e8f1194" alt="Faucet Button" width="150" height="36.94" border="10" />
 </a>
 
-### 13. Buat Validator
+### 14. Buat Validator
 ```bash
 0gchaind tx staking create-validator \
   --amount=1000000ua0gi \
