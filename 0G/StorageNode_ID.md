@@ -118,6 +118,10 @@ if ! grep -q "^log_directory" "$ZGS_CONFIG_FILE"; then
     sed -i "/^#* log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" "$ZGS_CONFIG_FILE"
 fi
 
+if grep -q '# Miner ID registered in contract, which is mandatory for incentive\.' "$ZGS_CONFIG_FILE"; then
+    sed -i '/# Miner ID registered in contract, which is mandatory for incentive\./,+2d' "$ZGS_CONFIG_FILE"
+fi
+
 if grep -q 'miner_key\|# miner_key' "$ZGS_CONFIG_FILE"; then
     sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
 fi
