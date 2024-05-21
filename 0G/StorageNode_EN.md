@@ -18,7 +18,7 @@ This guide will help you in the 0G storage node installation process.
 
 ## Storage Node Auto-Installation
 ```bash
-curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/47d79d8b52bd0d156cc61f2aa58bddcd/raw/ec7f7df729c39447975b79c04cc5028217462a6c/zgs_EN.sh && bash zgs_EN.sh
+curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/47d79d8b52bd0d156cc61f2aa58bddcd/raw/84e95d7a1d4642204fa1660b7e5a4ac1fe3098c8/zgs_EN.sh && bash zgs_EN.sh
 ```
 
 After the installation is completed, you can continue to the [Check Latest Log](#Check-Latest-Log) step to check your logs.
@@ -118,17 +118,19 @@ if ! grep -q "^log_directory" "$ZGS_CONFIG_FILE"; then
     sed -i "/^#* log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" "$ZGS_CONFIG_FILE"
 fi
 
+if grep -q 'miner_key\|# miner_key' "$ZGS_CONFIG_FILE"; then
+    sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
+fi
+
+cp "$ZGS_CONFIG_FILE" "${ZGS_CONFIG_FILE}.bak"
+
 awk '
     BEGIN {delete_block = 0}
     /^# Miner ID registered in contract, which is mandatory for incentive\.$/ {delete_block = 1; next}
     delete_block == 1 && /^# The value should be a hex string of length 64 without 0x prefix\.$/ {next}
     delete_block == 1 && /^miner_id = ""$/ {delete_block = 0; next}
     delete_block == 0 {print}
-' config.toml > config.tmp
-
-if grep -q 'miner_key\|# miner_key' "$ZGS_CONFIG_FILE"; then
-    sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
-fi
+' "$ZGS_CONFIG_FILE" > "$ZGS_CONFIG_FILE.tmp" && mv "$ZGS_CONFIG_FILE.tmp" "$ZGS_CONFIG_FILE"
 ```
 
 ### 8. Create Service File
