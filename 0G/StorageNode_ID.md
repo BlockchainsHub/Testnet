@@ -134,7 +134,7 @@ After=network.target
 [Service]
 User=$USER
 Type=simple
-ExecStart=/usr/local/bin/zgs_node --config $ZGS_CONFIG_FILE
+ExecStart=/usr/local/bin/zgs_node --config $HOME/0g-storage-node/run/config.toml
 Restart=on-failure
 LimitNOFILE=65535
 
