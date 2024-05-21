@@ -102,7 +102,13 @@ sed -i \
     "$HOME/.initia/config/app.toml"
 ```
 
-### 10. Membuat File Service
+### 10. Open Json-RPC 
+```bash
+sed -i -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
+       -e 's/ws-address = "127.0.0.1:8546"/ws-address = "0.0.0.0:8546"/' $HOME/.0gchain/config/app.toml
+```
+
+### 11. Membuat File Service
 ```bash
 sudo tee /etc/systemd/system/initiad.service > /dev/null <<EOF
 [Unit]
@@ -121,33 +127,33 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 11. Memuat Ulang Konfigurasi Systemd
+### 12. Memuat Ulang Konfigurasi Systemd
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable initiad 
 sudo systemctl start initiad
 ```
 
-### 12. Cek Log
+### 13. Cek Log
 ```bash
 sudo journalctl -u initiad -f -o cat
 ```
 
-### 13. Buat Wallet Untuk Validator
+### 14. Buat Wallet Untuk Validator
 ```bash
 initiad keys add $WALLET_NAME
 ```
 > [!CAUTION]
 > **JANGAN LUPA UNTUK MENYIMPAN SEED PHRASE ANDA!**
 
-### 14. Request Token Melalui Faucet
+### 15. Request Token Melalui Faucet
 Silahkan klik tombol dibawah ini untuk request faucet.
 
 <a href="https://faucet.testnet.initia.xyz/" target="_blank">
   <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/58473daf-a9e6-4fba-9449-ef7fff50ed1a" alt="Initia Faucet Button" width="150" height="36.94" border="10" />
 </a>
 
-### 15. Buat Validator
+### 16. Buat Validator
 ```bash
 initiad tx mstaking create-validator \
   --amount=10000000uinit \
