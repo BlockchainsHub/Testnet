@@ -76,21 +76,13 @@ echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.b
 source ~/.bash_profile
 ```
 
-### 6. Masukkan miner_id dan miner_key Dalam Variabel
-```bash
-read -p "Masukkan nama anda untuk konfigurasi miner_id: " MINER_NAME && echo
-```
+### 6. Masukkan miner_key Dalam Variabel
 ```bash
 read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
 ```
 
 ### 7. Update Konfigurasi
 ```bash
-if grep -q 'miner_id' "$ZGS_CONFIG_FILE" || grep -q '# miner_id' "$ZGS_CONFIG_FILE"; then
-    MINER_ID=$(echo -n "$MINER_NAME" | sha256sum | cut -d ' ' -f1)
-    sed -i "/#*miner_id/c\miner_id = \"$MINER_ID\"" "$ZGS_CONFIG_FILE"
-fi
-
 if grep -q 'miner_key' "$ZGS_CONFIG_FILE" || grep -q '# miner_key' "$ZGS_CONFIG_FILE"; then
     sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
 fi
@@ -105,6 +97,18 @@ if ! grep -q "^# log_directory" "$ZGS_CONFIG_FILE"; then
     sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
 elif ! grep -q "^log_directory" "$ZGS_CONFIG_FILE"; then
     sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
+fi
+
+if grep -q 'blockchain_rpc_endpoint' "$ZGS_CONFIG_FILE" || grep -q '# blockchain_rpc_endpoint' "$ZGS_CONFIG_FILE"; then
+    sed -i 's|blockchain_rpc_endpoint = "https://rpc-testnet.0g.ai"|blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id"|' "$ZGS_CONFIG_FILE"
+fi
+
+if grep -q '# network_dir = "network"' "$HOME/0g-storage-node/run/config.toml"; then
+    sed -i 's|# network_dir = "network"|network_dir = "network"|' "$HOME/0g-storage-node/run/config.toml"
+fi
+
+if grep -q '# network_libp2p_port = 1234' "$HOME/0g-storage-node/run/config.toml"; then
+    sed -i 's|# network_libp2p_port = 1234|network_libp2p_port = 1234|' "$HOME/0g-storage-node/run/config.toml"
 fi
 ```
 
@@ -180,16 +184,15 @@ cargo build --release
 sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
 ```
 
-### Backup Miner ID and Key
-Anda dapat membackup `miner_id` dan `miner_key` dengan menyimpan nilai output dari command di bawah ini.
+### Backup Miner Key
+Anda dapat membackup `miner_key` dengan menyimpan nilai output dari command di bawah ini.
 ```bash
-grep 'miner_id' $ZGS_CONFIG_FILE
 grep 'miner_key' $ZGS_CONFIG_FILE
 ```
 
 ### Hapus Node
 > [!CAUTION]
-> **Pastikan untuk membackup `miner_id` dan `miner_key` anda sebelum menghapus node!**
+> **Pastikan untuk membackup `miner_key` anda sebelum menghapus node!**
 ```bash
 sudo systemctl stop zgs
 sudo systemctl disable zgs

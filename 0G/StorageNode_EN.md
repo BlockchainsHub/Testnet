@@ -76,21 +76,13 @@ echo 'export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"' >> ~/.b
 source ~/.bash_profile
 ```
 
-### 6. Store Miner ID and Key
-```bash
-read -p "Enter your name for miner_id config: " MINER_NAME && echo
-```
+### 6. Store Miner Key
 ```bash
 read -sp "Enter your private key for miner_key config: " PRIVATE_KEY && echo
 ```
 
 ### 7. Update Config File
 ```bash
-if grep -q 'miner_id' "$ZGS_CONFIG_FILE" || grep -q '# miner_id' "$ZGS_CONFIG_FILE"; then
-    MINER_ID=$(echo -n "$MINER_NAME" | sha256sum | cut -d ' ' -f1)
-    sed -i "/#*miner_id/c\miner_id = \"$MINER_ID\"" "$ZGS_CONFIG_FILE"
-fi
-
 if grep -q 'miner_key' "$ZGS_CONFIG_FILE" || grep -q '# miner_key' "$ZGS_CONFIG_FILE"; then
     sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
 fi
@@ -105,6 +97,18 @@ if ! grep -q "^# log_directory" "$ZGS_CONFIG_FILE"; then
     sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
 elif ! grep -q "^log_directory" "$ZGS_CONFIG_FILE"; then
     sed -i "/^# log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" $ZGS_CONFIG_FILE
+fi
+
+if grep -q 'blockchain_rpc_endpoint' "$ZGS_CONFIG_FILE" || grep -q '# blockchain_rpc_endpoint' "$ZGS_CONFIG_FILE"; then
+    sed -i 's|blockchain_rpc_endpoint = "https://rpc-testnet.0g.ai"|blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id"|' "$ZGS_CONFIG_FILE"
+fi
+
+if grep -q '# network_dir = "network"' "$HOME/0g-storage-node/run/config.toml"; then
+    sed -i 's|# network_dir = "network"|network_dir = "network"|' "$HOME/0g-storage-node/run/config.toml"
+fi
+
+if grep -q '# network_libp2p_port = 1234' "$HOME/0g-storage-node/run/config.toml"; then
+    sed -i 's|# network_libp2p_port = 1234|network_libp2p_port = 1234|' "$HOME/0g-storage-node/run/config.toml"
 fi
 ```
 
@@ -180,21 +184,20 @@ cargo build --release
 sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
 ```
 
-### Backup Miner ID and Key
-You can backup your `miner_id` and `miner_key` by saving the output value of the command below.
+### Backup Miner Key
+You can backup your `miner_key` by saving the output value of the command below.
 ```bash
-grep 'miner_id' $ZGS_CONFIG_FILE
 grep 'miner_key' $ZGS_CONFIG_FILE
 ```
 
 ### Delete The Node
 > [!CAUTION]
-> **Make sure to backup your `miner_id` and `miner_key` before deleting the node!**
+> **Make sure to backup your `miner_key` before deleting the node!**
 ```bash
 sudo systemctl stop zgs
 sudo systemctl disable zgs
 sudo rm /etc/systemd/system/zgs.service
-rm -rf $HOME/0g-storage-node
+sudo rm -rf $HOME/0g-storage-node
 ```
 
 -----------------------------------------------------------------
