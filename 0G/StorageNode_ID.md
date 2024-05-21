@@ -29,7 +29,7 @@ Setelah instalasi selesai, anda dapat melanjutkan ke langkah [Cek Log](#Cek-Log-
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt-get update
-sudo apt-get install git clang cmake build-essential
+sudo apt-get install git cargo clang cmake build-essential
 ```
 
 ### 2. Instal Rustup

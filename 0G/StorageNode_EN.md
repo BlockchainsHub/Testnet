@@ -29,7 +29,7 @@ After the installation is completed, you can continue to the [Check Latest Log](
 ### 1. Install Dependencies
 ```bash
 sudo apt-get update
-sudo apt-get install git clang cmake build-essential
+sudo apt-get install git cargo clang cmake build-essential
 ```
 
 ### 2. Install Rustup
