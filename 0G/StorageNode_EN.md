@@ -29,7 +29,7 @@ After the installation is completed, you can continue to the [Check Latest Log](
 ### 1. Install Dependencies
 ```bash
 sudo apt-get update
-sudo apt-get install git wget curl clang cmake build-essential
+sudo apt-get install git clang cmake build-essential
 ```
 
 ### 2. Install Rustup
@@ -59,11 +59,11 @@ go version
 
 ### 4. Build Binary
 ```bash
-git clone https://github.com/0glabs/0g-storage-node.git
+cd $HOME
+git clone --recurse-submodules https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
-git submodule update --init
 cargo build --release
-sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
+sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
 ```
 
 ### 5. Set Up Environment Variables
