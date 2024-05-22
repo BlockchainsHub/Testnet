@@ -18,7 +18,7 @@ This guide will help you in the 0G storage node installation process.
 
 ## Storage Node Auto-Installation
 ```bash
-curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/47d79d8b52bd0d156cc61f2aa58bddcd/raw/84e95d7a1d4642204fa1660b7e5a4ac1fe3098c8/zgs_EN.sh && bash zgs_EN.sh
+curl -o zgs_EN.sh https://gist.githubusercontent.com/botxx15/47d79d8b52bd0d156cc61f2aa58bddcd/raw/d911dd92c4a3b2a90471907143f63e06893f1cb7/zgs_EN.sh && bash zgs_EN.sh
 ```
 
 After the installation is completed, you can continue to the [Check Latest Log](#Check-Latest-Log) step to check your logs.
@@ -62,6 +62,7 @@ go version
 cd $HOME
 git clone --recurse-submodules https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
+git pull origin main
 cargo build --release
 sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
 ```

@@ -62,6 +62,7 @@ go version
 cd $HOME
 git clone --recurse-submodules https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
+git pull origin main
 cargo build --release
 sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
 ```
