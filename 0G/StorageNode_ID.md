@@ -95,9 +95,9 @@ else
 fi
 
 if grep -q '# log_sync_start_block_number' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|# log_sync_start_block_number =.*|log_sync_start_block_number = 80981|' "$ZGS_CONFIG_FILE"
+    sed -i 's|# log_sync_start_block_number =.*|log_sync_start_block_number = 334797|' "$ZGS_CONFIG_FILE"
 elif grep -q 'log_sync_start_block_number' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|log_sync_start_block_number =.*|log_sync_start_block_number = 80981|' "$ZGS_CONFIG_FILE"
+    sed -i 's|log_sync_start_block_number =.*|log_sync_start_block_number = 334797|' "$ZGS_CONFIG_FILE"
 fi
 
 sed -i 's|#* db_dir = "db"|db_dir = "db"|' "$ZGS_CONFIG_FILE"
