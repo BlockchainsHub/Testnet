@@ -210,7 +210,8 @@ grep 'miner_key' $ZGS_CONFIG_FILE
 sudo systemctl stop zgs
 sudo systemctl disable zgs
 sudo rm /etc/systemd/system/zgs.service
-sudo rm -rf $HOME/0g-storage-node
+sudo rm /usr/local/bin/zgs_node
+rm -rf $HOME/0g-storage-node
 ```
 
 -----------------------------------------------------------------
