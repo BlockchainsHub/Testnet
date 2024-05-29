@@ -51,9 +51,9 @@ go version
 ### 4. Build Binary
 ```bash
 cd $HOME
-git clone --recurse-submodules https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.2.0 https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
-git pull origin main
+git submodule update --init
 cargo build --release
 sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
 ```
@@ -210,6 +210,7 @@ grep 'miner_key' $ZGS_CONFIG_FILE
 sudo systemctl stop zgs
 sudo systemctl disable zgs
 sudo rm /etc/systemd/system/zgs.service
+sudo rm /usr/local/bin/zgs_node
 rm -rf $HOME/0g-storage-node
 ```
 
