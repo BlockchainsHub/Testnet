@@ -74,9 +74,14 @@ source ~/.bash_profile
 read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
 ```
 
-### 7. Update Config File
+### 7. Create Network & DB Directory
 ```bash
-sed -i 's|#* network_dir = "network"|network_dir = "network"|' "$ZGS_CONFIG_FILE"
+mkdir -p "$HOME/0g-storage-node/network" "$HOME/0g-storage-node/db"
+```
+
+### 8. Update Config File
+```bash
+sed -i 's|#* network_dir = "network"|network_dir = "/root/0g-storage-node/network"|' "$ZGS_CONFIG_FILE"
 
 sed -i 's|#* network_libp2p_port = 1234|network_libp2p_port = 1234|' "$ZGS_CONFIG_FILE"
 
@@ -100,7 +105,7 @@ elif grep -q 'log_sync_start_block_number' "$ZGS_CONFIG_FILE"; then
     sed -i 's|log_sync_start_block_number =.*|log_sync_start_block_number = 334797|' "$ZGS_CONFIG_FILE"
 fi
 
-sed -i 's|#* db_dir = "db"|db_dir = "db"|' "$ZGS_CONFIG_FILE"
+sed -i 's|#* db_dir = "db"|db_dir = "/root/0g-storage-node/db"|' "$ZGS_CONFIG_FILE"
 
 if ! grep -q "^log_config_file" "$ZGS_CONFIG_FILE"; then
     sed -i "/^#* log_config_file/c\log_config_file = \"$ZGS_LOG_CONFIG_FILE\"" "$ZGS_CONFIG_FILE"
@@ -115,7 +120,7 @@ if grep -q 'miner_key\|# miner_key' "$ZGS_CONFIG_FILE"; then
 fi
 ```
 
-### 8. Create Service File
+### 9. Create Service File
 Create a service file to run the storage node in the background.
 ```bash
 sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
@@ -135,7 +140,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 9. Start Storage Node
+### 10. Start Storage Node
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable zgs && \
