@@ -113,16 +113,6 @@ fi
 if grep -q 'miner_key\|# miner_key' "$ZGS_CONFIG_FILE"; then
     sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
 fi
-
-cp "$ZGS_CONFIG_FILE" "${ZGS_CONFIG_FILE}.bak"
-
-awk '
-    BEGIN {delete_block = 0}
-    /^# Miner ID registered in contract, which is mandatory for incentive\.$/ {delete_block = 1; next}
-    delete_block == 1 && /^# The value should be a hex string of length 64 without 0x prefix\.$/ {next}
-    delete_block == 1 && /^miner_id = ""$/ {delete_block = 0; next}
-    delete_block == 0 {print}
-' "$ZGS_CONFIG_FILE" > "$ZGS_CONFIG_FILE.tmp" && mv "$ZGS_CONFIG_FILE.tmp" "$ZGS_CONFIG_FILE"
 ```
 
 ### 8. Create Service File
