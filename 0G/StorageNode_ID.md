@@ -229,6 +229,7 @@ sudo mv "$HOME/0g-storage-client/0g-storage-client" /usr/local/bin
 ```
 
 ### Upload file
+Mohon untuk merubah `YOURVALIDATORIP:8545` dengan IP address dan port validator anda dan `YOURSTORAGEIP:5678` dengan IP address dan port storage node anda.
 ```bash
 0g-storage-client upload \
 --url http://YOURVALIDATORIP:8545 \

@@ -229,6 +229,7 @@ sudo mv "$HOME/0g-storage-client/0g-storage-client" /usr/local/bin
 ```
 
 ### Upload file
+Please change `YOURVALIDATORIP:8545` with your actual validator IP address and port and `YOURSTORAGEIP:5678` with your actual storage node IP address and port.
 ```bash
 0g-storage-client upload \
 --url http://YOURVALIDATORIP:8545 \
