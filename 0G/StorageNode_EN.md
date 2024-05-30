@@ -148,6 +148,8 @@ sudo systemctl restart zgs && \
 sudo systemctl status zgs
 ```
 
+After checking the your node logs and make sure it's up and running, you can continue to [Storage Node CLI](#storage-node-cli) to upload a test file.
+
 -----------------------------------------------------------------
 
 ## Useful Commands
@@ -198,7 +200,7 @@ You can backup your `miner_key` by saving the output value of the command below.
 grep 'miner_key' $ZGS_CONFIG_FILE
 ```
 
-### Delete The Node
+### Delete the Node
 > [!CAUTION]
 > **Make sure to backup your `miner_key` before deleting the node!**
 ```bash
@@ -207,6 +209,33 @@ sudo systemctl disable zgs
 sudo rm /etc/systemd/system/zgs.service
 sudo rm /usr/local/bin/zgs_node
 rm -rf $HOME/0g-storage-node
+```
+
+-----------------------------------------------------------------
+
+## Storage Node CLI
+### Build Binary
+```bash
+cd $HOME
+git clone https://github.com/0glabs/0g-storage-client.git
+cd 0g-storage-client
+go build
+sudo mv "$HOME/0g-storage-client/0g-storage-client" /usr/local/bin
+```
+
+### Generate a test file
+```bash
+0g-storage-client gen --file test.txt
+```
+
+### Upload file
+```bash
+0g-storage-client upload \
+--url http://YOURVALIDATORIP:8545 \
+--contract "0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7” \
+--key $PRIVATE_KEY \
+--node http://YOURSTORAGEIP:5678 \
+--file test.txt
 ```
 
 -----------------------------------------------------------------
