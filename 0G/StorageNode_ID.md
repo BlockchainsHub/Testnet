@@ -148,7 +148,7 @@ sudo systemctl restart zgs && \
 sudo systemctl status zgs
 ```
 
-Setelah memeriksa log node Anda dan pastikan itu sudah aktif dan berjalan, Anda dapat melanjutkan ke [Storage Node CLI] [#storage-node-cli] untuk mengunggah file uji.
+Setelah memeriksa log node Anda, pastikan sudah aktif dan berjalan, selanjutnya Anda dapat melanjutkan ke [Storage Node CLI](#storage-node-cli) untuk upload file test.
 
 -----------------------------------------------------------------
 
