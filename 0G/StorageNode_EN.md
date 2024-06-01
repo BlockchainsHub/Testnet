@@ -71,7 +71,7 @@ source ~/.bash_profile
 
 ### 6. Store Miner Key
 ```bash
-read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
+read -p "Enter your private key for miner_key configuration: " PRIVATE_KEY && echo
 ```
 
 ### 7. Create Network & DB Directory
