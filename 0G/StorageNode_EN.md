@@ -51,7 +51,7 @@ go version
 ### 4. Build Binary
 ```bash
 cd $HOME
-git clone -b v0.2.0 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.3.0 https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
@@ -60,7 +60,13 @@ sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
 
 ### 5. Set Up Environment Variables
 ```bash
+ENR_ADDRESS=$(wget -qO- eth0.me)
+echo "export ENR_ADDRESS=${ENR_ADDRESS}"
+```
+
+```bash
 cat <<EOF >> ~/.bash_profile
+export ENR_ADDRESS=${ENR_ADDRESS}
 export ZGS_CONFIG_FILE="$HOME/0g-storage-node/run/config.toml"
 export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"
 export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"
@@ -81,43 +87,29 @@ mkdir -p "$HOME/0g-storage-node/network" "$HOME/0g-storage-node/db"
 
 ### 8. Update Config File
 ```bash
-sed -i 's|#* network_dir = "network"|network_dir = "/root/0g-storage-node/network"|' "$ZGS_CONFIG_FILE"
+sed -i 's|^\s*#\?\s*network_dir\s*=.*|network_dir = "/root/0g-storage-node/network"|' "$ZGS_CONFIG_FILE"
 
-sed -i 's|#* network_libp2p_port = 1234|network_libp2p_port = 1234|' "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*network_enr_address\s*=.*|network_enr_address = \"$ENR_ADDRESS\"|" "$ZGS_CONFIG_FILE"
 
-if grep -q '# network_boot_nodes' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|# network_boot_nodes = \["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmPxGNWu9eVAQPJww79J32pTJLKGcpjRMb4Qb8xxKkyuG1","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAm93Hd5azfhkGBbkx1zero3nYHvfjQYM2NtiW4R3r5bE2g"\]|network_boot_nodes = \["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAkzRjxK2gorngB1Xq84qDrT4hSVznYDHj6BkbaE4SGx9oS"\]|' "$ZGS_CONFIG_FILE"
-elif grep -q 'network_boot_nodes' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|network_boot_nodes = \["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmPxGNWu9eVAQPJww79J32pTJLKGcpjRMb4Qb8xxKkyuG1","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAm93Hd5azfhkGBbkx1zero3nYHvfjQYM2NtiW4R3r5bE2g"\]|network_boot_nodes = \["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAkzRjxK2gorngB1Xq84qDrT4hSVznYDHj6BkbaE4SGx9oS"\]|' "$ZGS_CONFIG_FILE"
-fi
+sed -i 's|^\s*#\?\s*network_enr_tcp_port\s*=.*|network_enr_tcp_port = 1234|' "$ZGS_CONFIG_FILE"
 
-if grep -q '# blockchain_rpc_endpoint' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|# blockchain_rpc_endpoint =.*|blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id:443"|' "$ZGS_CONFIG_FILE"
-elif grep -q 'blockchain_rpc_endpoint' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|blockchain_rpc_endpoint =.*|blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id:443"|' "$ZGS_CONFIG_FILE"
-else
-    echo 'blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id:443"' >> "$ZGS_CONFIG_FILE"
-fi
+sed -i 's|^\s*#\?\s*network_enr_udp_port\s*=.*|network_enr_udp_port = 1234|' "$ZGS_CONFIG_FILE"
 
-if grep -q '# log_sync_start_block_number' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|# log_sync_start_block_number =.*|log_sync_start_block_number = 334797|' "$ZGS_CONFIG_FILE"
-elif grep -q 'log_sync_start_block_number' "$ZGS_CONFIG_FILE"; then
-    sed -i 's|log_sync_start_block_number =.*|log_sync_start_block_number = 334797|' "$ZGS_CONFIG_FILE"
-fi
+sed -i 's|^\s*#\?\s*network_libp2p_port\s*=.*|network_libp2p_port = 1234|' "$ZGS_CONFIG_FILE"
 
-sed -i 's|#* db_dir = "db"|db_dir = "/root/0g-storage-node/db"|' "$ZGS_CONFIG_FILE"
+sed -i 's|^\s*#\?\s*network_discovery_port\s*=.*|network_discovery_port = 1234|' "$ZGS_CONFIG_FILE"
 
-if ! grep -q "^log_config_file" "$ZGS_CONFIG_FILE"; then
-    sed -i "/^#* log_config_file/c\log_config_file = \"$ZGS_LOG_CONFIG_FILE\"" "$ZGS_CONFIG_FILE"
-fi
+sed -i 's|^\s*#\?\s*network_target_peers\s*=.*|network_target_peers = 50|' "$ZGS_CONFIG_FILE"
 
-if ! grep -q "^log_directory" "$ZGS_CONFIG_FILE"; then
-    sed -i "/^#* log_directory/c\log_directory = \"$ZGS_LOG_DIR\"" "$ZGS_CONFIG_FILE"
-fi
+sed -i 's|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "https://og-testnet-rpc.blockhub.id"|' "$ZGS_CONFIG_FILE"
 
-if grep -q 'miner_key\|# miner_key' "$ZGS_CONFIG_FILE"; then
-    sed -i "/#*miner_key/c\miner_key = \"$PRIVATE_KEY\"" "$ZGS_CONFIG_FILE"
-fi
+sed -i 's|^\s*#\?\s*db_dir\s*=.*|db_dir = "/root/0g-storage-node/db"|' "$ZGS_CONFIG_FILE"
+
+sed -i 's|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "/root/0g-storage-node/run/log_config"|' "$ZGS_CONFIG_FILE"
+
+sed -i 's|^\s*#\?\s*log_directory\s*=.*|log_directory = "/root/0g-storage-node/run/log"|' "$ZGS_CONFIG_FILE"
+
+sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
 ```
 
 ### 9. Create Service File
@@ -187,7 +179,7 @@ sudo systemctl stop zgs
 ```bash
 cd $HOME/0g-storage-node
 git fetch --tags
-git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+git checkout v0.3.0
 git submodule update --init
 cargo build --release
 sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
