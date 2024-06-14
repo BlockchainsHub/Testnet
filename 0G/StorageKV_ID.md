@@ -1,12 +1,12 @@
 ![0G Github Banner](https://github.com/BlockchainsHub/Testnet/assets/77204008/34a32724-b411-41e4-8696-e390dfa01cab)
 
-# 0G Storage KV Guide
-This guide will help you in the 0G storage kv node installation process.
+# Panduan Node Storage KV 0G
+Panduan ini akan membantu anda dalam proses instalasi node storage kv 0G.
 
 -----------------------------------------------------------------
 
-## Required Hardware Specifications
-| Required | Specification |
+## Spesifikasi Hardware Yang Dibutuhkan
+| Spesifikasi | Hardware |
 |-|-
 | CPU | 4 Cores |
 | Memory | 16 GB |
@@ -16,28 +16,28 @@ This guide will help you in the 0G storage kv node installation process.
 
 -----------------------------------------------------------------
 
-## Storage KV Node Installation
-### 1. Install Dependencies
+## Instalasi Node Storage KV
+### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt-get update
 sudo apt-get install git cargo clang cmake build-essential
 ```
 
-### 2. Install Rustup
+### 2. Instal Rustup
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-You will be asked for Rust installation options, just use the default one. Press `1` then `enter` to continue the installation process.
+Anda akan ditanyakan opsi instalasi Rust, cukup pakai yang default. Tekan `1` kemudian `enter` untuk melanjutkan proses instalasi.
 ![CleanShot 2024-04-13 at 15 07 52@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/bcb81284-8235-4cf2-a4f1-50821044cc21)
 
-After the installation process is complete, run the following command, to restart the shell.
+Setelah proses instalasi selesai, jalankan command berikut, untuk restart shell.
 ```bash
 . "$HOME/.cargo/env"
 ```
 ![CleanShot 2024-04-13 at 15 13 17@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/f8f94656-0f1f-4d27-b347-3842b2b77a6f)
 
-### 3. Install GO
+### 3. Instal GO
 ```bash
 cd $HOME && \
 ver="1.22.0" && \
@@ -58,25 +58,25 @@ cargo build --release
 sudo mv "$HOME/0g-storage-kv/target/release/zgs_kv" /usr/local/bin
 ```
 
-### 5. Create DB & KV-DB Directory
+### 5. Buat Directory DB & KV-DB
 ```bash
 mkdir -p "$HOME/0g-storage-kv/db" "$HOME/0g-storage-kv/kv-db"
 ```
 
-### 6. Create Config File
+### 6. Buat File Konfigurasi
 ```bash
 cp $HOME/0g-storage-kv/run/config.toml_backup $HOME/0g-storage-kv/run/config.toml
 ```
 
-### 7. Set Up Environment Variables
-Run the command below and input your IP and port in this format `http://x.x.x.x:5678`. If you installed Storage Node and Storage KV on the same server, you can use `http://127.0.0.1:5678`.
+### 7. Menyiapkan Environment Variables
+Jalankan perintah di bawah ini dan masukkan IP dan port Anda dalam format ini `http://x.x.x.x:5678`. Jika Anda menginstal Storage Node dan Storage KV di server yang sama, Anda dapat menggunakan `http://127.0.0.1:5678`.
 ```bash
-read -p "Enter your storage node IP and port for zgs_node_urls configuration: " ZGS_NODE_URLS
+read -p "Masukkan IP dan port storage node Anda untuk konfigurasi zgs_node_urls: " ZGS_NODE_URLS
 ```
 
-Run the command below and input your storage node `log_sync_start_block_number`. You can run this `grep "log_sync_start_block_number" $HOME/0g-storage-node/run/config.toml | cut -d'=' -f2` command on your storage node to see the `log_sync_start_block_number`.
+Jalankan perintah di bawah ini dan masukkan `log_sync_start_block_number` dari storage node Anda. Anda dapat menjalankan perintah `grep "log_sync_start_block_number" $HOME/0g-storage-node/run/config.toml | cut -d'=' -f2` pada storage node Anda untuk melihat `log_sync_start_block_number`.
 ```bash
-read -p "Enter your storage node log_sync_start_block_number configuration: " BLOCK_NUMBER
+read -p "Masukkan konfigurasi log_sync_start_block_number dari storage node anda: " BLOCK_NUMBER
 ```
 
 ```bash
@@ -95,8 +95,8 @@ grep -qxF 'export BLOCK_NUMBER="'$BLOCK_NUMBER'"' ~/.bash_profile || echo 'expor
 source ~/.bash_profile
 ```
 
-### 8. Update Config File
-If you run a validator node, you can replace `https://og-testnet-jsonrpc.blockhub.id` with your validator IP and port on the `blockchain_rpc_endpoint` section below.
+### 8. Update Konfigurasi
+Jika Anda menjalankan node validator, Anda dapat mengganti `https://og-testnet-jsonrpc.blockhub.id` dengan IP dan port validator Anda pada bagian `blockchain_rpc_endpoint` di bawah.
 ```bash
 sed -i "s|^\s*#\?\s*db_dir\s*=.*|db_dir = \"$DB_DIR\"|" "$ZGSKV_CONFIG_FILE"
 
@@ -115,12 +115,12 @@ sed -i 's|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "0xb8F0306
 sed -i "s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $BLOCK_NUMBER|" "$ZGSKV_CONFIG_FILE"
 ```
 
-### 9. Create Service File
-Create a service file to run the storage kv node in the background.
+### 9. Buat File Service
+Buat file service untuk menjalankan storage node di background.
 ```bash
 sudo tee /etc/systemd/system/zgskv.service > /dev/null <<EOF
 [Unit]
-Description=0G Storage KV Node
+Description=Node Storage KV 0G
 After=network.target
 
 [Service]
@@ -139,29 +139,29 @@ EOF
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable zgskv && \
-sudo systemctl start zgskv && \
+sudo systemctl restart zgskv && \
 sudo systemctl status zgskv
 ```
 
 -----------------------------------------------------------------
 
-## Useful Commands
-### Check Log
+## Daftar Command
+### Cek Log
 ```bash
 sudo journalctl -u zgskv -f -o cat
 ```
 
-### Restart the Node
+### Restart Node
 ```bash
 sudo systemctl restart zgskv
 ```
 
-### Stop the Node
+### Stop Node
 ```bash
 sudo systemctl stop zgskv
 ```
 
-### Delete the Node
+### Hapus Node
 ```bash
 sudo systemctl stop zgskv
 sudo systemctl disable zgskv
