@@ -225,7 +225,7 @@ Please change `YOURVALIDATORIP:8545` with your actual validator IP address and p
 ```bash
 0g-storage-client upload \
 --url http://YOURVALIDATORIP:8545 \
---contract "0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7” \
+--contract "0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7" \
 --key $PRIVATE_KEY \
 --node http://YOURSTORAGEIP:5678 \
 --file test.txt
