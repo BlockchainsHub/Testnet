@@ -85,12 +85,7 @@ read -p "Enter your private key for miner_key configuration: " PRIVATE_KEY && ec
 mkdir -p "$HOME/0g-storage-node/network" "$HOME/0g-storage-node/db"
 ```
 
-### 8. Create Config File
-```bash
-cp $HOME/0g-storage-kv/run/config.toml_backup $HOME/0g-storage-kv/run/config.toml
-```
-
-### 9. Update Config File
+### 8. Update Config File
 ```bash
 sed -i 's|^\s*#\?\s*network_dir\s*=.*|network_dir = "/root/0g-storage-node/network"|' "$ZGS_CONFIG_FILE"
 
@@ -117,7 +112,7 @@ sed -i 's|^\s*#\?\s*log_directory\s*=.*|log_directory = "/root/0g-storage-node/r
 sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
 ```
 
-### 10. Create Service File
+### 9. Create Service File
 Create a service file to run the storage node in the background.
 ```bash
 sudo tee /etc/systemd/system/zgs.service > /dev/null <<EOF
@@ -137,7 +132,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 11. Start Storage Node
+### 10. Start Storage Node
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable zgs && \
