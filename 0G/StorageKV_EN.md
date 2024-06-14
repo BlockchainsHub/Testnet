@@ -63,7 +63,12 @@ sudo mv "$HOME/0g-storage-kv/target/release/zgs_kv" /usr/local/bin
 mkdir -p "$HOME/0g-storage-kv/db" "$HOME/0g-storage-kv/kv-db"
 ```
 
-### 6. Set Up Environment Variables
+### 6. Create Config File
+```bash
+cp $HOME/0g-storage-kv/run/config.toml_backup $HOME/0g-storage-kv/run/config.toml
+```
+
+### 7. Set Up Environment Variables
 Run the command below and input your IP and port in this format `http://x.x.x.x:5678`. If you installed Storage Node and Storage KV on the same server, you can use `http://127.0.0.1:5678`.
 ```bash
 read -p "Enter your storage node IP and Port for zgs_node_urls configuration: " ZGS_NODE_URLS
@@ -90,7 +95,7 @@ grep -qxF 'export BLOCK_NUMBER="'$BLOCK_NUMBER'"' ~/.bash_profile || echo 'expor
 source ~/.bash_profile
 ```
 
-### 7. Update Config File
+### 8. Update Config File
 If you run a validator node, you can replace `https://og-testnet-jsonrpc.blockhub.id` with your validator IP and port on the `blockchain_rpc_endpoint` section below.
 ```bash
 sed -i "s|^\s*#\?\s*db_dir\s*=.*|db_dir = \"$DB_DIR\"|" "$ZGSKV_CONFIG_FILE"
@@ -107,10 +112,10 @@ sed -i 's|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "htt
 
 sed -i 's|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7"|' "$ZGSKV_CONFIG_FILE"
 
-ed -i "s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $BLOCK_NUMBER|" "$ZGSKV_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $BLOCK_NUMBER|" "$ZGSKV_CONFIG_FILE"
 ```
 
-### 8. Create Service File
+### 9. Create Service File
 Create a service file to run the storage kv node in the background.
 ```bash
 sudo tee /etc/systemd/system/zgskv.service > /dev/null <<EOF
@@ -130,7 +135,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 9. Start Storage Node
+### 10. Start Storage Node
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable zgskv && \
