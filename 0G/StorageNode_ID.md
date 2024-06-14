@@ -136,7 +136,7 @@ EOF
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable zgs && \
-sudo systemctl restart zgs && \
+sudo systemctl start zgs && \
 sudo systemctl status zgs
 ```
 
