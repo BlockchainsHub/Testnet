@@ -65,7 +65,7 @@ mkdir -p "$HOME/0g-storage-kv/db" "$HOME/0g-storage-kv/kv-db"
 
 ### 6. Buat File Konfigurasi
 ```bash
-cp $HOME/0g-storage-kv/run/config.toml_backup $HOME/0g-storage-kv/run/config.toml
+cp $HOME/0g-storage-kv/run/config_example.toml $HOME/0g-storage-kv/run/config.toml
 ```
 
 ### 7. Menyiapkan Environment Variables
