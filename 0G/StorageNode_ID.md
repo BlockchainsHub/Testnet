@@ -150,6 +150,16 @@ Setelah memeriksa log node Anda, pastikan sudah aktif dan berjalan, selanjutnya 
 tail -n 100 "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
 ```
 
+### Cek Log Peers
+```bash
+grep 'peers' "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
+```
+
+### Cek Log Tx Sequence
+```bash
+grep 'tx_seq' "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
+```
+
 ### Cek Error
 ```bash
 grep "Error" $ZGS_LOG_DIR/zgs.log.*

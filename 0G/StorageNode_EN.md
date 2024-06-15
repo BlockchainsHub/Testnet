@@ -150,6 +150,16 @@ After checking the your node logs and make sure it's up and running, you can con
 tail -n 100 "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
 ```
 
+### Check Peers Log
+```bash
+grep 'peers' "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
+```
+
+### Check Tx Sequence Log
+```bash
+grep 'tx_seq' "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
+```
+
 ### Look for Errors
 ```bash
 grep "Error" $ZGS_LOG_DIR/zgs.log.*
