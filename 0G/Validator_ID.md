@@ -93,7 +93,7 @@ Kemudian verifikasi file konfigurasi genesis sudah benar atau belum.
 0gchaind validate-genesis
 ```
 
-### 7. Tambahkan seeds dan peers pada file config.toml
+### 7. Update Konfigurasi
 ```bash
 PEERS="9d7564df34efa146a94c073e5bf3f5e11f947b75@155.133.22.230:26656,a4055b828e59832c7a06d61fc51347755a160d0b@157.90.33.62:21656" && \
 SEEDS="c4d619f6088cb0b24b4ab43a0510bf9251ab5d7f@54.241.167.190:26656,44d11d4ba92a01b520923f51632d2450984d5886@54.176.175.48:26656,f2693dd86766b5bf8fd6ab87e2e970d564d20aff@54.193.250.204:26656,f878d40c538c8c23653a5b70f615f8dccec6fb9f@54.215.187.94:26656" && \
@@ -102,15 +102,12 @@ sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persisten
 sed -i 's|^\s*#\?\s*laddr\s*=.*|laddr = "tcp://0.0.0.0:26657"|' $HOME/.0gchain/config/config.toml
 
 sed -i 's|^\s*#\?\s*api\s*=.*|api = "eth,txpool,personal,net,debug,web3"|' $HOME/.0gchain/config/app.toml
-```
 
-### 8. Open Json-RPC 
-```bash
 sed -i -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
        -e 's/ws-address = "127.0.0.1:8546"/ws-address = "0.0.0.0:8546"/' $HOME/.0gchain/config/app.toml
 ```
 
-### 9. Membuat File Service
+### 8. Membuat File Service
 ```bash
 sudo tee /etc/systemd/system/0gchaind.service > /dev/null <<EOF
 [Unit]
@@ -129,19 +126,19 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 10. Memuat Ulang Konfigurasi Systemd
+### 9. Memuat Ulang Konfigurasi Systemd
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable 0gchaind 
 sudo systemctl start 0gchaind
 ```
 
-### 11. Cek Log
+### 10. Cek Log
 ```bash
 sudo journalctl -u 0gchaind -f -o cat
 ```
 
-### 12. Buat Wallet Untuk Validator
+### 11. Buat Wallet Untuk Validator
 ```bash
 0gchaind keys add $WALLET_NAME --eth
 ```
@@ -155,14 +152,14 @@ Export private key dan masukkan ke Metamask.
 
 Untuk menambahkan jaringan 0G di Metamask, buka website [scanner 0G](https://scan-testnet.0g.ai/) dan connect wallet. Jaringan 0G akan ditambahkan secara otomatis ke wallet Metamask anda.
 
-### 13. Request Token Melalui Faucet
+### 12. Request Token Melalui Faucet
 Silahkan klik tombol dibawah ini untuk request faucet.
 
 <a href="https://faucet.0g.ai/" target="_blank">
   <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/12866a81-cac7-451a-96b5-4b202e8f1194" alt="Faucet Button" width="150" height="36.94" border="10" />
 </a>
 
-### 14. Buat Validator
+### 13. Buat Validator
 ```bash
 0gchaind tx staking create-validator \
   --amount=1000000ua0gi \
