@@ -69,34 +69,38 @@ cp $HOME/0g-storage-kv/run/config_example.toml $HOME/0g-storage-kv/run/config.to
 ```
 
 ### 7. Set Up Environment Variables
-Run the command below and input your IP and port in this format `http://x.x.x.x:5678`. If you installed Storage Node and Storage KV on the same server, you can use `http://127.0.0.1:5678`.
+Run the command below and input your storage node IP and port in this format `http://x.x.x.x:5678`. If you installed Storage Node and Storage KV on the same server, you can use `http://127.0.0.1:5678`.
 ```bash
 read -p "Enter your storage node IP and port for zgs_node_urls configuration: " ZGS_NODE_URLS
 ```
 
-Run the command below and input your storage node `log_sync_start_block_number`. You can run this `grep "log_sync_start_block_number" $HOME/0g-storage-node/run/config.toml | cut -d'=' -f2` command on your storage node to see the `log_sync_start_block_number`.
+Make sure the Validator RPC that you gonna use has block `334797` before you run Storage KV by running the command below. Change `yourvalidatorip:port` with your actual validator jsonrpc IP and port.
 ```bash
-read -p "Enter your storage node log_sync_start_block_number configuration: " BLOCK_NUMBER
+curl -X POST http://yourvalidatorip:port -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x51bcd",false],"id":1}'
+```
+
+Run the command below and input your validator node IP and port in this format `http://x.x.x.x:8545`. 
+```bash
+read -p "Enter your validator node IP and port for blockchain_rpc_endpoint configuration: " BLOCKCHAIN_RPC_ENDPOINT
 ```
 
 ```bash
-grep -qxF 'export DB_DIR="$HOME/0g-storage-kv/db"' ~/.bash_profile || echo 'export DB_DIR="$HOME/0g-storage-kv/db"' >> ~/.bash_profile
+echo 'export DB_DIR="$HOME/0g-storage-kv/db"' >> ~/.bash_profile
 
-grep -qxF 'export ZGSKV_DB_DIR="$HOME/0g-storage-kv/kv-db"' ~/.bash_profile || echo 'export ZGSKV_DB_DIR="$HOME/0g-storage-kv/kv-db"' >> ~/.bash_profile
+echo 'export ZGSKV_DB_DIR="$HOME/0g-storage-kv/kv-db"' >> ~/.bash_profile
 
-grep -qxF 'export ZGS_NODE_URLS="'$ZGS_NODE_URLS'"' ~/.bash_profile || echo 'export ZGS_NODE_URLS="'$ZGS_NODE_URLS'"' >> ~/.bash_profile
+echo 'export ZGS_NODE_URLS="'$ZGS_NODE_URLS'"' >> ~/.bash_profile
 
-grep -qxF 'export ZGSKV_CONFIG_FILE="$HOME/0g-storage-kv/run/config.toml"' ~/.bash_profile || echo 'export ZGSKV_CONFIG_FILE="$HOME/0g-storage-kv/run/config.toml"' >> ~/.bash_profile
+echo 'export ZGSKV_CONFIG_FILE="$HOME/0g-storage-kv/run/config.toml"' >> ~/.bash_profile
 
-grep -qxF 'export ZGSKV_LOG_CONFIG_FILE="$HOME/0g-storage-kv/run/log_config"' ~/.bash_profile || echo 'export ZGSKV_LOG_CONFIG_FILE="$HOME/0g-storage-kv/run/log_config"' >> ~/.bash_profile
+echo 'export ZGSKV_LOG_CONFIG_FILE="$HOME/0g-storage-kv/run/log_config"' >> ~/.bash_profile
 
-grep -qxF 'export BLOCK_NUMBER="'$BLOCK_NUMBER'"' ~/.bash_profile || echo 'export BLOCK_NUMBER="'$BLOCK_NUMBER'"' >> ~/.bash_profile
+echo 'export BLOCKCHAIN_RPC_ENDPOINT="'$BLOCKCHAIN_RPC_ENDPOINT'"' >> ~/.bash_profile
 
 source ~/.bash_profile
 ```
 
 ### 8. Update Config File
-If you run a validator node, you can replace `https://og-testnet-jsonrpc.blockhub.id` with your validator IP and port on the `blockchain_rpc_endpoint` section below.
 ```bash
 sed -i "s|^\s*#\?\s*db_dir\s*=.*|db_dir = \"$DB_DIR\"|" "$ZGSKV_CONFIG_FILE"
 
@@ -108,11 +112,11 @@ sed -i "s|^\s*#\?\s*zgs_node_urls\s*=.*|zgs_node_urls = \"$ZGS_NODE_URLS\"|" "$Z
 
 sed -i "s|^\s*#\?\s*log_config_file\s*=.*|log_config_file = \"$ZGSKV_LOG_CONFIG_FILE\"|" "$ZGSKV_CONFIG_FILE"
 
-sed -i 's|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id"|' "$ZGSKV_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$ZGSKV_CONFIG_FILE"
 
 sed -i 's|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7"|' "$ZGSKV_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = $BLOCK_NUMBER|" "$ZGSKV_CONFIG_FILE"
+sed -i 's|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 334797|' "$ZGSKV_CONFIG_FILE"
 ```
 
 ### 9. Create Service File
