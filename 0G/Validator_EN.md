@@ -26,19 +26,6 @@ This guide will assist you in the installation process of the 0G node.
 
 -----------------------------------------------------------------
 
-## Auto Node Installation
-Run the following command to install node automatically.
-```bash
-curl -o zg_EN.sh https://gist.githubusercontent.com/botxx15/e8f60b199e74356ea8b8be532fb71880/raw/3675e7ab585b2d20092ea1eea90003b5d5b6a31e/zg_EN.sh && bash zg_EN.sh
-```
-
-You can press `ctrl+c` button to quit from logs.
-
-> [!NOTE]
-> Once the nodes are synchronized, you can proceed to step [11. Create Wallet for Validator](#11-Create-Wallet-For-Validator)
-
------------------------------------------------------------------
-
 ## Manual Node Installation
 ### 1. Install Required Packages
 ```bash
@@ -65,6 +52,7 @@ git clone -b v0.2.3 https://github.com/0glabs/0g-chain.git
 ./0g-chain/networks/testnet/install.sh
 source .profile
 ```
+
 ### 4. Set Variables
 You can make several required changes, such as changing `My_Node` in the variable `MONIKER="My_Node"` with any node name you want to use, and `wallet` in the variable `WALLET_NAME="wallet"` with any wallet name you want to use.
 ```bash
@@ -97,12 +85,13 @@ PEERS="96d615925aee68b90bfaf18d461e799fdcb22211@45.10.162.96:26656,7253c5556119b
 SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656" && \
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.0gchain/config/config.toml
 
-sed -i 's|^\s*#\?\s*laddr\s*=.*|laddr = "tcp://0.0.0.0:26657"|' $HOME/.0gchain/config/config.toml
+sed -i 's|^\s*#\?\s*laddr\s*=\s*"tcp://127.0.0.1:26657"|laddr = "tcp://0.0.0.0:26657"|' $HOME/.0gchain/config/config.toml
 
 sed -i 's|^\s*#\?\s*api\s*=.*|api = "eth,txpool,personal,net,debug,web3"|' $HOME/.0gchain/config/app.toml
 
-sed -i -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
-       -e 's/ws-address = "127.0.0.1:8546"/ws-address = "0.0.0.0:8546"/' $HOME/.0gchain/config/app.toml
+sed -i 's|^\s*#\?\s*address\s*=\s*"127.0.0.1:8545"|address = "0.0.0.0:8545"|' $HOME/.0gchain/config/app.toml
+
+sed -i 's|^\s*#\?\s*ws-address\s*=\s*"127.0.0.1:8546"|ws-address = "0.0.0.0:8546"|' $HOME/.0gchain/config/app.toml
 ```
 
 ### 8. Create a Service File
@@ -222,39 +211,37 @@ Query wallet balances
 Create validator
 ```
 0gchaind tx staking create-validator \
---amount 1000000ua0gi \
---pubkey $(0gchaind tendermint show-validator) \
---moniker $MONIKER \
---identity "keybase-id" \
---details "detailed-info" \
---website "website-link" \
---security-contact "email-address" \
---chain-id $CHAIN_ID \
---commission-rate 0.10 \
---commission-max-rate 0.20 \
---commission-max-change-rate 0.01 \
---min-self-delegation 1 \
---from wallet \
---gas auto \
---gas-adjustment 1.4 \
---fees=800ua0gi \
+--amount=1000000ua0gi \
+--pubkey=$(0gchaind tendermint show-validator) \
+--moniker=$MONIKER \
+--identity="keybase-id" \
+--details="detailed-info" \
+--website="website-link" \
+--security-contact="email-address" \
+--chain-id=$CHAIN_ID \
+--commission-rate="0.10" \
+--commission-max-rate="0.20" \
+--commission-max-change-rate="0.01" \
+--min-self-delegation="1" \
+--from=wallet \
+--gas=auto \
+--gas-adjustment=1.4 \
 -y
 ```
 
 Edit validator
 ```
 0gchaind tx staking edit-validator \
---new-moniker "nama-moniker" \
---identity "keybase-id" \
---details "detailed-info" \
---website "website-link" \
---security-contact "email-address" \
---chain-id $CHAIN_ID \
---commission-rate 0.10 \
---from wallet \
---gas auto \
---gas-adjustment 1.4 \
---fees=800ua0gi \
+--new-moniker="nama-moniker" \
+--identity="keybase-id" \
+--details="detailed-info" \
+--website="website-link" \
+--security-contact="email-address" \
+--chain-id=$CHAIN_ID \
+--commission-rate="0.10" \
+--from=wallet \
+--gas=auto \
+--gas-adjustment=1.4 \
 -y
 ```
 

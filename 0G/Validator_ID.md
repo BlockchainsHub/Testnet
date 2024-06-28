@@ -26,19 +26,6 @@ Panduan ini akan membantu anda dalam proses instalasi node 0G.
 
 -----------------------------------------------------------------
 
-## Instalasi Node Otomatis
-Jalankan command berikut ini untuk menginstal node secara otomatis.
-```
-curl -o zg_ID.sh https://gist.githubusercontent.com/botxx15/972b30bfa135b92c20438f48fc8a6e7d/raw/d8da1be11b125f8e70f371f14536d4b452376efb/zg_ID.sh && bash zg_ID.sh
-``` 
-
-Anda dapat menekan tombol `ctrl+c` untuk keluar dari log.
-
-> [!NOTE]
-> Setelah node tersinkronisasi, anda dapat melanjutkan ke tahap [11. Buat Wallet Untuk Validator](#11-Buat-Wallet-Untuk-Validator)
-
------------------------------------------------------------------
-
 ## Instalasi Node Manual
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
@@ -61,15 +48,16 @@ go version
 
 ### 3. Build Binary
 ```bash
-git clone -b v0.1.0 https://github.com/0glabs/0g-chain.git
+git clone -b v0.2.3 https://github.com/0glabs/0g-chain.git
 ./0g-chain/networks/testnet/install.sh
 source .profile
 ```
+
 ### 4. Mengatur Variable
 Anda bisa melakukan beberapa perubahan yang dibutuhkan. Seperti `My_Node` yang ada pada variabel `MONIKER="My_Node"` bisa dirubah dengan nama node apa saja yang ingin anda gunakan dan `wallet` yang ada pada variabel `WALLET_NAME="wallet"` bisa dirubah dengan nama wallet apa saja yang ingin anda gunakan.
 ```bash
 echo 'export MONIKER="My_Node"' >> ~/.bash_profile
-echo 'export CHAIN_ID="zgtendermint_16600-1"' >> ~/.bash_profile
+echo 'export CHAIN_ID="zgtendermint_16600-2"' >> ~/.bash_profile
 echo 'export WALLET_NAME="wallet"' >> ~/.bash_profile
 source $HOME/.bash_profile
 ```
@@ -81,11 +69,9 @@ cd $HOME
 0gchaind init $MONIKER --chain-id $CHAIN_ID
 ```
 
-### 6. Download file genesis.json & addrbook.json
+### 6. Download file genesis.json
 ```bash
-curl -Ls https://snapshots.liveraven.net/snapshots/testnet/zero-gravity/genesis.json > $HOME/.0gchain/config/genesis.json
-
-curl -Ls https://snapshots.liveraven.net/snapshots/testnet/zero-gravity/addrbook.json > $HOME/.0gchain/config/addrbook.json
+curl -Ls https://github.com/0glabs/0g-chain/releases/download/v0.2.3/genesis.json > $HOME/.0gchain/config/genesis.json
 ```
 
 Kemudian verifikasi file konfigurasi genesis sudah benar atau belum.
@@ -95,16 +81,17 @@ Kemudian verifikasi file konfigurasi genesis sudah benar atau belum.
 
 ### 7. Update Konfigurasi
 ```bash
-PEERS="9d7564df34efa146a94c073e5bf3f5e11f947b75@155.133.22.230:26656,a4055b828e59832c7a06d61fc51347755a160d0b@157.90.33.62:21656" && \
-SEEDS="c4d619f6088cb0b24b4ab43a0510bf9251ab5d7f@54.241.167.190:26656,44d11d4ba92a01b520923f51632d2450984d5886@54.176.175.48:26656,f2693dd86766b5bf8fd6ab87e2e970d564d20aff@54.193.250.204:26656,f878d40c538c8c23653a5b70f615f8dccec6fb9f@54.215.187.94:26656" && \
+PEERS="96d615925aee68b90bfaf18d461e799fdcb22211@45.10.162.96:26656,7253c5556119b84f581bf3479db33687c2ff5cfe@38.242.143.169:26656,0aa16751b6c1884e755997d08dc17f8582aa9e38@45.10.163.80:26656,85233db31304a69fb2dda924b5de31c22dfcff5a@45.10.161.188:26656,89e272c0e5007e391f420e4f45e1473f91995025@154.26.155.239:26656,df8947d0bd46f24590e5d4bc3c06c59d543572d0@65.109.92.18:36656,d7ca6521ee30f8cf9eaf32e9edee1101e44c48e9@45.10.161.5:26656,364c45b7cab8a095cb59443f3e91fd102ec9eb95@158.220.118.216:26656,c8807bba12fa67676319df8e049ae5fac690cf55@45.159.228.20:26656,cfd099ade96d82908b4ab185eddbf90379579bfc@84.247.149.9:26656,03619b6f90fab32cd5f0cadbe3021e6a3cda16e3@154.26.156.101:26656,b3411cfb89113055dce89277c7cc7029ce451090@195.201.242.107:26656,bed108e9ce56d84a574fa02df90c734281ae19ef@162.55.65.137:27856,057f64f293f0843c849aa3f1f1e20a1a0add29f8@45.159.222.237:26656,369666051d45ed28379db34a80dfdf13e43d3681@5.104.80.63:26656,bc8898c416f7b22e56782eb16803150fd90863b6@81.0.221.180:26656,6970d09a9e004f6132b30db6eb5e27b6bd53a1d8@158.220.89.199:26656,7ecfe8d9404a4e1ea36cba5d546650da2b97bfd2@45.90.122.129:26656,4d98cf3cb2a61238a0b1557596cdc4b306472cb9@95.216.228.91:13456" && \
+SEEDS="81987895a11f6689ada254c6b57932ab7ed909b6@54.241.167.190:26656,010fb4de28667725a4fef26cdc7f9452cc34b16d@54.176.175.48:26656,e9b4bc203197b62cc7e6a80a64742e752f4210d5@54.193.250.204:26656,68b9145889e7576b652ca68d985826abd46ad660@18.166.164.232:26656" && \
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.0gchain/config/config.toml
 
-sed -i 's|^\s*#\?\s*laddr\s*=.*|laddr = "tcp://0.0.0.0:26657"|' $HOME/.0gchain/config/config.toml
+sed -i 's|^\s*#\?\s*laddr\s*=\s*"tcp://127.0.0.1:26657"|laddr = "tcp://0.0.0.0:26657"|' $HOME/.0gchain/config/config.toml
 
 sed -i 's|^\s*#\?\s*api\s*=.*|api = "eth,txpool,personal,net,debug,web3"|' $HOME/.0gchain/config/app.toml
 
-sed -i -e 's/address = "127.0.0.1:8545"/address = "0.0.0.0:8545"/' \
-       -e 's/ws-address = "127.0.0.1:8546"/ws-address = "0.0.0.0:8546"/' $HOME/.0gchain/config/app.toml
+sed -i 's|^\s*#\?\s*address\s*=\s*"127.0.0.1:8545"|address = "0.0.0.0:8545"|' $HOME/.0gchain/config/app.toml
+
+sed -i 's|^\s*#\?\s*ws-address\s*=\s*"127.0.0.1:8546"|ws-address = "0.0.0.0:8546"|' $HOME/.0gchain/config/app.toml
 ```
 
 ### 8. Membuat File Service
@@ -119,7 +106,7 @@ User=root
 ExecStart=/root/go/bin/0gchaind start
 Restart=on-failure
 RestartSec=3
-LimitNOFILE=4096
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
@@ -224,39 +211,37 @@ Cek saldo wallet
 Buat validator
 ```
 0gchaind tx staking create-validator \
---amount 1000000ua0gi \
---pubkey $(0gchaind tendermint show-validator) \
---moniker $MONIKER \
---identity "keybase-id" \
---details "info-detail" \
---website "link-website" \
---security-contact "alamat-email" \
---chain-id $CHAIN_ID \
---commission-rate 0.10 \
---commission-max-rate 0.20 \
---commission-max-change-rate 0.01 \
---min-self-delegation 1 \
---from wallet \
---gas auto \
---gas-adjustment 1.4 \
---fees=800ua0gi \
+--amount=1000000ua0gi \
+--pubkey=$(0gchaind tendermint show-validator) \
+--moniker=$MONIKER \
+--identity="keybase-id" \
+--details="info-detail" \
+--website="link-website" \
+--security-contact="alamat-email" \
+--chain-id=$CHAIN_ID \
+--commission-rate="0.10" \
+--commission-max-rate="0.20" \
+--commission-max-change-rate="0.01" \
+--min-self-delegation="1" \
+--from=wallet \
+--gas=auto \
+--gas-adjustment=1.4 \
 -y
 ```
 
 Edit validator
 ```
 0gchaind tx staking edit-validator \
---new-moniker "nama-moniker" \
---identity "keybase-id" \
---details "info-detail" \
---website "link-website" \
---security-contact "alamat-email" \
---chain-id $CHAIN_ID \
---commission-rate 0.10 \
---from wallet \
---gas auto \
---gas-adjustment 1.4 \
---fees=800ua0gi \
+--new-moniker="nama-moniker" \
+--identity="keybase-id" \
+--details="detailed-info" \
+--website="website-link" \
+--security-contact="email-address" \
+--chain-id=$CHAIN_ID \
+--commission-rate="0.10" \
+--from=wallet \
+--gas=auto \
+--gas-adjustment=1.4 \
 -y
 ```
 
@@ -386,7 +371,7 @@ Cek validator keys
 
 Dapatkan live peers
 ```bash
-curl -sS http://localhost:23457/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
+curl -sS http://localhost:26657/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
 ```
 
 Aktifkan prometheus
