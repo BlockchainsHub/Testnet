@@ -51,7 +51,7 @@ go version
 ### 4. Build Binary
 ```bash
 cd $HOME
-git clone -b v0.3.1 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.3.2 https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
@@ -102,6 +102,10 @@ sed -i 's|^\s*#\?\s*network_discovery_port\s*=.*|network_discovery_port = 1234|'
 sed -i 's|^\s*#\?\s*network_target_peers\s*=.*|network_target_peers = 50|' "$ZGS_CONFIG_FILE"
 
 sed -i 's|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id"|' "$ZGS_CONFIG_FILE"
+
+sed -i 's|^\s*#\?\s*rpc_enabled\s*=\s*true|rpc_enabled = true|' "$ZGS_CONFIG_FILE"
+
+sed -i 's|^\s*#\?\s*rpc_listen_address\s*=\s*"0.0.0.0:5678"|rpc_listen_address = "0.0.0.0:5678"|' "$ZGS_CONFIG_FILE"
 
 sed -i 's|^\s*#\?\s*db_dir\s*=.*|db_dir = "/root/0g-storage-node/db"|' "$ZGS_CONFIG_FILE"
 
