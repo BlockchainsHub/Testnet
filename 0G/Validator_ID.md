@@ -104,6 +104,8 @@ After=network.target
 [Service]
 User=root
 ExecStart=/root/go/bin/0gchaind start
+Environment="G0GC=900"
+Environment="G0MELIMIT=40GB"
 Restart=on-failure
 RestartSec=3
 LimitNOFILE=65535
