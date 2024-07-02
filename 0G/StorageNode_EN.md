@@ -114,6 +114,8 @@ sed -i 's|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "/root/0g-storage-no
 sed -i 's|^\s*#\?\s*log_directory\s*=.*|log_directory = "/root/0g-storage-node/run/log"|' "$ZGS_CONFIG_FILE"
 
 sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
+
+sed -i "s|^\s*#\?\s*auto_sync_enabled\s*=.*|# auto_sync_enabled = true|" "$ZGS_CONFIG_FILE"
 ```
 
 ### 9. Create Service File
@@ -239,7 +241,7 @@ Please change `YOURVALIDATORIP:8545` with your actual validator IP address and p
 ```bash
 0g-storage-client upload \
 --url http://YOURVALIDATORIP:8545 \
---contract "0xb8F03061969da6Ad38f0a4a9f8a86bE71dA3c8E7" \
+--contract "0x8873cc79c5b3b5666535C825205C9a128B1D75F1" \
 --key $PRIVATE_KEY \
 --node http://YOURSTORAGEIP:5678 \
 --file test.txt
