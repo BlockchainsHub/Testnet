@@ -179,7 +179,7 @@ Generate new key
 
 Recover key
 ```
-0gchaind keys add wallet --recover
+0gchaind keys add wallet --eth --recover
 ```
 
 List all key
