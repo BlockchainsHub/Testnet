@@ -51,7 +51,7 @@ go version
 ### 4. Build Binary
 ```bash
 cd $HOME
-git clone -b v0.3.2 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.3.3 https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
@@ -114,8 +114,6 @@ sed -i 's|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "/root/0g-storage-no
 sed -i 's|^\s*#\?\s*log_directory\s*=.*|log_directory = "/root/0g-storage-node/run/log"|' "$ZGS_CONFIG_FILE"
 
 sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
-
-sed -i "s|^\s*#\?\s*auto_sync_enabled\s*=.*|# auto_sync_enabled = true|" "$ZGS_CONFIG_FILE"
 ```
 
 ### 9. Buat File Service
