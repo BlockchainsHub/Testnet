@@ -105,19 +105,19 @@ echo 'export SIGNER_ETH_PRIVATE_KEY="'$SIGNER_ETH_PRIVATE_KEY'"' >> ~/.bash_prof
 
 ### 8. Update Config File
 ```bash
-sed -i "s|^\s*#\?\s*data_path\s*=.*|data_path = \"$DB_DIR\"|" "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*data_path\s*=.*|data_path = \"$DB_DIR\"|" "$ZGDA_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*encoder_params_dir\s*=.*|encoder_params_dir = \"$ZGDA_ENCODER_PARAMS_DIR\"|" "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*encoder_params_dir\s*=.*|encoder_params_dir = \"$ZGDA_ENCODER_PARAMS_DIR\"|" "$ZGDA_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*eth_rpc_endpoint\s*=.*|eth_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*eth_rpc_endpoint\s*=.*|eth_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$ZGDA_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*socket_address\s*=.*|socket_address = \"$SOCKET_ADDRESS\"|" "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*socket_address\s*=.*|socket_address = \"$SOCKET_ADDRESS\"|" "$ZGDA_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*da_entrance_address\s*=.*|da_entrance_address = "0xDFC8B84e3C98e8b550c7FEF00BCB2d8742d80a69"|" "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*da_entrance_address\s*=.*|da_entrance_address = "0xDFC8B84e3C98e8b550c7FEF00BCB2d8742d80a69"|" "$ZGDA_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*signer_bls_private_key\s*=.*|signer_bls_private_key = \"$SIGNER_BLS_PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*signer_bls_private_key\s*=.*|signer_bls_private_key = \"$SIGNER_BLS_PRIVATE_KEY\"|" "$ZGDA_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*signer_eth_private_key\s*=.*|signer_eth_private_key = \"$SIGNER_ETH_PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*signer_eth_private_key\s*=.*|signer_eth_private_key = \"$SIGNER_ETH_PRIVATE_KEY\"|" "$ZGDA_CONFIG_FILE"
 ```
 
 ### 9. Create Service File
