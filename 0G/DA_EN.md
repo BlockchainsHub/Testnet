@@ -115,7 +115,7 @@ sed -i "s|^\s*#\?\s*eth_rpc_endpoint\s*=.*|eth_rpc_endpoint = \"$BLOCKCHAIN_RPC_
 
 sed -i "s|^\s*#\?\s*socket_address\s*=.*|socket_address = \"$SOCKET_ADDRESS\"|" "$ZGDA_CONFIG_FILE"
 
-sed -i "s|^\s*#\?\s*da_entrance_address\s*=.*|da_entrance_address = "0xDFC8B84e3C98e8b550c7FEF00BCB2d8742d80a69"|" "$ZGDA_CONFIG_FILE"
+sed -i 's|^\s*#\?\s*da_entrance_address\s*=.*|da_entrance_address = "0xDFC8B84e3C98e8b550c7FEF00BCB2d8742d80a69"|' "$ZGDA_CONFIG_FILE"
 
 sed -i "s|^\s*#\?\s*signer_bls_private_key\s*=.*|signer_bls_private_key = \"$SIGNER_BLS_PRIVATE_KEY\"|" "$ZGDA_CONFIG_FILE"
 
