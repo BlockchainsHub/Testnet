@@ -101,6 +101,8 @@ echo 'export SOCKET_ADDRESS="'$SOCKET_ADDRESS'"' >> ~/.bash_profile
 echo 'export SIGNER_BLS_PRIVATE_KEY="'$SIGNER_BLS_PRIVATE_KEY'"' >> ~/.bash_profile
 
 echo 'export SIGNER_ETH_PRIVATE_KEY="'$SIGNER_ETH_PRIVATE_KEY'"' >> ~/.bash_profile
+
+source ~/.bash_profile
 ```
 
 ### 8. Update Konfigurasi
