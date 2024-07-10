@@ -76,7 +76,7 @@ read -p "Enter your storage node IP and port for zgs_node_urls configuration: " 
 
 Make sure the validator RPC that you are going to use has block `802` before you run Storage KV by running the command below. Change `yourvalidatorip:port` with your actual validator jsonrpc IP and port. If the `result` is `null` that means that your validator RPC don't have block `802`, you should consider to use other validator RPC.
 ```bash
-curl -X POST http://yourvalidatorip:port -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x51bcd",false],"id":1}'
+curl -X POST http://yourvalidatorip:port -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x322",false],"id":1}'
 ```
 
 Run the command below and input your validator node IP and port in this format `http://x.x.x.x:8545`. 
