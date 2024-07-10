@@ -62,7 +62,7 @@ Run the command below to generate a BLS private key. **Please keep the generated
 cargo run --bin key-gen
 ```
 Example output:
-
+![CleanShot 2024-07-10 at 18 05 17@2x](https://github.com/BlockchainsHub/Testnet/assets/77204008/aaa9ab86-3bb0-4445-9d4a-b75deb2d686d)
 > [!CAUTION]
 > **DO NOT FORGET TO SAVE YOUR BLS PRIVATE KEY!**
 
