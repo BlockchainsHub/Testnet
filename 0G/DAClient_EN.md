@@ -42,38 +42,15 @@ cd 0g-da-client
 make build
 ```
 
-### 4. Set Up Environment Variables
-Run the command below and input your validator node IP and port in this format `http://x.x.x.x:8545`. 
-```bash
-read -p "Enter your validator node IP and port for chain.rpc configuration: " CHAIN_RPC
-```
+### 4. Create Service File
+Create a service file to run the DA client in the background. Please change the following variables:
 
-Run the command below and input your validator private key. 
-```bash
-read -p "Enter your validator private key for chain.private-key configuration: " CHAIN_PRIVATE_KEY
-```
+| Variables | Description |
+|-|-
+| $CHAIN_RPC | Change with your validator IP and Port in this format `http://your_validator_ip:8545` |
+| $CHAIN_PRIVATE_KEY | Change with your validator private key |
+| $ENCODER_SOCKET | Change with your DA Node IP and Port in this format `http://your_da_node_ip:8545` |
 
-Run the command below and input your DA node IP and port in this format `http://x.x.x.x:34000`. 
-```bash
-read -p "Enter your DA node IP and port for encoder-socket configuration: " ENCODER_SOCKET
-```
-
-```bash
-cat <<EOF >> ~/.bash_profile
-export CHAIN_RPC="$CHAIN_RPC"
-export CHAIN_PRIVATE_KEY="$CHAIN_PRIVATE_KEY"
-export ENCODER_SOCKET="$ENCODER_SOCKET"
-EOF
-
-source ~/.bash_profile
-
-echo "The following configuration variables have been set:"
-echo "--chain.rpc: $CHAIN_RPC"
-echo "--chain.private-key: $CHAIN_PRIVATE_KEY"
-echo "--encoder-socket: $ENCODER_SOCKET"
-```
-
-### 5. Create Service File
 ```bash
 sudo tee /etc/systemd/system/zgdac.service > /dev/null <<EOF
 [Unit]
@@ -84,34 +61,34 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/root/0g-da-client
-ExecStart=/root/0g-da-client/disperser/bin/combined \\
-    --chain.rpc \$CHAIN_RPC \\
-    --chain.private-key \$CHAIN_PRIVATE_KEY \\
-    --chain.receipt-wait-rounds 180 \\
-    --chain.receipt-wait-interval 1s \\
-    --chain.gas-limit 2000000 \\
-    --combined-server.use-memory-db \\
-    --combined-server.storage.kv-db-path ./root/0g-storage-kv/run \\
-    --combined-server.storage.time-to-expire 300 \\
-    --disperser-server.grpc-port 51001 \\
-    --batcher.da-entrance-contract 0xDFC8B84e3C98e8b550c7FEF00BCB2d8742d80a69 \\
-    --batcher.da-signers-contract 0x0000000000000000000000000000000000001000 \\
-    --batcher.finalizer-interval 20s \\
-    --batcher.confirmer-num 3 \\
-    --batcher.max-num-retries-for-sign 3 \\
-    --batcher.finalized-block-count 50 \\
-    --batcher.batch-size-limit 500 \\
-    --batcher.encoding-interval 3s \\
-    --batcher.encoding-request-queue-size 1 \\
-    --batcher.pull-interval 10s \\
-    --batcher.signing-interval 3s \\
-    --batcher.signed-pull-interval 20s \\
-    --encoder-socket \$ENCODER_SOCKET \\
-    --encoding-timeout 600s \\
-    --signing-timeout 600s \\
-    --chain-read-timeout 12s \\
-    --chain-write-timeout 13s \\
-    --combined-server.log.level-file trace \\
+ExecStart=/root/0g-da-client/disperser/bin/combined \
+    --chain.rpc $CHAIN_RPC \
+    --chain.private-key $CHAIN_PRIVATE_KEY \
+    --chain.receipt-wait-rounds 180 \
+    --chain.receipt-wait-interval 1s \
+    --chain.gas-limit 2000000 \
+    --combined-server.use-memory-db \
+    --combined-server.storage.kv-db-path ./root/0g-storage-kv/run \
+    --combined-server.storage.time-to-expire 300 \
+    --disperser-server.grpc-port 51001 \
+    --batcher.da-entrance-contract 0xDFC8B84e3C98e8b550c7FEF00BCB2d8742d80a69 \
+    --batcher.da-signers-contract 0x0000000000000000000000000000000000001000 \
+    --batcher.finalizer-interval 20s \
+    --batcher.confirmer-num 3 \
+    --batcher.max-num-retries-for-sign 3 \
+    --batcher.finalized-block-count 50 \
+    --batcher.batch-size-limit 500 \
+    --batcher.encoding-interval 3s \
+    --batcher.encoding-request-queue-size 1 \
+    --batcher.pull-interval 10s \
+    --batcher.signing-interval 3s \
+    --batcher.signed-pull-interval 20s \
+    --encoder-socket $ENCODER_SOCKET \
+    --encoding-timeout 600s \
+    --signing-timeout 600s \
+    --chain-read-timeout 12s \
+    --chain-write-timeout 13s \
+    --combined-server.log.level-file trace \
     --combined-server.log.level-std trace
 Restart=on-failure
 RestartSec=10
@@ -121,7 +98,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 6. Start DA Client
+### 5. Start DA Client
 ```bash
 sudo systemctl daemon-reload && \
 sudo systemctl enable zgdac && \
