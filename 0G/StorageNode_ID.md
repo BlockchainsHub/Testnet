@@ -51,7 +51,7 @@ go version
 ### 4. Build Binary
 ```bash
 cd $HOME
-git clone -b v0.3.3 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.3.4 https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
@@ -193,18 +193,6 @@ sudo systemctl restart zgs
 ### Stop Node
 ```bash
 sudo systemctl stop zgs
-```
-
-### Upgrade Node
-```bash
-cd $HOME/0g-storage-node
-git stash
-git fetch --all --tags
-git checkout 2a2688d2c34a1e9480239e17b626912370662dcc
-git submodule update --init
-cargo build --release
-sudo mv $HOME/0g-storage-node/target/release/zgs_node /usr/local/bin
-zgs_node --version
 ```
 
 ### Backup Miner Key
