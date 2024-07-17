@@ -19,7 +19,7 @@ Panduan ini akan membantu Anda dalam proses instalasi Klien 0G DA.
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt-get update
-sudo apt-get install cmake screen
+sudo apt-get install cmake
 ```
 
 ### 2. Instal GO
