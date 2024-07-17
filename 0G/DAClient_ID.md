@@ -49,7 +49,7 @@ Buat file service untuk menjalankan DA client di background. Silahkan ubah varia
 |-|-
 | $CHAIN_RPC | Ubah dengan IP dan Port validator Anda dalam format `http://ip_validator_anda:8545` |
 | $CHAIN_PRIVATE_KEY | Ubah dengan private key validator Anda |
-| $ENCODER_SOCKET | Ubah dengan IP dan Port Node DA Anda dalam format ini `http://ip_da_node_anda:8545` |
+| $ENCODER_SOCKET | Ubah dengan IP dan Port Node DA Anda dalam format ini `http://ip_da_node_anda:34000` |
 
 ```bash
 sudo tee /etc/systemd/system/zgdac.service > /dev/null <<EOF

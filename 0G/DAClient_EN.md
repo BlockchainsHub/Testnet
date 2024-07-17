@@ -49,7 +49,7 @@ Create a service file to run the DA client in the background. Please change the 
 |-|-
 | $CHAIN_RPC | Change with your validator IP and Port in this format `http://your_validator_ip:8545` |
 | $CHAIN_PRIVATE_KEY | Change with your validator private key |
-| $ENCODER_SOCKET | Change with your DA Node IP and Port in this format `http://your_da_node_ip:8545` |
+| $ENCODER_SOCKET | Change with your DA Node IP and Port in this format `http://your_da_node_ip:34000` |
 
 ```bash
 sudo tee /etc/systemd/system/zgdac.service > /dev/null <<EOF
