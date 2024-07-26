@@ -74,9 +74,9 @@ Run the command below and input your storage node IP and port in this format `ht
 read -p "Enter your storage node IP and port for zgs_node_urls configuration: " ZGS_NODE_URLS
 ```
 
-Make sure the validator RPC that you are going to use has block `802` before you run Storage KV by running the command below. Change `yourvalidatorip:port` with your actual validator jsonrpc IP and port. If the `result` is `null` that means that your validator RPC don't have block `802`, you should consider to use other validator RPC.
+Make sure the validator RPC that you are going to use has block `401178` before you run Storage KV by running the command below. Change `yourvalidatorip:port` with your actual validator jsonrpc IP and port. If the `result` is `null` that means that your validator RPC don't have block `401178`, you should consider to use other validator RPC.
 ```bash
-curl -X POST http://yourvalidatorip:port -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x322",false],"id":1}'
+curl -X POST http://yourvalidatorip:port -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x61B8A",false],"id":1}'
 ```
 
 Run the command below and input your validator node IP and port in this format `http://x.x.x.x:8545`. 
@@ -114,9 +114,9 @@ sed -i "s|^\s*#\?\s*log_config_file\s*=.*|log_config_file = \"$ZGSKV_LOG_CONFIG_
 
 sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$BLOCKCHAIN_RPC_ENDPOINT\"|" "$ZGSKV_CONFIG_FILE"
 
-sed -i 's|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "0x8873cc79c5b3b5666535C825205C9a128B1D75F1"|' "$ZGSKV_CONFIG_FILE"
+sed -i 's|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "0xB7e39604f47c0e4a6Ad092a281c1A8429c2440d3"|' "$ZGSKV_CONFIG_FILE"
 
-sed -i 's|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 802|' "$ZGSKV_CONFIG_FILE"
+sed -i 's|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 401178|' "$ZGSKV_CONFIG_FILE"
 ```
 
 ### 9. Create Service File

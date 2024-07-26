@@ -222,7 +222,7 @@ Mohon untuk merubah `YOURVALIDATORIP:8545` dengan IP address dan port validator 
 ```bash
 0g-storage-client upload \
 --url http://YOURVALIDATORIP:8545 \
---contract "0x8873cc79c5b3b5666535C825205C9a128B1D75F1" \
+--contract "0xB7e39604f47c0e4a6Ad092a281c1A8429c2440d3" \
 --key $PRIVATE_KEY \
 --node http://YOURSTORAGEIP:5678 \
 --file test.txt
