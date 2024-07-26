@@ -17,6 +17,12 @@ This guide will help you in the 0G DA node installation process.
 -----------------------------------------------------------------
 
 ## DA Node Installation
+Before you install the DA node, make sure you have more than 10 A0GI in your wallet. Click the button below to request from the faucet.
+
+<a href="https://faucet.0g.ai/" target="_blank">
+  <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/12866a81-cac7-451a-96b5-4b202e8f1194" alt="Faucet Button" width="150" height="36.94" border="10" />
+</a>
+
 ### 1. Install Dependencies
 ```bash
 sudo apt-get update

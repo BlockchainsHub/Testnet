@@ -17,6 +17,12 @@ Panduan ini akan membantu Anda dalam proses instalasi node 0G DA.
 -----------------------------------------------------------------
 
 ## Instalasi Node DA
+Sebelum Anda menginstal node DA, pastikan Anda memiliki lebih dari 10 A0GI di dompet Anda. Klik tombol di bawah ini untuk meminta dari faucet.
+
+<a href="https://faucet.0g.ai/" target="_blank">
+  <img src="https://github.com/BlockchainsHub/Testnet/assets/77204008/12866a81-cac7-451a-96b5-4b202e8f1194" alt="Faucet Button" width="150" height="36.94" border="10" />
+</a>
+
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt-get update
