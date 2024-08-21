@@ -20,7 +20,8 @@ Panduan ini akan membantu anda dalam proses instalasi storage node 0G.
 ### 1. Instal Packages Yang Dibutuhkan
 ```bash
 sudo apt-get update
-sudo apt-get install git cargo clang cmake build-essential
+sudo apt-get install git cargo clang cmake build-essential libssl-dev
+sudo apt install pkg-config
 ```
 
 ### 2. Instal Rustup
@@ -51,7 +52,7 @@ go version
 ### 4. Build Binary
 ```bash
 cd $HOME
-git clone -b v0.4.2 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.4.4 https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
@@ -59,6 +60,17 @@ sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
 ```
 
 ### 5. Menyiapkan Environment Variables
+Simpan `miner_key` ke dalam variabel.
+```bash
+read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
+```
+
+Simpan json-rpc validator Anda ke dalam variabel. Anda dapat menggunakan RPC `http://18.166.164.232:8545/` Node3 untuk melakukan sinkronisasi awal dan mengubahnya ke milik Anda setelah sinkronisasi penuh.
+```bash
+read -p "Masukkan json-rpc validator Anda untuk konfigurasi blockchain_rpc_endpoint:" JSONRPC && echo
+```
+
+Simpan `ENR Address` anda ke dalam variabel.
 ```bash
 ENR_ADDRESS=$(wget -qO- eth0.me)
 echo "export ENR_ADDRESS=${ENR_ADDRESS}"
@@ -75,14 +87,14 @@ EOF
 source ~/.bash_profile
 ```
 
-### 6. Masukkan miner_key Dalam Variabel
-```bash
-read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
-```
-
-### 7. Buat Directory Network & DB
+### 6. Buat Directory Network & DB
 ```bash
 mkdir -p "$HOME/0g-storage-node/network" "$HOME/0g-storage-node/db"
+```
+
+### 7. Buat file config.toml
+```bash
+cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config.toml
 ```
 
 ### 8. Update Konfigurasi
@@ -91,21 +103,13 @@ sed -i 's|^\s*#\?\s*network_dir\s*=.*|network_dir = "/root/0g-storage-node/netwo
 
 sed -i "s|^\s*#\?\s*network_enr_address\s*=.*|network_enr_address = \"$ENR_ADDRESS\"|" "$ZGS_CONFIG_FILE"
 
-sed -i 's|^\s*#\?\s*network_boot_nodes\s*=.*|network_boot_nodes = ["/ip4/54.219.26.22/udp/1234/p2p/16Uiu2HAmTVDGNhkHD98zDnJxQWu3i1FL1aFYeh9wiQTNu4pDCgps","/ip4/52.52.127.117/udp/1234/p2p/16Uiu2HAkzRjxK2gorngB1Xq84qDrT4hSVznYDHj6BkbaE4SGx9oS","/ip4/18.167.69.68/udp/1234/p2p/16Uiu2HAm2k6ua2mGgvZ8rTMV8GhpW71aVzkQWy7D37TTDuLCpgmX"]|' "$ZGS_CONFIG_FILE"
-
-sed -i 's|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = "https://og-testnet-jsonrpc.blockhub.id"|' "$ZGS_CONFIG_FILE"
-
-sed -i 's|^\s*#\?\s*log_contract_address\s*=.*|log_contract_address = "0xB7e39604f47c0e4a6Ad092a281c1A8429c2440d3"|' "$ZGS_CONFIG_FILE"
-
-sed -i 's|^\s*#\?\s*log_sync_start_block_number\s*=.*|log_sync_start_block_number = 401178|' "$ZGS_CONFIG_FILE"
+sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$JSONRPC\"|" "$ZGS_CONFIG_FILE"
 
 sed -i 's|^\s*#\?\s*db_dir\s*=.*|db_dir = "/root/0g-storage-node/db"|' "$ZGS_CONFIG_FILE"
 
 sed -i 's|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "/root/0g-storage-node/run/log_config"|' "$ZGS_CONFIG_FILE"
 
 sed -i 's|^\s*#\?\s*log_directory\s*=.*|log_directory = "/root/0g-storage-node/run/log"|' "$ZGS_CONFIG_FILE"
-
-sed -i 's|^\s*#\?\s*mine_contract_address\s*=.*|mine_contract_address = "0x6176AA095C47A7F79deE2ea473B77ebf50035421"|' "$ZGS_CONFIG_FILE"
 
 sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
 ```
@@ -202,6 +206,92 @@ rm -rf $HOME/0g-storage-node
 
 -----------------------------------------------------------------
 
+## Upgrade Storage Node
+## 1. Stop Node
+```bash
+sudo systemctl stop zgs
+```
+
+## 2. Instal Dependencies
+```bash
+sudo apt-get update
+sudo apt-get install libssl-dev
+sudo apt install pkg-config
+```
+
+## 3. Upgrade Node
+```bash
+cd $HOME/0g-storage-node
+git stash
+git fetch --all --tags
+git checkout v0.4.4
+git submodule update --init
+cargo build --release
+sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
+```
+
+## 4. Menyiapkan Environment Variables
+Simpan `miner_key` ke dalam variabel.
+```bash
+read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
+```
+
+Simpan json-rpc validator Anda ke dalam variabel. Anda dapat menggunakan RPC `http://18.166.164.232:8545/` Node3 untuk melakukan sinkronisasi awal dan mengubahnya ke milik Anda setelah sinkronisasi penuh.
+```bash
+read -p "Masukkan json-rpc validator Anda untuk konfigurasi blockchain_rpc_endpoint:" JSONRPC && echo
+```
+
+Simpan `ENR Address` anda ke dalam variabel.
+```bash
+ENR_ADDRESS=$(wget -qO- eth0.me)
+echo "export ENR_ADDRESS=${ENR_ADDRESS}"
+```
+
+```bash
+cat <<EOF >> ~/.bash_profile
+export ENR_ADDRESS=${ENR_ADDRESS}
+export ZGS_CONFIG_FILE="$HOME/0g-storage-node/run/config.toml"
+export ZGS_LOG_DIR="$HOME/0g-storage-node/run/log"
+export ZGS_LOG_CONFIG_FILE="$HOME/0g-storage-node/run/log_config"
+EOF
+
+source ~/.bash_profile
+```
+
+## 5. Buat file config.toml
+```bash
+cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config.toml
+```
+
+### 6. Update Konfigurasi
+```bash
+sed -i 's|^\s*#\?\s*network_dir\s*=.*|network_dir = "/root/0g-storage-node/network"|' "$ZGS_CONFIG_FILE"
+
+sed -i "s|^\s*#\?\s*network_enr_address\s*=.*|network_enr_address = \"$ENR_ADDRESS\"|" "$ZGS_CONFIG_FILE"
+
+sed -i "s|^\s*#\?\s*blockchain_rpc_endpoint\s*=.*|blockchain_rpc_endpoint = \"$JSONRPC\"|" "$ZGS_CONFIG_FILE"
+
+sed -i 's|^\s*#\?\s*db_dir\s*=.*|db_dir = "/root/0g-storage-node/db"|' "$ZGS_CONFIG_FILE"
+
+sed -i 's|^\s*#\?\s*log_config_file\s*=.*|log_config_file = "/root/0g-storage-node/run/log_config"|' "$ZGS_CONFIG_FILE"
+
+sed -i 's|^\s*#\?\s*log_directory\s*=.*|log_directory = "/root/0g-storage-node/run/log"|' "$ZGS_CONFIG_FILE"
+
+sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
+```
+
+## 7. Start Node
+```bash
+systemctl start zgs
+```
+
+## 8. Cek Log
+```
+tail -n 100 "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
+```
+
+-----------------------------------------------------------------
+
 ## Storage Node CLI
 ### Build Binary
 ```bash
@@ -222,10 +312,20 @@ Mohon untuk merubah `YOURVALIDATORIP:8545` dengan IP address dan port validator 
 ```bash
 0g-storage-client upload \
 --url http://YOURVALIDATORIP:8545 \
---contract "0xB7e39604f47c0e4a6Ad092a281c1A8429c2440d3" \
+--contract "0xbD2C3F0E65eDF5582141C35969d66e34629cC768" \
 --key $PRIVATE_KEY \
 --node http://YOURSTORAGEIP:5678 \
 --file test.txt
+```
+
+### Download file
+Mohon untuk merubah `YOURSTORAGEIP:5678` dengan IP address dan port storage node anda dan `$ROOTH_HASH` dengan root hash yang ada dapatkan pada saat membuat file test.
+```bash
+0g-storage-client download \
+--node http://YOURSTORAGEIP:5678 \
+--root $ROOTH_HASH \
+--file test_downloaded.txt \
+--proof
 ```
 
 -----------------------------------------------------------------
