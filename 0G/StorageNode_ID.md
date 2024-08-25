@@ -52,7 +52,7 @@ go version
 ### 4. Build Binary
 ```bash
 cd $HOME
-git clone -b v0.4.4 https://github.com/0glabs/0g-storage-node.git
+git clone -b v0.4.5 https://github.com/0glabs/0g-storage-node.git
 cd 0g-storage-node
 git submodule update --init
 cargo build --release
@@ -212,25 +212,18 @@ rm -rf $HOME/0g-storage-node
 sudo systemctl stop zgs
 ```
 
-## 2. Instal Dependencies
-```bash
-sudo apt-get update
-sudo apt-get install libssl-dev
-sudo apt install pkg-config
-```
-
-## 3. Upgrade Node
+## 2. Upgrade Node
 ```bash
 cd $HOME/0g-storage-node
 git stash
 git fetch --all --tags
-git checkout v0.4.4
+git checkout v0.4.5
 git submodule update --init
 cargo build --release
 sudo mv "$HOME/0g-storage-node/target/release/zgs_node" /usr/local/bin
 ```
 
-## 4. Menyiapkan Environment Variables
+## 3. Menyiapkan Environment Variables
 Simpan `miner_key` ke dalam variabel.
 ```bash
 read -p "Masukkan private key anda untuk konfigurasi miner_key: " PRIVATE_KEY && echo
@@ -258,12 +251,12 @@ EOF
 source ~/.bash_profile
 ```
 
-## 5. Buat file config.toml
+## 4. Buat file config.toml
 ```bash
 cp $HOME/0g-storage-node/run/config-testnet-turbo.toml $HOME/0g-storage-node/run/config.toml
 ```
 
-### 6. Update Konfigurasi
+### 5. Update Konfigurasi
 ```bash
 sed -i 's|^\s*#\?\s*network_dir\s*=.*|network_dir = "/root/0g-storage-node/network"|' "$ZGS_CONFIG_FILE"
 
@@ -280,12 +273,12 @@ sed -i 's|^\s*#\?\s*log_directory\s*=.*|log_directory = "/root/0g-storage-node/r
 sed -i "s|^\s*#\?\s*miner_key\s*=.*|miner_key = \"$PRIVATE_KEY\"|" "$ZGS_CONFIG_FILE"
 ```
 
-## 7. Start Node
+## 6. Start Node
 ```bash
 systemctl start zgs
 ```
 
-## 8. Cek Log
+## 7. Cek Log
 ```
 tail -n 100 "$ZGS_LOG_DIR/$(ls -Art $ZGS_LOG_DIR | tail -n 1)"
 ```
