@@ -1,3 +1,4 @@
+![Story Protocol Github Banner](https://github.com/user-attachments/assets/51fe2eef-9e7d-4550-9b85-870c4e98117c)
 # Story Node Guide
 This guide will assist you in the installation process of the Story node.
 
@@ -139,7 +140,11 @@ story validator export --export-evm-key
 
 ### 2. Request Faucet
 To create your validator you need at least 1 IP (1000000000000000000) to be staked. You can get 1 IP per day from the faucet.
-https://faucet.story.foundation/
+
+<a href="https://faucet.story.foundation/" target="_blank">
+  <img src="https://github.com/user-attachments/assets/b76fa86a-6c14-4c64-b96f-743d1fe4b73e" alt="Story Faucet" width="150" border="10" />
+</a>
+
 > [!NOTE]
 > You need more than 1 IP because you have to pay for the fee.
 
