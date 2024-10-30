@@ -37,34 +37,55 @@ go version
 
 ### 3. Download and Install Story-Geth Binary
 ```bash
-wget -q https://story-geth-binaries.s3.us-west-1.amazonaws.com/geth-public/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz -O /tmp/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz
-tar -xzf /tmp/geth-linux-amd64-0.9.2-ea9f0d2.tar.gz -C /tmp
-[ ! -d "$HOME/go/bin" ] && mkdir -p $HOME/go/bin
-sudo cp /tmp/geth-linux-amd64-0.9.2-ea9f0d2/geth $HOME/go/bin/story-geth
+wget -q -O geth https://github.com/piplabs/story-geth/releases/download/v0.10.0/geth-linux-amd64
+wget -q -O geth.sha256 https://github.com/piplabs/story-geth/releases/download/v0.10.0/geth-linux-amd64.sha256
+sha256sum -c geth.sha256
+chmod +x geth
+sudo mv geth ~/go/bin/geth
 ```
 
 ### 4. Download and Install Story Binary
 ```bash
-wget -q https://story-geth-binaries.s3.us-west-1.amazonaws.com/story-public/story-linux-amd64-0.9.11-2a25df1.tar.gz -O /tmp/story-linux-amd64-0.9.11-2a25df1.tar.gz
-tar -xzf /tmp/story-linux-amd64-0.9.11-2a25df1.tar.gz -C /tmp
-sudo cp /tmp/story-linux-amd64-0.9.11-2a25df1/story $HOME/go/bin/story
+wget -q -O story https://github.com/piplabs/story/releases/download/v0.12.0/story-linux-amd64
+chmod +x story
+mkdir -p ~/go/bin
+mkdir -p ~/.story/story/cosmovisor/genesis/bin
+sudo mv story ~/go/bin/story
+sudo cp ~/go/bin/story ~/.story/story/cosmovisor/genesis/bin
 ```
 
-### 5. Initialize The Iliad Network Node
-```bash
-$HOME/go/bin/story init --network iliad --moniker "your_moniker"
+### 5. Install and Setup The Latest Version of Cosmovisor
+```
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+mkdir -p ~/.story/story/cosmovisor
+echo "export DAEMON_NAME=story" >> ~/.bash_profile
+echo "export DAEMON_HOME=$HOME/.story/story" >> ~/.bash_profile
+echo "export PATH=$HOME/go/bin:$DAEMON_HOME/cosmovisor/current/bin:$PATH" >> ~/.bash_profile
+source ~/.bash_profile
 ```
 
-### 6. Create and Configure systemd Service for Story-Geth
+### 6. Initialize The Odyssey Network Node
 ```bash
-sudo tee /etc/systemd/system/story-geth.service > /dev/null <<EOF
+~/.story/story/cosmovisor/genesis/bin/story init --network odyssey --moniker "your_moniker"
+```
+
+### 7. Update Peers
+```
+PEERS=$(curl -sS https://story-testnet-rpc.blockhub.id | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}' | paste -sd, -)
+echo "Updating peers..."
+sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.story/story/config/config.toml
+```
+
+### 8. Create and Configure systemd Service for Geth
+```bash
+sudo tee /etc/systemd/system/geth.service > /dev/null <<EOF
 [Unit]
 Description=Story Geth Client
 After=network.target
 
 [Service]
-User=root
-ExecStart=$HOME/go/bin/story-geth --iliad --syncmode full
+User=$USER
+ExecStart=$HOME/go/bin/geth --odyssey --syncmode full --http --http.api eth,net,web3,engine --http.vhosts '*' --http.addr 0.0.0.0 --http.port 8545 --ws --ws.api eth,web3,net,txpool --ws.addr 0.0.0.0 --ws.port 8546
 Restart=on-failure
 RestartSec=3
 LimitNOFILE=65535
@@ -74,53 +95,60 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 7. Create and Configure systemd Service for Story
+### 9. Create and Configure systemd Service for Story
 ```bash
 sudo tee /etc/systemd/system/story.service > /dev/null <<EOF
 [Unit]
-Description=Story Consensus Client
+Description=Cosmovisor service for Story binary
 After=network.target
 
 [Service]
-User=root
-ExecStart=$HOME/go/bin/story run
+User=$USER
+ExecStart=$HOME/go/bin/cosmovisor run run
+WorkingDirectory=$HOME/.story/story
 Restart=on-failure
 RestartSec=3
 LimitNOFILE=65535
+Environment="DAEMON_NAME=story"
+Environment="DAEMON_HOME=$HOME/.story/story"
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
+Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
+Environment="DAEMON_DATA_BACKUP_DIR=$HOME/.story/story/data"
+Environment="UNSAFE_SKIP_BACKUP=true"
 
 [Install]
 WantedBy=multi-user.target
 EOF
 ```
 
-### 8. Reload systemd, Enable, and Start Services
+### 10. Reload systemd, Enable, and Start Services
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable story-geth story
-sudo systemctl start story-geth story
+sudo systemctl enable geth story
+sudo systemctl start geth story
 ```
 
-### 9. Check Service Status
-Checking Story-Geth service status.
+### 11. Check Service Status
+Checking Geth service status.
 ```bash
-sudo systemctl status story-geth --no-pager -l
+sudo systemctl status geth --no-pager -l
 ```
 Checking Story service status.
 ```bash
 sudo systemctl status story --no-pager -l
 ```
 
-### 10. Check Logs
-Checking logs for Story-Geth
+### 12. Check Logs
+Checking logs for Geth
 ```bash
-sudo journalctl -u story-geth -f -o cat
+sudo journalctl -u geth -f -o cat
 ```
 Checking logs for Story
 ```bash
 sudo journalctl -u story -f -o cat
 ```
 
-### 11. Check Sync Status
+### 13. Check Sync Status
 If `catching_up` status is `true` that means that you are still syncing and if it's `false` it means that you are fully sync.
 ```bash
 curl -s localhost:26657/status | jq
@@ -182,14 +210,14 @@ curl -s localhost:26657/status | jq -r '.result.validator_info.address'
 > [!CAUTION]
 > Before remove the node **make sure you have already backup all the important data!**
 ```bash
-sudo systemctl stop story-geth
+sudo systemctl stop geth
 sudo systemctl stop story
-sudo systemctl disable story-geth
+sudo systemctl disable geth
 sudo systemctl disable story
-sudo rm /etc/systemd/system/story-geth.service
+sudo rm /etc/systemd/system/geth.service
 sudo rm /etc/systemd/system/story.service
 sudo systemctl daemon-reload
 sudo rm -rf $HOME/.story
-sudo rm $HOME/go/bin/story-geth
+sudo rm $HOME/go/bin/geth
 sudo rm $HOME/go/bin/story
 ```
