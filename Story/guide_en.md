@@ -8,9 +8,9 @@ This guide will assist you in the installation process of the Story node.
 | Required | Specifications |
 |-|-
 | CPU | 4 Cores |
-| Memory | 8 GB |
+| Memory | 16 GB |
 | Storage | 200 GB |
-| Bandwidth | 10 MBit/s |
+| Bandwidth | 25 MBit/s |
 | OS | Linux |
 
 -----------------------------------------------------------------
