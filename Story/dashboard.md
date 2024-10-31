@@ -4,7 +4,7 @@
 Welcome to the Story Node Dashboard, a comprehensive tool for managing and monitoring your Story Node. This dashboard provides an easy-to-use interface for various node management tasks.
 
 <div align="center">
-  <img src="https://postimg.cc/rzWv6qtG" alt="Dashboard" width="756"/>
+  <img src="https://github.com/user-attachments/assets/fed6b755-43b6-4d81-9784-99b363677dde" alt="Dashboard" width="756"/>
 </div>
 
 ## Features
