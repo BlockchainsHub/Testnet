@@ -3,6 +3,10 @@
 
 Welcome to the Story Node Dashboard, a comprehensive tool for managing and monitoring your Story Node. This dashboard provides an easy-to-use interface for various node management tasks.
 
+<div align="center">
+  <img src="https://postimg.cc/rzWv6qtG" alt="Dashboard" width="756"/>
+</div>
+
 ## Features
 
 1. **Install Story Node**: Automates the process of setting up a Story Node, including:
