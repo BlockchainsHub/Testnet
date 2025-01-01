@@ -13,7 +13,7 @@ sudo apt install -y ocaml-findlib
 ### 2. Set Up the Environment
 Download and Execute Installation Script
 ```bash
-wget https://raw.githubusercontent.com/blockchainshub/testnet/main/octra/env.sh
+wget https://raw.githubusercontent.com/BlockchainsHub/Testnet/refs/heads/main/Octra/env.sh
 chmod +x env.sh
 ./env.sh
 ```
@@ -35,7 +35,7 @@ opam install -y yojson cohttp-lwt-unix lwt_ppx
 ### 4. Configure and Run the Application
 Download the configuration file.
 ```bash
-wget https://raw.githubusercontent.com/blockchainshub/testnet/main/octra/config.ml
+wget https://raw.githubusercontent.com/BlockchainsHub/Testnet/refs/heads/main/Octra/config.ml
 ```
 
 Compile and run the configuration.
