@@ -1,3 +1,5 @@
+![Github Banner-2-Octra Github Banner](https://github.com/user-attachments/assets/7d0a27b3-83eb-48a8-849f-a6e0d19294c0)
+
 # Octra Node Guide
 This guide provides step-by-step instructions for setting up Octra Node in. The process includes installing system dependencies, configuring the environment, and setting up the necessary variables.
 
