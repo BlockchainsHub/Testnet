@@ -47,6 +47,8 @@ ocamlfind ocamlopt -o config -thread -linkpkg -package yojson,cohttp-lwt-unix,un
 > [!CAUTION]
 > Make sure to backup your **`hash_id_config.json`** file!!! If you lose it, it will be impossible to authorize your node even with a private key.
 
+![CleanShot 2025-01-02 at 10 08 53@2x](https://github.com/user-attachments/assets/84d90733-a135-4a5f-a8fc-4631a1ef3a31)
+
 -----------------------------------------------------------------
 
 <p align="center">
