@@ -248,7 +248,7 @@ Edit validator
 
 Unjail validator
 ```
-0gchaind tx slashing unjail --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx slashing unjail --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Validator jail reason
@@ -282,37 +282,37 @@ View validator details
 ## Managing Tokens
 Withdraw reward from all validator
 ```
-0gchaind tx distribution withdraw-all-rewards --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx distribution withdraw-all-rewards --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Withdraw reward and commission
 ```
-0gchaind tx distribution withdraw-rewards $(0gchaind keys show wallet --bech val -a) --commission --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx distribution withdraw-rewards $(0gchaind keys show wallet --bech val -a) --commission --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Delegate tokens to your validator
 ```
-0gchaind tx staking delegate $(0gchaind keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx staking delegate $(0gchaind keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Delegate token to other validator, change `<to-valoper-address>` as you like
 ```
-0gchaind tx staking delegate <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx staking delegate <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Redelegate to another validator
 ```
-0gchaind tx staking redelegate $(0gchaind keys show wallet --bech val -a) <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx staking redelegate $(0gchaind keys show wallet --bech val -a) <to-valoper-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Unbond token from your own validator
 ```
-0gchaind tx staking unbond $(0gchaind keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx staking unbond $(0gchaind keys show wallet --bech val -a) 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Send token to the wallet
 ```
-0gchaind tx bank send wallet <to-wallet-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx bank send wallet <to-wallet-address> 1000000ua0gi --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 -----------------------------------------------------------------
@@ -330,22 +330,22 @@ View proposal by ID
 
 Vote option yes
 ```bash
-0gchaind tx gov vote 1 yes --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx gov vote 1 yes --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Vote option no
 ```bash
-0gchaind tx gov vote 1 no --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx gov vote 1 no --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Vote option asbtain
 ```bash
-0gchaind tx gov vote 1 abstain --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx gov vote 1 abstain --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 
 Vote option NoWithVeto
 ```bash
-0gchaind tx gov vote 1 NoWithVeto --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 fees 800ua0gi -y
+0gchaind tx gov vote 1 NoWithVeto --from wallet --chain-id $CHAIN_ID --gas auto --gas-adjustment 1.4 --fees 800ua0gi -y
 ```
 -----------------------------------------------------------------
 
