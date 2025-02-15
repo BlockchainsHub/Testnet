@@ -68,20 +68,20 @@ read -p "Enter max storage allocation in GB (minimum 100GB): " storage_size
 
 ### 8. Create systemd service file
 ```bash
-sudo tee /etc/systemd/system/pop.service << 'EOF'
+sudo tee /etc/systemd/system/pop.service << EOF
 [Unit]
 Description=Pipe POP Node Service
 After=network.target
 Wants=network-online.target
 
 [Service]
-User=$USER
-Group=$USER
-ExecStart=/opt/pop/pop \\
-    --ram $ram_size \\
-    --pubKey $solana_address \\
-    --max-disk $storage_size \\
-    --cache-dir /var/cache/pop/download_cache \\
+User=${USER}
+Group=${USER}
+ExecStart=/opt/pop/pop \
+    --ram ${ram_size} \
+    --pubKey ${solana_address} \
+    --max-disk ${storage_size} \
+    --cache-dir /var/cache/pop/download_cache \
     --no-prompt
 Restart=always
 RestartSec=5
