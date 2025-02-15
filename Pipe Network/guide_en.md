@@ -18,14 +18,21 @@ sudo apt update
 sudo apt install -y libssl3
 ```
 
-### 2. Setup the directory
+### 2. Setup the directories
 ```bash
 sudo mkdir -p /opt/pop
 sudo mkdir -p /var/lib/pop
 sudo mkdir -p /var/cache/pop/download_cache
 ```
 
-### 3. Donwload the compiled binary
+### 3. Setup directories permission
+```bash
+sudo chown -R $USER:$USER /opt/pop
+sudo chown -R $USER:$USER /var/lib/pop
+sudo chown -R $USER:$USER /var/cache/pop
+```
+
+### 4. Donwload the compiled binary
 ```bash
 cd $HOME
 curl -L -o pop https://dl.pipecdn.app/v0.2.5/pop
@@ -33,18 +40,18 @@ chmod +x pop
 sudo mv pop /opt/pop
 ```
 
-### 4. Register your node
+### 5. Register your node
 ```bash
 cd /opt/pop/
 ./pop --signup-by-referral-route ae7dc44a4ba6bfc5
 ```
 
-### 5. Handle any existing node_info.json from quick-start
+### 6. Handle any existing node_info.json from quick-start
 ```bash
 sudo mv -f /opt/pop/node_info.json /var/lib/pop/ 2>/dev/null || true
 ```
 
-### 6. Setup node configuration
+### 7. Setup node configuration
 Enter your RAM Allocation
 ```bash
 read -p "Enter RAM allocation in GB (minimum 4GB): " ram_size
@@ -59,7 +66,7 @@ Enter your max storage allocation
 read -p "Enter max storage allocation in GB (minimum 100GB): " storage_size
 ```
 
-### 7. Create systemd service file
+### 8. Create systemd service file
 ```bash
 sudo tee /etc/systemd/system/pop.service << 'EOF'
 [Unit]
@@ -90,14 +97,14 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 8. Set config file symlink and pop alias
+### 9. Set config file symlink and pop alias
 Set the symlink and pop alias to avoid duplicated configs or registrations.
 ```bash
 ln -sf /var/lib/pop/node_info.json ~/node_info.json
 grep -q "alias pop='cd /var/lib/pop && /opt/pop/pop'" ~/.bashrc || echo "alias pop='cd /var/lib/pop && /opt/pop/pop'" >> ~/.bashrc && source ~/.bashrc
 ```
 
-### 9. Reload systemd, check and enable service
+### 10. Reload systemd, check and enable service
 ```bash
 sudo systemctl daemon-reload
 sudo systemd-analyze verify pop.service && sudo systemctl enable pop.service && sudo systemctl start pop.service
