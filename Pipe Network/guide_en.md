@@ -1,3 +1,5 @@
+![Github Banner-3-Octra Github Banner](https://github.com/user-attachments/assets/326ef408-f080-4a83-9c0e-4761a4fca92e)
+
 # Pipe PoP Cache Node Guide
 ## Overview
 Cache Node is a high-performance caching service that helps distribute and serve files efficiently across a network.
