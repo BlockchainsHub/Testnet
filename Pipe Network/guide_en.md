@@ -146,3 +146,9 @@ pop --signup-by-referral-route $referral_code
 ```bash
 pop --refresh
 ```
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2025 BlockHub. All rights reserved.
+</p>
