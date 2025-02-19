@@ -83,6 +83,8 @@ ExecStart=/opt/pop/pop \
     --max-disk ${storage_size} \
     --cache-dir /var/cache/pop/download_cache \
     --no-prompt
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
 Restart=always
 RestartSec=5
 LimitNOFILE=65536
