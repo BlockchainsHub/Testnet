@@ -35,7 +35,7 @@ sudo chown -R $USER:$USER /var/cache/pop
 ### 4. Donwload the compiled binary
 ```bash
 cd $HOME
-curl -L -o pop https://dl.pipecdn.app/v0.2.5/pop
+curl -L -o pop https://dl.pipecdn.app/v0.2.8/pop
 chmod +x pop
 sudo mv pop /opt/pop
 ```
