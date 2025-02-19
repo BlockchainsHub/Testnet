@@ -66,7 +66,16 @@ Enter your max storage allocation
 read -p "Enter max storage allocation in GB (minimum 100GB): " storage_size
 ```
 
-### 8. Create systemd service file
+### 8. Enable firewall
+```bash
+sudo ufw allow ssh/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 8003/tcp
+sudo ufw enable
+```
+
+### 9. Create systemd service file
 ```bash
 sudo tee /etc/systemd/system/pop.service << EOF
 [Unit]
@@ -99,14 +108,14 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### 9. Set config file symlink and pop alias
+### 10. Set config file symlink and pop alias
 Set the symlink and pop alias to avoid duplicated configs or registrations.
 ```bash
 ln -sf /var/lib/pop/node_info.json ~/node_info.json
 grep -q "alias pop='cd /var/lib/pop && /opt/pop/pop'" ~/.bashrc || echo "alias pop='cd /var/lib/pop && /opt/pop/pop'" >> ~/.bashrc && source ~/.bashrc
 ```
 
-### 10. Reload systemd, check and enable service
+### 11. Reload systemd, check and enable service
 ```bash
 sudo systemctl daemon-reload
 sudo systemd-analyze verify pop.service && sudo systemctl enable pop.service && sudo systemctl start pop.service
