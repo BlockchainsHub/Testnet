@@ -181,7 +181,7 @@ To create your validator you need at least 1 IP (1000000000000000000) to be stak
 story validator create --stake 1000000000000000000 --private-key "your_private_key"
 ```
 > [!CAUTION]
-> Don't forget to backup the `priv_validator_key.json` file located in `$HOME/.0gchain/config/`.
+> Don't forget to backup the `priv_validator_key.json` file located in `$HOME/.story/story/config/`.
 
 -----------------------------------------------------------------
 
