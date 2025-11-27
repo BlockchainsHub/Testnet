@@ -96,13 +96,36 @@ Copy the new configuration.
 cp config.toml $HOME/.stabled/config/config.toml
 ```
 
-Update the moniker in config.
+### Update The Configuration File
+`config.toml` file
 
 ```bash
-sed -i "s/^moniker = \".*\"/moniker = \"$MONIKER\"/" $HOME/.stabled/config/config.toml
+PEERS="b74b5f566b37e6af6c3bd0aa8111ff50b256fcc1@194.163.170.176:26656,209a09611e4ae574c9ef425bbf5d11b15dbdab2c@212.90.121.89:26656,414c66671c13cdaef1a6decdc1efd47d50e2d495@116.202.212.179:26656,cd89dd1aa4afb38e2226d5cabe5b7db047255129@65.21.237.124:12656,128accd3e8ee379bfdf54560c21345451c7048c7@37.187.147.22:26656,6d3d5b13e2f203dbf718d8c201e2af97bbc52dbe@45.84.138.149:26656,08ff2704dffcbfce0038fbd499758f15ec78472f@51.159.226.76:26656,9b9897064ed6a27f3e44d3269ebe9bc06e1ba233@217.76.55.225:26656,c9621f90fbe0cb20d50d434aca007a2159090cd4@104.152.209.189:26656,3c353744a5260e4fb3a9c176e9fd095f93255149@162.250.188.149:13656"
+
+sed -i -E 's|^moniker\s*=.*|moniker = "'"$MONIKER"'"|' $HOME/.stabled/config/config.toml
+
+sed -i -E '/^\[p2p]/,/^\[/ s|^#?\s*max_num_inbound_peers\s*=.*|max_num_inbound_peers = 50|' $HOME/.stabled/config/config.toml
+sed -i -E '/^\[p2p]/,/^\[/ s|^#?\s*max_num_outbound_peers\s*=.*|max_num_outbound_peers = 30|' $HOME/.stabled/config/config.toml
+sed -i -E "/^\[p2p]/,/^\[/ s|^#?\s*persistent_peers\s*=.*|persistent_peers = \"$PEERS\"|" "$HOME/.stabled/config/config.toml"
+sed -i -E '/^\[p2p]/,/^\[/ s|^#?\s*pex\s*=.*|pex = true|' $HOME/.stabled/config/config.toml
+
+sed -i -E '/^\[rpc]/,/^\[/ s|^#?\s*laddr\s*=.*|laddr = "tcp://0.0.0.0:26657"|' $HOME/.stabled/config/config.toml
+sed -i -E '/^\[rpc]/,/^\[/ s|^#?\s*max_open_connections\s*=.*|max_open_connections = 900|' $HOME/.stabled/config/config.toml
+sed -i -E '/^\[rpc]/,/^\[/ s|^#?\s*cors_allowed_origins\s*=.*|cors_allowed_origins = ["*"]|' $HOME/.stabled/config/config.toml
 ```
 
-### Update The Configuration File
+Verify the changes.
+
+```bash
+grep -E '^\s*moniker\s*=' "$HOME/.stabled/config/config.toml"
+echo
+sed -n '/^\[p2p]/,/^\[/p' "$HOME/.stabled/config/config.toml" \
+  | grep -E '^\[p2p]|^\s*max_num_inbound_peers\s*=|^\s*max_num_outbound_peers\s*=|^\s*persistent_peers\s*=|^\s*pex\s*='
+echo
+sed -n '/^\[rpc]/,/^\[/p' "$HOME/.stabled/config/config.toml" \
+  | grep -E '^\[rpc]|^\s*laddr\s*=|^\s*max_open_connections\s*=|^\s*cors_allowed_origins\s*='
+```
+
 `app.toml` file
 
 ```bash
@@ -120,31 +143,6 @@ grep -E "^inter-block-cache" "$HOME/.stabled/config/app.toml"
 echo
 sed -n '/^\[json-rpc]/,/^\[/p' "$HOME/.stabled/config/app.toml" \
   | grep -E '^\[json-rpc]|^\s*enable\s*=|^\s*address\s*=|^\s*ws-address\s*=|^\s*allow-unprotected-txs\s*='
-```
-
-`config.toml` file
-
-```bash
-PEERS="b74b5f566b37e6af6c3bd0aa8111ff50b256fcc1@194.163.170.176:26656,209a09611e4ae574c9ef425bbf5d11b15dbdab2c@212.90.121.89:26656,414c66671c13cdaef1a6decdc1efd47d50e2d495@116.202.212.179:26656,cd89dd1aa4afb38e2226d5cabe5b7db047255129@65.21.237.124:12656,128accd3e8ee379bfdf54560c21345451c7048c7@37.187.147.22:26656,6d3d5b13e2f203dbf718d8c201e2af97bbc52dbe@45.84.138.149:26656,08ff2704dffcbfce0038fbd499758f15ec78472f@51.159.226.76:26656,9b9897064ed6a27f3e44d3269ebe9bc06e1ba233@217.76.55.225:26656,c9621f90fbe0cb20d50d434aca007a2159090cd4@104.152.209.189:26656,3c353744a5260e4fb3a9c176e9fd095f93255149@162.250.188.149:13656"
-
-sed -i -E '/^\[p2p]/,/^\[/ s|^#?\s*max_num_inbound_peers\s*=.*|max_num_inbound_peers = 50|' $HOME/.stabled/config/config.toml
-sed -i -E '/^\[p2p]/,/^\[/ s|^#?\s*max_num_outbound_peers\s*=.*|max_num_outbound_peers = 30|' $HOME/.stabled/config/config.toml
-sed -i -E "/^\[p2p]/,/^\[/ s|^#?\s*persistent_peers\s*=.*|persistent_peers = \"$PEERS\"|" "$HOME/.stabled/config/config.toml"
-sed -i -E '/^\[p2p]/,/^\[/ s|^#?\s*pex\s*=.*|pex = true|' $HOME/.stabled/config/config.toml
-
-sed -i -E '/^\[rpc]/,/^\[/ s|^#?\s*laddr\s*=.*|laddr = "tcp://0.0.0.0:26657"|' $HOME/.stabled/config/config.toml
-sed -i -E '/^\[rpc]/,/^\[/ s|^#?\s*max_open_connections\s*=.*|max_open_connections = 900|' $HOME/.stabled/config/config.toml
-sed -i -E '/^\[rpc]/,/^\[/ s|^#?\s*cors_allowed_origins\s*=.*|cors_allowed_origins = ["*"]|' $HOME/.stabled/config/config.toml
-```
-
-Verify the changes.
-
-```bash
-sed -n '/^\[p2p]/,/^\[/p' "$HOME/.stabled/config/config.toml" \
-  | grep -E '^\[p2p]|^\s*max_num_inbound_peers\s*=|^\s*max_num_outbound_peers\s*=|^\s*persistent_peers\s*=|^\s*pex\s*='
-echo
-sed -n '/^\[rpc]/,/^\[/p' "$HOME/.stabled/config/config.toml" \
-  | grep -E '^\[rpc]|^\s*laddr\s*=|^\s*max_open_connections\s*=|^\s*cors_allowed_origins\s*='
 ```
 
 ### Create Service File
