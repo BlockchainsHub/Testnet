@@ -1,3 +1,8 @@
+# Stable Node Guide
+This guide will assist you in the installation process of the Stable node.
+
+-----------------------------------------------------------------
+
 ## Hardware Requirements
 
 | Component | Testnet                      |
@@ -6,6 +11,8 @@
 | Memory    | 16 GB                        |
 | Disk      | 1 TB NVMe SSD                |
 | Bandwidth | 1 Gbps for Download / Upload |
+
+-----------------------------------------------------------------
 
 ## Installation Process
 ### System Preparation
@@ -225,3 +232,52 @@ sudo systemctl status stabled
 ```bash
 sudo journalctl -u stabled -fo cat
 ```
+
+-----------------------------------------------------------------
+
+# Command List
+## Maintenance
+Get sync information
+```bash
+stabled status 2>&1 | jq .sync_info
+```
+
+Get node peer
+```bash
+echo $(stabled tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/.stabled/config/config.toml | sed -n '/Address to listen for incoming connection/{n;p;}' | sed 's/.*://; s/".*//')
+```
+
+Get live peers
+```bash
+curl -sS http://localhost:26657/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
+```
+
+Enable prometheus
+```bash
+sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.stabled/config/config.toml
+```
+
+Reset chain data
+```bash
+stabled tendermint unsafe-reset-all --keep-addr-book --home $HOME/.stabled --keep-addr-book
+```
+
+Remove node
+> [!CAUTION]
+> Before removing the node, be aware that all chain data will be erased. **Ensure you've created a backup of your priv_validator_key.json!**
+
+```bash
+cd $HOME
+sudo systemctl stop stabled
+sudo systemctl disable stabled
+sudo rm /etc/systemd/system/stabled.service
+sudo systemctl daemon-reload
+sudo rm -f $(which stabled)
+sudo rm -rf $HOME/.stabled
+```
+
+-----------------------------------------------------------------
+
+<p align="center">
+  &copy; 2025 BlockHub. All rights reserved.
+</p>
