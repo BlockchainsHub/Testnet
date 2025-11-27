@@ -143,7 +143,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=/usr/bin/stabled start --chain-id stabletestnet_2201-1
+ExecStart=$HOME/go/bin/stabled start --chain-id stabletestnet_2201-1
 Restart=always
 RestartSec=3
 LimitNOFILE=65535
