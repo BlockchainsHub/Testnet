@@ -84,25 +84,6 @@ Expected result `66afbb6e57e6faf019b3021de299125cddab61d433f28894db751252f5b8eaf
 sha256sum $HOME/.stabled/config/genesis.json
 ```
 
-### Download Configuration Files
-Download optimized configuration.
-
-```bash
-wget https://stable-testnet-data.s3.us-east-1.amazonaws.com/rpc_node_config.zip unzip rpcnode_config.zip
-```
-
-Backup original config.
-
-```bash
-cp $HOME/.stabled/config/config.toml $HOME/.stabled/config/config.toml.backup
-```
-
-Copy the new configuration.
-
-```bash
-cp config.toml $HOME/.stabled/config/config.toml
-```
-
 ### Update The Configuration File
 `config.toml` file
 
