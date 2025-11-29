@@ -157,7 +157,7 @@ EOF
 ```
 
 ## Applying Snpashot
-Snapshot provided by @astrostake team.
+Snapshot provided by [@astrostake](https://github.com/astrostake) team.
 ### Backup and Remove Current Data
 
 ```bash
