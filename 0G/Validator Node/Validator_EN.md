@@ -1,5 +1,4 @@
-![0G Github Banner](https://github.com/BlockchainsHub/Testnet/assets/77204008/34a32724-b411-41e4-8696-e390dfa01cab)
-
+con
 # 0G Node Guide
 This guide will assist you in the installation process of the 0G node.
 
