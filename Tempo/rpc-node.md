@@ -187,8 +187,8 @@ sudo systemctl restart tempo
 
 ### Node Removal
 
-[\!CAUTION]
-**Danger Zone:** This will permanently delete your node data and configuration. Ensure you have backed up any necessary keys before running this.
+> [!CAUTION]
+> **Danger Zone:** This will permanently delete your node data and configuration. Ensure you have backed up any necessary keys before running this.
 
 ```bash
 sudo systemctl stop tempo
