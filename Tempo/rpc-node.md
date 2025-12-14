@@ -193,8 +193,8 @@ sudo systemctl restart tempo
 ```bash
 sudo systemctl stop tempo
 sudo systemctl disable tempo
-rm /etc/systemd/system/tempo.service
-rm -rf $HOME/.tempo
+sudo rm /etc/systemd/system/tempo.service
+sudo rm -rf $HOME/.tempo
 sudo systemctl daemon-reload
 ```
 
