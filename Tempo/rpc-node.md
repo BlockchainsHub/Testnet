@@ -34,8 +34,9 @@ sudo apt install curl git jq lz4 build-essential -y
 
 Tempo uses specific ports for P2P communication and RPC interfaces. We will allow these through our firewall (`ufw`).
 
-**Crucially, we will add comments to each rule.** This is a best practice that ensures when you review your firewall settings in the future, you know exactly what each open port is used for.
+**Important:** We must allow Port 22 (SSH) first to prevent locking ourselves out of the server. We also add comments to each rule for clarity.
 
+  * **22 (TCP):** SSH (Remote Access).
   * **30303 (TCP/UDP):** P2P Peering (Public).
   * **8545 (TCP):** HTTP RPC (Public/Private).
   * **9000 (TCP):** Metrics (Internal).
@@ -43,6 +44,9 @@ Tempo uses specific ports for P2P communication and RPC interfaces. We will allo
 <!-- end list -->
 
 ```bash
+# Allow SSH (CRITICAL: Do this first to prevent lockout)
+sudo ufw allow 22/tcp comment "SSH Access"
+
 # Allow P2P Peering for syncing
 sudo ufw allow 30303/tcp comment "Tempo P2P Peering"
 sudo ufw allow 30303/udp comment "Tempo P2P Discovery"
